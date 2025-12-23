@@ -1,0 +1,37 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{{Black Forest Labs}}{2024}]{fluxkontext2024}
+{Black Forest Labs}.
+\newblock Flux.1 kontext: Flow matching for in-context image generation and editing, 2024.
+
+\bibitem[\protect\citeauthoryear{Brooks \bgroup \em et al.\egroup }{2023}]{brooks2023instructpix2pix}
+Tim Brooks, Aleksander Holynski, and Alexei~A Efros.
+\newblock Instructpix2pix: Learning to follow image editing instructions.
+\newblock In {\em CVPR}, 2023.
+
+\bibitem[\protect\citeauthoryear{Cheng \bgroup \em et al.\egroup }{2025}]{cheng2025overt}
+Ziheng Cheng, Yixiao Huang, Haoran Li, Yue Zhang, and Junfeng Wen.
+\newblock Overt: A benchmark for over-refusal evaluation on text-to-image models.
+\newblock {\em arXiv preprint arXiv:2505.21347}, 2025.
+
+\bibitem[\protect\citeauthoryear{Cui \bgroup \em et al.\egroup }{2024}]{cui2024orbench}
+Jiaming Cui, Hongzhan Yu, Jiachen Dong, Junyi Ye, and Yue Zhang.
+\newblock Or-bench: An over-refusal benchmark for large language models.
+\newblock In {\em NeurIPS Datasets and Benchmarks}, 2024.
+
+\bibitem[\protect\citeauthoryear{Jin \bgroup \em et al.\egroup }{2024}]{jin2024selective}
+Xiaoping Jin, Yang Liu, and Hao Zhang.
+\newblock Characterizing selective refusal bias in large language models.
+\newblock {\em arXiv preprint arXiv:2510.27087}, 2024.
+
+\bibitem[\protect\citeauthoryear{Li \bgroup \em et al.\egroup }{2024}]{li2024t2isafety}
+Hao Li, Linxuan Chen, and Yue Zhang.
+\newblock T2isafety: Benchmark for assessing fairness, toxicity, and privacy in image generation.
+\newblock {\em arXiv preprint arXiv:2404.xxxxx}, 2024.
+
+\bibitem[\protect\citeauthoryear{Luccioni \bgroup \em et al.\egroup }{2024}]{luccioni2024stable}
+Alexandra~Sasha Luccioni, Christopher Akiki, Margaret Mitchell, and Yacine Jernite.
+\newblock Stable bias: Evaluating societal representations in diffusion models.
+\newblock {\em NeurIPS}, 2024.
+
+\end{thebibliography}
