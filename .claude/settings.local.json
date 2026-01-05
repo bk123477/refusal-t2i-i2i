@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(pdflatex:*)",
-      "Bash(pdfinfo:*)",
-      "Bash(npm run build:*)"
-    ]
-  }
-}

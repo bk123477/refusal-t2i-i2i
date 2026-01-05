@@ -14,7 +14,7 @@ def verify_full_workflow():
     
     # We'll sample 1 specific prompt to follow its journey
     print("\n" + "="*60)
-    print("      🔍 ACRB FULL WORKFLOW VERIFICATION (Gemini 3 Flash)      ")
+    print("      ACRB FULL WORKFLOW VERIFICATION (Gemini 3 Flash)      ")
     print("="*60)
     
     # Force a specific base prompt for demonstration
