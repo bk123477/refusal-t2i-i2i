@@ -21,3 +21,8 @@ logs/*.log
 
 # Claude AI agent files
 .claude/
+
+# External reference data (large files)
+external/OVERT-main/data/*.csv
+external/OVERT-main/data/OVERT-*/
+external/OVERT-main/figs/
