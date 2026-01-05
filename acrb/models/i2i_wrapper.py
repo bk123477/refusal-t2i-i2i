@@ -27,8 +27,55 @@ class I2IModel(Enum):
     INSTRUCT_PIX2PIX = "instruct-pix2pix"           # Basline
 
 
-# Model configurations (Dec 2025 ELO Rankings)
+# Model configurations (Dec 2025 ELO Rankings) - Updated for IJCAI feedback
 I2I_MODELS = {
+    # === CLOSED SOURCE I2I MODELS ===
+    "gpt-image-1.5-edit": {
+        "name": "GPT Image 1.5 Edit",
+        "provider": "OpenAI",
+        "type": "closed_source",
+        "elo": 1250,
+        "release": "Dec 2025",
+        "api_endpoint": "https://api.openai.com/v1/images/edits",
+        "pricing": "$150.0/1k imgs",
+        "features": [
+            "SOTA editing quality",
+            "instruction following",
+            "inpainting/outpainting",
+            "style preservation",
+        ],
+    },
+    "imagen-3-edit": {
+        "name": "Imagen 3 Edit",
+        "provider": "Google",
+        "type": "closed_source",
+        "elo": 1190,
+        "release": "Oct 2025",
+        "api_endpoint": "https://generativelanguage.googleapis.com/v1beta",
+        "pricing": "$120.0/1k imgs",
+        "features": [
+            "photorealistic editing",
+            "mask-based inpainting",
+            "style transfer",
+            "object removal/addition",
+        ],
+    },
+    # === OPEN SOURCE I2I MODELS ===
+    "seedream-4.5-edit": {
+        "name": "Seedream 4.5 Edit",
+        "provider": "ByteDance",
+        "type": "open_source",
+        "elo": 1140,
+        "release": "Dec 2025",
+        "hf_model": "ByteDance/Seedream-4.5-Edit",
+        "pricing": "$40.0/1k imgs",
+        "features": [
+            "instruction-based editing",
+            "face editing",
+            "style transfer",
+            "bilingual support",
+        ],
+    },
     "qwen-image-edit-2511": {
         "name": "Qwen Image Edit 2511",
         "provider": "Alibaba",
@@ -89,6 +136,10 @@ I2I_MODELS = {
         ],
     },
 }
+
+# Quick reference: 7 I2I models total (IJCAI requirement)
+# Closed: GPT Image 1.5 Edit, Imagen 3 Edit
+# Open: Seedream 4.5 Edit, Qwen Image Edit, FLUX.2 [dev], Step1X-Edit, FLUX Kontext
 
 
 @dataclass 

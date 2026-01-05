@@ -9,7 +9,7 @@ You are a senior ML engineer responsible for running experiments for the ACRB be
 ## Tech Stack
 
 - **Python**: PyTorch, Transformers, diffusers
-- **VLMs**: Qwen2.5-VL, Gemini 2.0 Flash
+- **VLMs**: Qwen2.5-VL, Gemini 2.5 Flash
 - **I2I Models**: FLUX.1 Kontext, FLUX.2-dev, InstructPix2Pix, Step1X-Edit
 - **Metrics**: DreamSim, OpenCLIP, LAION-Aesthetic
 

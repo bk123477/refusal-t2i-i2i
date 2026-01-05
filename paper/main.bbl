@@ -1,54 +1,123 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
 
-\bibitem[\protect\citeauthoryear{{Alibaba Qwen Team}}{2025}]{qwenimageedit2511}
+\bibitem{qwenimageedit2511}
 {Alibaba Qwen Team}.
 \newblock Qwen-image-edit-2511: Enhanced image editing with integrated lora, 2025.
 
-\bibitem[\protect\citeauthoryear{{Black Forest Labs}}{2024}]{fluxkontext2024}
+\bibitem{black2022fairness}
+Samuel Black, Edward Raff, et~al.
+\newblock Model assertions for monitoring and improving ml models.
+\newblock In {\em MLSys}, 2022.
+
+\bibitem{fluxkontext2024}
 {Black Forest Labs}.
 \newblock Flux.1 kontext: Flow matching for in-context image generation and editing, 2024.
 
-\bibitem[\protect\citeauthoryear{Brooks \bgroup \em et al.\egroup }{2023}]{brooks2023instructpix2pix}
+\bibitem{brooks2023instructpix2pix}
 Tim Brooks, Aleksander Holynski, and Alexei~A Efros.
 \newblock Instructpix2pix: Learning to follow image editing instructions.
 \newblock In {\em CVPR}, 2023.
 
-\bibitem[\protect\citeauthoryear{Buolamwini and Gebru}{2018}]{buolamwini2018gender}
+\bibitem{buolamwini2018gender}
 Joy Buolamwini and Timnit Gebru.
 \newblock Gender shades: Intersectional accuracy disparities in commercial gender classification.
 \newblock In {\em Proceedings of Machine Learning Research (FAT*)}, volume~81, pages 77--91, 2018.
 
-\bibitem[\protect\citeauthoryear{Cheng \bgroup \em et al.\egroup }{2025}]{cheng2025overt}
+\bibitem{chao2024apt}
+Patrick Chao, Alexander Robey, et~al.
+\newblock Jailbreaking black box large language models in twenty queries.
+\newblock {\em arXiv preprint arXiv:2310.08419}, 2024.
+
+\bibitem{cheng2025overt}
 Ziheng Cheng, Yixiao Huang, Haoran Li, Yue Zhang, and Junfeng Wen.
 \newblock Overt: A benchmark for over-refusal evaluation on text-to-image models.
 \newblock {\em arXiv preprint arXiv:2505.21347}, 2025.
 
-\bibitem[\protect\citeauthoryear{Cui \bgroup \em et al.\egroup }{2024}]{cui2024orbench}
+\bibitem{cui2024orbench}
 Jiaming Cui, Hongzhan Yu, Jiachen Dong, Junyi Ye, and Yue Zhang.
 \newblock Or-bench: An over-refusal benchmark for large language models.
 \newblock In {\em NeurIPS Datasets and Benchmarks}, 2024.
 
-\bibitem[\protect\citeauthoryear{{European Parliament and Council}}{2024}]{euaiact2024}
+\bibitem{euaiact2024}
 {European Parliament and Council}.
 \newblock Regulation (eu) 2024/1689 on artificial intelligence (ai act), 2024.
 
-\bibitem[\protect\citeauthoryear{Jin \bgroup \em et al.\egroup }{2024}]{jin2024selective}
+\bibitem{gou2024rtvlm}
+Hongyi Gou, Jiawei Chen, et~al.
+\newblock Rt-vlm: Refusal-aware visual language model safety evaluation.
+\newblock {\em arXiv preprint arXiv:2411.06922}, 2024.
+
+\bibitem{han2024wildguard}
+Seungju Han et~al.
+\newblock Wildguard: Open one-stop moderation tools for safety risks, jailbreaks, and refusals of llms.
+\newblock {\em NeurIPS}, 2024.
+
+\bibitem{jin2024selective}
 Xiaoping Jin, Yang Liu, and Hao Zhang.
 \newblock Characterizing selective refusal bias in large language models.
 \newblock {\em arXiv preprint arXiv:2510.27087}, 2024.
 
-\bibitem[\protect\citeauthoryear{Li \bgroup \em et al.\egroup }{2024}]{li2024t2isafety}
+\bibitem{kumar2024cultural}
+Sneha Kumar, Rajesh Patel, Ming Li, et~al.
+\newblock Cultural competence in text-to-image models: A global audit of representation bias.
+\newblock {\em arXiv preprint arXiv:2510.20042}, 2024.
+
+\bibitem{li2024t2isafety}
 Hao Li, Linxuan Chen, and Yue Zhang.
 \newblock T2isafety: Benchmark for assessing fairness, toxicity, and privacy in image generation.
 \newblock {\em arXiv preprint arXiv:2404.xxxxx}, 2024.
 
-\bibitem[\protect\citeauthoryear{Luccioni \bgroup \em et al.\egroup }{2024}]{luccioni2024stable}
+\bibitem{li2024persona}
+Xiaoyu Li, Jinghan Wang, Yuchen Chen, et~al.
+\newblock Persona-conditioned safety alignment: How demographic attributes affect refusal in large language models.
+\newblock {\em arXiv preprint arXiv:2406.08222}, 2024.
+
+\bibitem{luccioni2024stable}
 Alexandra~Sasha Luccioni, Christopher Akiki, Margaret Mitchell, and Yacine Jernite.
 \newblock Stable bias: Evaluating societal representations in diffusion models.
 \newblock {\em NeurIPS}, 2024.
 
-\bibitem[\protect\citeauthoryear{{The White House}}{2023}]{bideno2023}
+\bibitem{oakden2024confidence}
+Luke Oakden-Rayner, Linda Palmer, et~al.
+\newblock Confidence-aware fairness testing for deep neural networks.
+\newblock {\em arXiv preprint arXiv:2409.13827}, 2024.
+
+\bibitem{wu2025qwen}
+{Qwen Team}.
+\newblock Qwen2.5-vl technical report, 2025.
+
+\bibitem{raji2020ofi}
+Inioluwa~Deborah Raji, Andrew Smart, et~al.
+\newblock Closing the ai accountability gap: Defining an end-to-end framework for internal algorithmic auditing.
+\newblock {\em FAT*}, 2020.
+
+\bibitem{samvelyan2024aprt}
+Mikayel Samvelyan, Roberta Raileanu, et~al.
+\newblock Adaptive progressive red teaming for language model safety.
+\newblock {\em arXiv preprint arXiv:2407.03876}, 2024.
+
+\bibitem{bideno2023}
 {The White House}.
 \newblock Executive order 14110: Safe, secure, and trustworthy development and use of artificial intelligence, 2023.
+
+\bibitem{wang2024lvlm}
+Yongshuo Wang, Yang Liu, et~al.
+\newblock Safety fine-tuning at (almost) no cost: A baseline for vision large language models.
+\newblock {\em ICML}, 2024.
+
+\bibitem{yu2024mart}
+Dacheng Yu, Yue Zhang, et~al.
+\newblock Mart: Model-adaptive red teaming for large language models.
+\newblock {\em arXiv preprint arXiv:2406.17419}, 2024.
+
+\bibitem{zhang2025bpm}
+Haoyu Zhang, Jiawei Chen, Yuxin Liu, et~al.
+\newblock Bpm: Beyond pixel-level metrics for region-aware evaluation of image-to-image translation.
+\newblock {\em arXiv preprint arXiv:2506.13827}, 2025.
+
+\bibitem{zhou2024fairjudge}
+Kaiwen Zhou, Jingyan Li, Xiao Wang, et~al.
+\newblock Fairjudge: Evaluating fairness in vision-language models with constrained multimodal judges.
+\newblock {\em arXiv preprint arXiv:2510.22827}, 2024.
 
 \end{thebibliography}

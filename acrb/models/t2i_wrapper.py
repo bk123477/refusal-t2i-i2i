@@ -29,9 +29,9 @@ class T2IModel(Enum):
     STEP1X_EDIT = "step1x-edit-v1p2"          # StepFun - ELO #3 (1081)
 
 
-# Model configurations (Dec 2025 ELO Rankings)
+# Model configurations (Dec 2025 ELO Rankings) - Updated for IJCAI feedback
 T2I_MODELS = {
-    # === CLOSED SOURCE TOP 3 ===
+    # === CLOSED SOURCE TOP 4 ===
     "gpt-image-1.5": {
         "name": "GPT Image 1.5 (high)",
         "provider": "OpenAI",
@@ -41,6 +41,8 @@ T2I_MODELS = {
         "api_endpoint": "https://api.openai.com/v1/images",
         "pricing": "$133.0/1k imgs",
         "features": ["SOTA quality", "instruction following", "text rendering"],
+        "supports_i2i": True,  # Added I2I support (IJCAI feedback)
+        "i2i_endpoint": "https://api.openai.com/v1/images/edits",
     },
     "nano-banana-pro": {
         "name": "Nano Banana Pro (Gemini 3 Pro Image)",
@@ -51,6 +53,19 @@ T2I_MODELS = {
         "api_endpoint": "https://generativelanguage.googleapis.com/v1beta",
         "pricing": "$134.0/1k imgs",
         "features": ["4K output", "text rendering", "multi-language", "reasoning"],
+        "supports_i2i": True,  # Added I2I support (IJCAI feedback)
+    },
+    "imagen-3": {
+        "name": "Imagen 3",
+        "provider": "Google",
+        "type": "closed_source",
+        "elo": 1195,
+        "release": "Oct 2025",
+        "api_endpoint": "https://generativelanguage.googleapis.com/v1beta",
+        "pricing": "$100.0/1k imgs",
+        "features": ["photorealism", "text rendering", "safety filters"],
+        "supports_i2i": True,  # Added I2I support (IJCAI feedback)
+        "i2i_features": ["inpainting", "outpainting", "style transfer"],
     },
     "flux-2-max": {
         "name": "FLUX.2 [max]",
@@ -61,8 +76,21 @@ T2I_MODELS = {
         "api_endpoint": "https://api.bfl.ml/v1",
         "pricing": "$70.0/1k imgs",
         "features": ["12B+ params", "flow matching", "high fidelity"],
+        "supports_i2i": False,
     },
-    # === OPEN SOURCE TOP 3 ===
+    # === OPEN SOURCE TOP 4 ===
+    "seedream-4.5": {
+        "name": "Seedream 4.5",
+        "provider": "ByteDance",
+        "type": "open_source",
+        "elo": 1145,
+        "release": "Dec 2025",
+        "hf_model": "ByteDance/Seedream-4.5",
+        "pricing": "$35.0/1k imgs",
+        "features": ["20B params", "DiT architecture", "bilingual", "style control"],
+        "supports_i2i": True,  # Added (IJCAI feedback - model added)
+        "i2i_features": ["instruction editing", "style transfer", "face editing"],
+    },
     "qwen-image-edit-2511": {
         "name": "Qwen Image Edit 2511",
         "provider": "Alibaba",
@@ -72,6 +100,7 @@ T2I_MODELS = {
         "hf_model": "Qwen/Qwen-Image-Edit-2511",
         "pricing": "$30.0/1k imgs",
         "features": ["20B params", "integrated LoRA", "text editing", "geometric reasoning"],
+        "supports_i2i": True,
     },
     "flux-2-dev": {
         "name": "FLUX.2 [dev]",
@@ -82,6 +111,7 @@ T2I_MODELS = {
         "hf_model": "black-forest-labs/FLUX.2-dev",
         "pricing": "$24.0/1k imgs",
         "features": ["12B params", "flow matching", "open weights"],
+        "supports_i2i": True,
     },
     "step1x-edit-v1p2": {
         "name": "Step1X-Edit v1.2",
@@ -92,8 +122,13 @@ T2I_MODELS = {
         "hf_model": "StepFun/Step1X-Edit-v1p2",
         "pricing": "$0.0/1k imgs (free)",
         "features": ["efficient", "instruction editing", "open weights"],
+        "supports_i2i": True,
     },
 }
+
+# Quick reference: 7 models total (IJCAI requirement)
+# Closed: GPT Image 1.5, Nano Banana Pro, Imagen 3, FLUX.2 [max]
+# Open: Seedream 4.5, Qwen Image Edit, FLUX.2 [dev], Step1X-Edit
 
 
 @dataclass

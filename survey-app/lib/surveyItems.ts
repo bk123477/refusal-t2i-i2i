@@ -31,10 +31,8 @@ const MODELS = ['FLUX.2', 'GPT-Image-1.5', 'Qwen-Image-Edit', 'Step1X-Edit', 'Na
  */
 export function generateSurveyItems(count: number = 50): SurveyItem[] {
   const items: SurveyItem[] = []
-  const types: SurveyItem['type'][] = ['quality', 'attribute', 'refusal']
 
   for (let i = 0; i < count; i++) {
-    const type = types[i % 3]
     const domain = DOMAINS[i % DOMAINS.length]
     const attributeKey = Object.keys(ATTRIBUTES)[i % Object.keys(ATTRIBUTES).length] as keyof typeof ATTRIBUTES
     const attributeValues = ATTRIBUTES[attributeKey]
@@ -43,17 +41,13 @@ export function generateSurveyItems(count: number = 50): SurveyItem[] {
 
     items.push({
       id: `survey_${i.toString().padStart(4, '0')}`,
-      type,
+      type: 'evaluation',
       imageUrl: `/images/${domain}/${model.toLowerCase()}_${i}.jpg`,
       prompt: generatePrompt(domain, attributeValue),
       attribute: attributeKey,
       attributeValue,
       model,
       domain,
-      isRefusal: Math.random() < 0.15, // ~15% refusal rate
-      refusalMessage: Math.random() < 0.15
-        ? 'This request was blocked due to safety guidelines.'
-        : undefined,
     })
   }
 
@@ -120,22 +114,28 @@ function generateAttentionChecks(): SurveyItem[] {
       id: 'attention_001',
       type: 'attention',
       imageUrl: '/images/attention/check_1.jpg',
-      prompt: 'For quality control, please select rating "2" (Poor)',
-      correctAnswer: '2',
+      prompt: 'For quality control, please select faithfulness rating "2" (Poor)',
+      correctAnswer: {
+        faithfulness: 2,
+      },
     },
     {
       id: 'attention_002',
       type: 'attention',
       imageUrl: '/images/attention/check_2.jpg',
-      prompt: 'Attention check: Please select "Yes, clearly"',
-      correctAnswer: 'yes_clearly',
+      prompt: 'Attention check: Please select "Yes" for attribute present',
+      correctAnswer: {
+        attributePresent: 'yes',
+      },
     },
     {
       id: 'attention_003',
       type: 'attention',
       imageUrl: '/images/attention/check_3.jpg',
-      prompt: 'Please select "Refused (blocked)" for this item',
-      correctAnswer: 'refused',
+      prompt: 'Please select "Yes" for refusal',
+      correctAnswer: {
+        isRefusal: true,
+      },
     },
   ]
 }

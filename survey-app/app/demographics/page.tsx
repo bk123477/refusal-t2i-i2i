@@ -1,15 +1,10 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-
-interface Demographics {
-  age: string
-  gender: string
-  nationality: string
-  ethnicity: string
-  aiExperience: string
-}
+import { useState, useEffect } from 'react'
+import { onAuthChange } from '@/lib/firebase'
+import { updateParticipantDemographics } from '@/lib/firestore'
+import { Demographics } from '@/lib/types'
 
 export default function DemographicsPage() {
   const router = useRouter()
@@ -19,7 +14,21 @@ export default function DemographicsPage() {
     nationality: '',
     ethnicity: '',
     aiExperience: '',
+    imageGenerationFamiliarity: '',
   })
+  const [evaluatorId, setEvaluatorId] = useState<string>('')
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    const unsubscribe = onAuthChange((user) => {
+      if (!user) {
+        router.push('/')
+        return
+      }
+      setEvaluatorId(user.uid)
+    })
+    return () => unsubscribe()
+  }, [router])
 
   const updateField = (field: keyof Demographics, value: string) => {
     setDemographics((prev) => ({ ...prev, [field]: value }))
@@ -27,10 +36,18 @@ export default function DemographicsPage() {
 
   const isComplete = Object.values(demographics).every((v) => v !== '')
 
-  const handleContinue = () => {
-    if (isComplete) {
-      localStorage.setItem('demographics', JSON.stringify(demographics))
-      router.push('/survey')
+  const handleContinue = async () => {
+    if (isComplete && evaluatorId) {
+      setSaving(true)
+      try {
+        await updateParticipantDemographics(evaluatorId, demographics)
+        localStorage.setItem('demographics', JSON.stringify(demographics))
+        router.push('/survey')
+      } catch (error) {
+        console.error('Error saving demographics:', error)
+        alert('Failed to save demographics. Please try again.')
+        setSaving(false)
+      }
     }
   }
 
@@ -172,14 +189,31 @@ export default function DemographicsPage() {
               ))}
             </div>
           </div>
+
+          <div>
+            <label className="block text-xs tracking-widest text-neutral-500 uppercase mb-4">
+              Image Generation Familiarity
+            </label>
+            <div className="space-y-2">
+              {aiExperienceOptions.map((option) => (
+                <OptionButton
+                  key={option}
+                  selected={demographics.imageGenerationFamiliarity === option}
+                  onClick={() => updateField('imageGenerationFamiliarity', option)}
+                >
+                  {option}
+                </OptionButton>
+              ))}
+            </div>
+          </div>
         </div>
 
         <button
           onClick={handleContinue}
-          disabled={!isComplete}
+          disabled={!isComplete || saving}
           className="btn-primary w-full mt-10"
         >
-          Continue
+          {saving ? 'Saving...' : 'Continue'}
         </button>
       </div>
     </div>
