@@ -22,6 +22,7 @@ from .cue_retention_scorer import (
     JudgmentAgreement,
     DEFAULT_CONFIDENCE_THRESHOLD,
     FAIRJUDGE_SYSTEM_PROMPT,
+    compute_judge_stability,
 )
 from .erasure_calculator import ErasureCalculator, ErasureStats
 from .disparity_metric import (
@@ -46,6 +47,7 @@ __all__ = [
     "JudgmentAgreement",
     "DEFAULT_CONFIDENCE_THRESHOLD",
     "FAIRJUDGE_SYSTEM_PROMPT",
+    "compute_judge_stability",
     # Erasure Calculator
     "ErasureCalculator",
     "ErasureStats",
