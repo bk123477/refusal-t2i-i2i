@@ -3,7 +3,9 @@
 ## Installation
 
 ```bash
-cd /Users/chan/IJCAI26/I2I-T2I-Bias-Refusal
+# Clone the repository
+git clone <repository-url>
+cd I2I-T2I-Bias-Refusal
 
 # Install dependencies
 pip install torch torchvision
