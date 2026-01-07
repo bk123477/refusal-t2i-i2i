@@ -192,3 +192,4 @@ class ACRBImageGenerator:
             'successful': len([r for r in results if not r.get('error')]),
             'results': results
         }
+

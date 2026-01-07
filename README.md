@@ -1,10 +1,13 @@
 # ACRB: Attribute-Conditioned Refusal Bias Framework
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/seochan99/refusal-t2i-i2i)
+**WildGuardMix 기반 버전 - 2025년 1월 업데이트**
+
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/seochan99/refusal-t2i-i2i)
 [![Conference](https://img.shields.io/badge/IJCAI-2026-gold.svg)](https://ijcai26.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Dataset](https://img.shields.io/badge/dataset-WildGuardMix-orange.svg)](https://huggingface.co/datasets/allenai/wildguardmix)
 
-A unified framework for auditing attribute-conditioned refusal bias in generative model safety alignment. ACRB measures both hard refusal (explicit blocking) and soft refusal (silent cue erasure) across Text-to-Image (T2I) and Image-to-Image (I2I) generative models.
+WildGuardMix 데이터셋을 기반으로 하는 통합 프레임워크로, 생성 모델 안전 정렬에서의 속성-조건화된 refusal bias를 감사합니다. ACRB는 Text-to-Image (T2I) 및 Image-to-Image (I2I) 생성 모델에서 하드 refusal (명시적 차단)과 소프트 refusal (조용한 cue erasure)을 모두 측정합니다.
 
 ## Key Findings
 
@@ -24,66 +27,87 @@ These patterns persist in benign contexts such as "wedding photography" or "phys
 4. Reproducible evaluation infrastructure: Open-source `acrb` Python library for regulatory compliance auditing
 5. Disparate impact evidence: Quantitative documentation for EU AI Act Article 10 and Executive Order 14110 compliance
 
-## Framework Architecture
+## Framework Architecture (WildGuardMix 기반)
 
-ACRB implements a three-stage evaluation pipeline:
+ACRB는 WildGuardMix 데이터셋을 기반으로 하는 3단계 평가 파이프라인을 구현합니다:
 
 ```
-Stage I: Dynamic Prompt Synthesis
-├── Boundary Rephrasing (LLM-driven)
-└── Attribute Expansion (6 cultures, 3 genders, disability, religion, age)
-    → 2,500 minimal-pair prompts
+Stage I: WildGuardMix 기반 프롬프트 준비
+├── WildGuardMix 다운로드 (86K+ benign prompts)
+├── LLM → T2I context 변환 ("How to X?" → "Person doing X")
+└── ACRB 속성 확장 (culture, gender, disability, religion, age)
+    → 확장 가능한 boundary prompts
 
-Stage II: Multi-Modal Generation
-├── T2I Models: GPT-Image 1.5, Imagen 3, FLUX.2, Seedream 4.5, Qwen, SD 3.5
-└── I2I Models: GPT-Image 1.5, Imagen 3, Qwen, Step1X-Edit, FLUX.2
-    → Grounded evaluation with FFHQ/COCO source images
+Stage II: 멀티-모달 생성
+├── T2I 모델: FLUX.2, SD 3.5, GPT-Image, Imagen 3, Qwen, 등
+└── I2I 모델: GPT-Image, Imagen 3, Qwen, Step1X-Edit, FLUX.2
+    → FFHQ/COCO 소스 이미지 기반 평가
 
-Stage III: Dual-Metric Evaluation
-├── Hard Refusal Detection (CLIP-based, τ=0.25)
-├── Soft Refusal Scoring (VLM ensemble: Qwen3-VL + Gemini 3 Flash Preview)
-└── Human Validation (12 annotators, κ=0.74 agreement)
-    → Disparity metrics: Δ_refusal, Δ_erasure
+Stage III: 이중 메트릭 평가
+├── 하드 refusal 검출 (CLIP 기반, τ=0.25)
+├── 소프트 refusal 스코어링 (VLM 앙상블)
+└── 인간 검증 (κ=0.74 agreement)
+    → Disparity 메트릭: Δ_refusal, Δ_erasure
 ```
 
-## Installation
+## 설치 (WildGuardMix 기반)
 
-### Prerequisites
+### 사전 요구사항
 
 - Python 3.10+
-- NVIDIA GPU with 24GB+ VRAM (for local models)
-- CUDA support for PyTorch
+- NVIDIA GPU with 24GB+ VRAM (로컬 모델용)
+- CUDA 지원 PyTorch
+- HuggingFace 접근 권한 (WildGuardMix 다운로드용)
 
-### Setup
+### 설정
 
 ```bash
-# Clone repository
+# 저장소 클론
 git clone https://github.com/seochan99/refusal-t2i-i2i.git
 cd I2I-T2I-Bias-Refusal
 
-# Install dependencies
+# 의존성 설치 (WildGuardMix 포함)
 pip install -r requirements.txt
+pip install datasets huggingface-hub  # WildGuardMix 다운로드용
 
-# Optional: Setup server environment
+# 선택: 서버 환경 설정
 ./setup_server.sh
+
+# WildGuardMix 접근 설정 (필요시)
+huggingface-cli login  # API 토큰으로 로그인
 ```
 
-## Quick Start
-
-### Option 1: Run Full Experiment Pipeline
+### 새로운 메인 파이프라인 사용법
 
 ```bash
-# Local models only (4 models, free, no API keys needed)
-./run_experiment.sh
+# WildGuardMix 기반 전체 실험 실행
+python acrb_pipeline.py --phase all --models flux2 sd35 --num-prompts 500
 
-# All 6 models (requires OPENAI_API_KEY, GOOGLE_API_KEY)
-./run_experiment.sh --all
+# 단계별 실행
+python acrb_pipeline.py --phase prepare --num-prompts 1000    # 프롬프트 준비
+python acrb_pipeline.py --phase experiment --models flux2     # 모델 테스트
+python acrb_pipeline.py --phase analyze                       # Bias 분석
+```
+```
 
-# Quick test (10 samples, 1 model, ~30 minutes)
-./run_experiment.sh --quick
+## 빠른 시작 (WildGuardMix 기반)
 
-# Single model with custom sample count
-./run_experiment.sh --model flux2 --samples 500
+### 옵션 1: 새로운 메인 파이프라인 실행
+
+```bash
+# WildGuardMix 기반 전체 실험 (권장)
+python acrb_pipeline.py --phase all --models flux2 sd35 --num-prompts 100
+
+# 빠른 테스트 (50개 프롬프트, 2개 모델, ~1시간)
+python acrb_pipeline.py --phase all --models flux2 --num-prompts 50
+
+# 단계별 실행으로 디버깅
+python acrb_pipeline.py --phase prepare --num-prompts 1000  # WildGuardMix 준비
+python acrb_pipeline.py --phase experiment --models flux2   # 모델 테스트
+python acrb_pipeline.py --phase analyze                     # Bias 분석
+
+# 레거시 파이프라인 (호환성 유지)
+./run_experiment.sh --model flux2 --samples 100
 ```
 
 ### Option 2: Use ACRB Python Library
