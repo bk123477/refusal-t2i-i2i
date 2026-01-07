@@ -1,0 +1,44 @@
+% table_disparity.tex - Summary Disparity Metrics
+% Usage: \input{tables/table_disparity}
+
+\begin{table}[t]
+\centering
+\caption{Disparity metrics summary. $\Delta_R$ = refusal disparity (max - min refusal rate within attribute category). $\Delta_E$ = erasure disparity. Values in percentage points (pp).}
+\label{tab:disparity_summary}
+\small
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l|cc|cc|cc@{}}
+\toprule
+& \multicolumn{2}{c|}{\textbf{T2I Models}} & \multicolumn{2}{c|}{\textbf{I2I Models}} & \multicolumn{2}{c}{\textbf{Overall}} \\
+\textbf{Attribute} & $\Delta_R$ & $\Delta_E$ & $\Delta_R$ & $\Delta_E$ & $\Delta_R$ & $\Delta_E$ \\
+\midrule
+\textbf{Culture} & & & & & & \\
+\quad NG vs US & 14.2 & 11.8 & 11.4 & 12.1 & \textbf{12.9} & 11.9 \\
+\quad KE vs US & 12.8 & 9.7 & 10.2 & 10.4 & 11.1 & 10.0 \\
+\quad Max disparity & 14.2 & 12.4 & 11.4 & 12.8 & 12.9 & 12.6 \\
+\midrule
+\textbf{Gender} & & & & & & \\
+\quad NB vs F & 1.8 & 4.2 & 1.4 & 3.8 & 1.5 & 4.0 \\
+\quad Max disparity & 1.8 & 4.2 & 1.4 & 4.4 & 1.5 & 4.2 \\
+\midrule
+\textbf{Disability} & & & & & & \\
+\quad WC vs Neutral & 4.8 & \textbf{35.2} & 3.2 & \textbf{32.8} & 3.4 & \textbf{34.3} \\
+\quad VI vs Neutral & 4.2 & 31.4 & 2.8 & 29.7 & 3.0 & 30.7 \\
+\quad PL vs Neutral & 3.8 & 27.8 & 2.5 & 26.4 & 2.6 & 26.8 \\
+\quad Max disparity & 4.8 & 35.2 & 3.2 & 32.8 & 3.4 & 34.3 \\
+\midrule
+\textbf{Religion} & & & & & & \\
+\quad Mus vs Chr & 8.4 & 17.1 & 6.8 & 15.4 & 7.5 & 15.1 \\
+\quad Jew vs Bud & 5.2 & 11.4 & 4.1 & 10.8 & 4.6 & 11.0 \\
+\quad Max disparity & 8.4 & 18.7 & 6.8 & 16.9 & 7.5 & 17.5 \\
+\midrule
+\textbf{Age} & & & & & & \\
+\quad Ch vs YA & 5.8 & 7.4 & 4.7 & 6.9 & 5.1 & 6.7 \\
+\quad Max disparity & 5.8 & 7.4 & 4.7 & 7.1 & 5.1 & 6.7 \\
+\midrule
+\midrule
+\textbf{Max Overall} & 14.2 & 35.2 & 11.4 & 32.8 & \textbf{12.9} & \textbf{34.3} \\
+\bottomrule
+\end{tabular*}
+\vspace{-2mm}
+\footnotesize{Key findings: Culture shows highest refusal disparity (12.9pp), Disability shows highest erasure disparity (34.3pp).}
+\end{table}

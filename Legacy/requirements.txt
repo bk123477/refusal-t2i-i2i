@@ -1,0 +1,78 @@
+# ACRB Requirements - December 2025 Latest Models
+# Install: pip install -r requirements.txt
+#
+# Paper: "ACRB: A Unified Framework for Auditing Attribute-Conditioned Refusal Bias"
+# IJCAI-ECAI 2026
+
+# =============================================================================
+# Core Deep Learning
+# =============================================================================
+torch>=2.5.0
+torchvision>=0.20.0
+transformers>=4.47.0
+accelerate>=1.2.0
+
+# =============================================================================
+# Diffusion Models (Dec 2025 SOTA)
+# =============================================================================
+diffusers>=0.32.0
+safetensors>=0.4.5
+peft>=0.14.0  # For LoRA support
+
+# =============================================================================
+# Vision-Language Models (Paper Section 4.4.2)
+# =============================================================================
+# Primary VLM: Qwen3-VL for cue retention scoring
+qwen-vl-utils>=0.0.8
+# Secondary VLM: Gemini 3 Flash Preview (API-based)
+google-generativeai>=0.8.0
+# Tertiary VLM: InternVL-2.5 for ablation studies
+# Note: Requires separate installation from HuggingFace
+# OpenAI for API-based VLM (optional backup)
+openai>=1.58.0
+
+# =============================================================================
+# CLIP for Refusal Detection (Paper Section 4.4.1)
+# =============================================================================
+git+https://github.com/openai/CLIP.git
+open-clip-torch>=2.28.0
+
+# =============================================================================
+# Image Processing
+# =============================================================================
+pillow>=11.0.0
+opencv-python>=4.10.0
+
+# =============================================================================
+# Pose Estimation for I2I Visibility Controls (Paper Section 3.3)
+# =============================================================================
+mediapipe>=0.10.0
+
+# =============================================================================
+# Statistical Analysis (Paper Section 5)
+# =============================================================================
+numpy>=2.0.0
+pandas>=2.2.0
+scipy>=1.14.0
+statsmodels>=0.14.0  # Mixed-effects modeling
+scikit-learn>=1.4.0  # Cohen's kappa, metrics
+
+# =============================================================================
+# Utilities
+# =============================================================================
+tqdm>=4.67.0
+python-dotenv>=1.0.0
+requests>=2.32.0
+huggingface-hub>=0.27.0
+
+# =============================================================================
+# Visualization
+# =============================================================================
+matplotlib>=3.9.0
+seaborn>=0.13.0
+
+# =============================================================================
+# Optional: Additional API Clients
+# =============================================================================
+# anthropic>=0.40.0  # For Claude-based evaluation
+# fal-client>=0.4.0  # For FLUX API access

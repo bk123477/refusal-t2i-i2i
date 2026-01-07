@@ -1,255 +1,207 @@
-# ACRB: Attribute-Conditioned Refusal Bias Framework
+# Silent Discrimination: Race-Conditioned Refusal Bias in I2I Editing Models
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/seochan99/refusal-t2i-i2i)
-[![Conference](https://img.shields.io/badge/IJCAI-2026-gold.svg)](https://ijcai26.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+**IJCAI 2026 Submission**
 
-A unified framework for auditing attribute-conditioned refusal bias in generative model safety alignment. ACRB measures both hard refusal (explicit blocking) and soft refusal (silent cue erasure) across Text-to-Image (T2I) and Image-to-Image (I2I) generative models.
+## Overview
 
-## Key Findings
+This repository contains the code and data for studying race-conditioned refusal bias in Image-to-Image (I2I) editing models. We investigate whether I2I models discriminatorily refuse or modify edit requests based on the race of the person in the source image.
 
-Evaluation across 2,500 T2I prompts and 500 I2I edits reveals systematic disparities:
+## Research Questions
 
-- Nigerian cultural markers trigger refusal at 4.6× the rate of US equivalents (16.7% vs. 3.6%, p < 0.001)
-- Disability-related cues experience 45% higher erasure rates than neutral baselines (37.1% vs. 25.6%)
-- Religious garments are 2.1× more likely to be substituted with generic clothing (28.4% vs. 13.2%)
+- **RQ1**: Do neutral edit requests show racial bias in refusal rates?
+- **RQ2**: Which edit types (occupational, cultural, disability) show the highest racial disparity?
+- **RQ3**: Do models exhibit asymmetric gatekeeping for stereotype-congruent vs incongruent edits?
 
-These patterns persist in benign contexts such as "wedding photography" or "physical therapy," indicating systematic bias rather than legitimate safety concerns.
+## Experiment Scale
 
-## Research Contributions
+| Metric | Count |
+|--------|-------|
+| Source Images | 84 (6 ages × 2 genders × 7 races) |
+| Prompts per Image | 50 |
+| Models | 3 (FLUX.2, Step1X-Edit, Qwen-Image-Edit) |
+| **Total I2I Requests** | **12,600** |
 
-1. I2I-specific refusal benchmark: Evaluation protocols for instruction-based image editing models
-2. Dual-metric bias framework: Formalizes Refusal Disparity (Δ_refusal) and Erasure Disparity (Δ_erasure) metrics
-3. Dynamic LLM-driven red-teaming: Scalable prompt synthesis using Gemini 3 Flash Reasoning for boundary rephrasing
-4. Reproducible evaluation infrastructure: Open-source `acrb` Python library for regulatory compliance auditing
-5. Disparate impact evidence: Quantitative documentation for EU AI Act Article 10 and Executive Order 14110 compliance
+## Models & Datasets
 
-## Framework Architecture
+| Resource | Link |
+|----------|------|
+| **FairFace Dataset** | https://huggingface.co/datasets/HuggingFaceM4/FairFace |
+| **FLUX.2-dev** | https://huggingface.co/black-forest-labs/FLUX.2-dev |
+| **Step1X-Edit-v1p2** | https://huggingface.co/stepfun-ai/Step1X-Edit-v1p2 |
+| **Qwen-Image-Edit-2511** | https://huggingface.co/Qwen/Qwen-Image-Edit-2511 |
 
-ACRB implements a three-stage evaluation pipeline:
+## Project Structure
 
 ```
-Stage I: Dynamic Prompt Synthesis
-├── Boundary Rephrasing (LLM-driven)
-└── Attribute Expansion (6 cultures, 3 genders, disability, religion, age)
-    → 2,500 minimal-pair prompts
-
-Stage II: Multi-Modal Generation
-├── T2I Models: GPT-Image 1.5, Imagen 3, FLUX.2, Seedream 4.5, Qwen, SD 3.5
-└── I2I Models: GPT-Image 1.5, Imagen 3, Qwen, Step1X-Edit, FLUX.2
-    → Grounded evaluation with FFHQ/COCO source images
-
-Stage III: Dual-Metric Evaluation
-├── Hard Refusal Detection (CLIP-based, τ=0.25)
-├── Soft Refusal Scoring (VLM ensemble: Qwen3-VL + Gemini 3 Flash Preview)
-└── Human Validation (12 annotators, κ=0.74 agreement)
-    → Disparity metrics: Δ_refusal, Δ_erasure
+├── data/
+│   ├── prompts/
+│   │   └── i2i_prompts.json       # 50 edit prompts (5 categories × 10)
+│   ├── config/
+│   │   └── fairface_sampling.json # Sampling configuration
+│   ├── source_images/
+│   │   └── fairface/              # 84 sampled images
+│   └── results/                   # Experiment outputs
+│
+├── src/
+│   ├── data/
+│   │   ├── fairface_sampler.py    # FairFace dataset sampler
+│   │   └── prompt_loader.py       # Prompt management
+│   ├── models/
+│   │   ├── base.py                # I2I model interface
+│   │   ├── flux_wrapper.py        # FLUX.2-dev wrapper
+│   │   ├── step1x_wrapper.py      # Step1X-Edit-v1p2 wrapper
+│   │   └── qwen_wrapper.py        # Qwen-Image-Edit-2511 wrapper
+│   ├── evaluation/
+│   │   ├── refusal_detector.py    # Hard refusal detection
+│   │   ├── erasure_detector.py    # Soft erasure detection
+│   │   ├── vlm_evaluator.py       # VLM-based attribute checking
+│   │   └── metrics.py             # Disparity & SCS metrics
+│   └── analysis/
+│       ├── statistical.py         # ANOVA, Chi-square, etc.
+│       └── visualization.py       # Figures & tables
+│
+├── scripts/
+│   ├── setup_environment.sh       # Environment setup
+│   ├── download_fairface.py       # Download FairFace dataset
+│   ├── sample_fairface.py         # Sample 84 images
+│   ├── run_experiment.py          # Main experiment runner
+│   └── analyze_results.py         # Statistical analysis
+│
+├── RESEARCH_PROPOSAL.md           # Full research proposal
+└── requirements.txt
 ```
 
-## Installation
+## Prompt Categories
 
-### Prerequisites
-
-- Python 3.10+
-- NVIDIA GPU with 24GB+ VRAM (for local models)
-- CUDA support for PyTorch
-
-### Setup
-
-```bash
-# Clone repository
-git clone https://github.com/seochan99/refusal-t2i-i2i.git
-cd I2I-T2I-Bias-Refusal
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Optional: Setup server environment
-./setup_server.sh
-```
+| Category | Name | Count | Description |
+|----------|------|-------|-------------|
+| A | Neutral Baseline | 10 | Should show no racial bias |
+| B | Occupational Stereotype | 10 | Doctor, CEO, Judge, etc. |
+| C | Cultural/Religious | 10 | Hijab, Kente, Sari, etc. |
+| D | Vulnerability | 10 | Wheelchair, Prosthetic, etc. |
+| E | Harmful/Safety | 10 | Weapons, Criminal imagery, etc. |
 
 ## Quick Start
 
-### Option 1: Run Full Experiment Pipeline
+### 1. Setup Environment
 
 ```bash
-# Local models only (4 models, free, no API keys needed)
-./run_experiment.sh
+# Install base requirements
+pip install -r requirements.txt
 
-# All 6 models (requires OPENAI_API_KEY, GOOGLE_API_KEY)
-./run_experiment.sh --all
+# Install latest diffusers for Qwen and FLUX.2
+pip install git+https://github.com/huggingface/diffusers
 
-# Quick test (10 samples, 1 model, ~30 minutes)
-./run_experiment.sh --quick
+# Install custom diffusers for Step1X-Edit-v1p2
+git clone -b step1xedit_v1p2 https://github.com/Peyton-Chen/diffusers.git external/diffusers-step1x
+pip install -e external/diffusers-step1x
 
-# Single model with custom sample count
-./run_experiment.sh --model flux2 --samples 500
+# Optional: RegionE for faster Step1X inference
+pip install RegionE
 ```
 
-### Option 2: Use ACRB Python Library
+Or use the setup script:
+```bash
+bash scripts/setup_environment.sh
+```
 
+### 2. Download FairFace Dataset
+
+```bash
+python scripts/download_fairface.py
+```
+
+### 3. Sample 84 Images (Factorial Design)
+
+```bash
+python scripts/sample_fairface.py --output-dir data/source_images/fairface
+```
+
+### 4. Run Experiment
+
+```bash
+# Single model
+python scripts/run_experiment.py --model flux --device cuda
+python scripts/run_experiment.py --model step1x --device cuda
+python scripts/run_experiment.py --model qwen --device cuda
+
+# All models
+python scripts/run_experiment.py --model all --device cuda
+```
+
+### 5. Analyze Results
+
+```bash
+python scripts/analyze_results.py --results-dir data/results
+```
+
+## Model Configuration
+
+### FLUX.2-dev
 ```python
-from acrb import ACRBPipeline, ACRBConfig
+from src.models import FluxWrapper
 
-# Configure pipeline
-config = ACRBConfig(
-    model_name="flux-2-dev",
-    mode="t2i",
-    max_base_prompts=100,
-    llm_model="gemini-3-flash-preview",
-    vlm_model="qwen-vl",
-    refusal_threshold=0.25
-)
+# Full precision (high VRAM required)
+model = FluxWrapper(device="cuda")
 
-# Run evaluation
-pipeline = ACRBPipeline(config)
-result = pipeline.run()
-
-# Access results
-print(f"Refusal Disparity (Δ_refusal): {result.delta_refusal:.4f}")
-print(f"Erasure Disparity (Δ_erasure): {result.delta_erasure:.4f}")
-print(f"Per-attribute refusal rates: {result.per_attribute_refusal_rates}")
+# 4-bit quantization for RTX 4090/5090
+model = FluxWrapper(device="cuda", use_quantized=True, use_remote_text_encoder=True)
 ```
 
-### Option 3: Manual Step-by-Step Execution
+### Step1X-Edit-v1p2
+```python
+from src.models import Step1XWrapper
 
-```bash
-# 1. Generate prompts (optional: uses LLM for dynamic expansion)
-python scripts/design_prompts.py \
-    --domains all \
-    --attributes culture gender disability religion age \
-    --num-base 100 \
-    --output data/prompts/expanded_prompts.json
+# With thinking and reflection (best quality)
+model = Step1XWrapper(device="cuda", enable_thinking=True, enable_reflection=True)
 
-# 2. Generate images
-python scripts/generate_all.py \
-    --models flux2 qwen-edit sd35 \
-    --samples 100 \
-    --prompts data/prompts/expanded_prompts.json \
-    --output experiments/images
-
-# 3. Evaluate (hard refusal + soft erasure)
-python scripts/evaluate_all.py \
-    --results-dir experiments/images \
-    --refusal-threshold 0.25 \
-    --vlm qwen-vl
-
-# 4. Compute disparity metrics
-python scripts/compute_disparity.py \
-    --input experiments/images/evaluation_results.json \
-    --output experiments/metrics
+# Base mode (faster)
+model = Step1XWrapper(device="cuda", enable_thinking=False, enable_reflection=False)
 ```
 
-## Supported Models
+### Qwen-Image-Edit-2511
+```python
+from src.models import QwenImageEditWrapper
 
-### Text-to-Image (T2I)
-- GPT-Image 1.5 (OpenAI) - Conservative policy
-- Imagen 3 (Google) - Moderate policy
-- Seedream 4.5 (ByteDance) - Regional variant
-- FLUX.2 [dev] (BFL) - Permissive policy
-- Qwen-Image-2512 (Alibaba) - Regional variant
-- SD 3.5 Large (Stability AI) - Community policy
-
-### Image-to-Image (I2I)
-- GPT-Image 1.5 (OpenAI)
-- Imagen 3 (Google)
-- Qwen-Image-Edit-2511 (Alibaba)
-- Step1X-Edit (StepFun) - I2I specialist
-- FLUX.2 [dev] (BFL)
-
-## Evaluation Metrics
-
-### Hard Refusal Detection
-- CLIP-based similarity to refusal templates (threshold τ = 0.25)
-- Text keyword matching for policy messages
-- Empty output detection
-
-### Soft Refusal (Cue Erasure)
-- Multi-VLM ensemble (Qwen3-VL + Gemini 3 Flash Preview)
-- Confidence-weighted voting for attribute retention
-- Three-state classification: Retained / Erased / Substituted
-
-### Disparity Metrics
-- Δ_refusal = max_a R(a) - min_a R(a)
-- Δ_erasure = max_a E(a) - min_a E(a)
-
-Where R(a) is refusal rate and E(a) is erasure rate for attribute a.
-
-## Experimental Results
-
-### Cultural Disparity (RQ1)
-Nigerian cultural markers show 4.6× higher refusal rates than US equivalents across all models. Mixed-effects regression confirms statistical significance (β_Nigerian = 1.83, OR = 6.23, p < 0.001).
-
-### Disability Erasure (RQ2)
-Disability-related cues experience 45% higher erasure rates (37.1% vs. 25.6% neutral baseline, Cohen's d = 1.34). This soft refusal mechanism operates invisibly, representing a pervasive form of exclusion.
-
-### Domain-Specific Patterns (RQ3)
-Refusal disparities concentrate in security-adjacent domains: Nigerian markers in "Unethical/Unsafe" contexts trigger 24.7% refusal vs. 8.0% for US equivalents (3.1× disparity).
-
-### I2I vs. T2I Differences (RQ4)
-I2I models exhibit 1.66× lower hard refusal but 1.26× higher soft erasure, suggesting a sanitization strategy that undermines personalization without user-visible errors.
-
-## Regulatory Compliance
-
-ACRB provides standardized methodology for:
-
-- EU AI Act Article 10: Bias mitigation measures and technical documentation
-- Biden Executive Order 14110: Algorithmic discrimination assessments for federal AI deployments
-
-The framework operationalizes abstract regulatory requirements through:
-1. Standardized disparity metrics with statistically validated thresholds
-2. Reproducible evaluation pipelines for API and open-weight models
-3. Human-validated automated scoring (κ = 0.74 agreement)
-
-## Documentation
-
-- [Quick Start Guide](docs/QUICKSTART.md) - Installation and basic usage
-- [Experiment Guide](docs/EXPERIMENT_README.md) - Detailed experiment documentation
-- [Paper](paper/main.pdf) - Full research paper (IJCAI 2026)
-
-## Human Evaluation
-
-A web-based survey application is provided for human validation:
-
-```bash
-cd survey-app
-npm install
-npm run dev
+model = QwenImageEditWrapper(device="cuda")
 ```
 
-The survey validates automated VLM-based metrics with 12 annotators (2 per target culture), achieving 82.7% agreement (Cohen's κ = 0.74).
+## Key Metrics
+
+### Hard Refusal Rate
+$$R_{r,c} = \frac{\text{refused}_{r,c}}{\text{total}_{r,c}}$$
+
+### Soft Erasure Rate
+$$E_{r,c} = \frac{\text{erased}_{r,c}}{\text{generated}_{r,c}}$$
+
+### Disparity
+$$\Delta_{\text{refusal}}^{(c)} = \max_r R_{r,c} - \min_r R_{r,c}$$
+
+### Stereotype Congruence Score (Novel)
+$$SCS = \frac{R_{\text{incongruent}} - R_{\text{congruent}}}{R_{\text{baseline}}}$$
+
+## Hypotheses
+
+| ID | Hypothesis | Expected Result |
+|----|------------|-----------------|
+| H1 | Neutral prompts show no racial bias | Δ < 3pp, p > 0.05 |
+| H2 | Occupational prompts show stereotype bias | Higher refusal for Black/Latino in professional roles |
+| H3 | Cultural prompts show gatekeeping | SCS > 0 for cross-cultural edits |
+| H4 | Disability + Race interaction | Black + disability = highest erasure |
+| H5 | Models differ in bias patterns | Significant model × race interaction |
+| H6 | Harmful prompts show asymmetry | "Threatening" either over- or under-refused by race |
 
 ## Citation
 
-If you use ACRB in your research, please cite:
-
 ```bibtex
-@inproceedings{acrb2026,
-  title={ACRB: A Unified Framework for Auditing Attribute-Conditioned Refusal Bias via Dynamic LLM-Driven Red-Teaming},
+@inproceedings{anonymous2026silent,
+  title={Silent Discrimination: Race-Conditioned Refusal Bias in Image-to-Image Editing Models},
   author={Anonymous},
-  booktitle={Proceedings of the 36th International Joint Conference on Artificial Intelligence (IJCAI)},
+  booktitle={Proceedings of IJCAI 2026},
   year={2026}
 }
 ```
 
-## Contributing
-
-We welcome contributions. Please see our contributing guidelines for details.
-
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- OVERT benchmark for base prompt templates
-- FFHQ and COCO datasets for I2I source images
-- All model providers for API access and open-source releases
-
-## Contact
-
-For questions or issues, please open an issue on GitHub.
-
----
-
-**Note**: This framework is designed for research and compliance auditing. Please use responsibly and in accordance with model providers' terms of service.
+MIT License

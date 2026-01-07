@@ -1,0 +1,30 @@
+{
+  "dataset": "FairFace",
+  "source": "huggingface",
+  "sampling_strategy": "factorial_design",
+  "total_images": 84,
+  "dimensions": {
+    "race": {
+      "categories": ["White", "Black", "East Asian", "Southeast Asian", "Indian", "Middle Eastern", "Latino_Hispanic"],
+      "count": 7
+    },
+    "gender": {
+      "categories": ["Male", "Female"],
+      "count": 2
+    },
+    "age": {
+      "categories": ["20-29", "30-39", "40-49", "50-59", "60-69", "70+"],
+      "count": 6
+    }
+  },
+  "selection_criteria": {
+    "images_per_combination": 1,
+    "face_orientation": "frontal",
+    "lighting": "clear",
+    "min_face_size": 128
+  },
+  "output_format": {
+    "naming_convention": "{race}_{gender}_{age}.jpg",
+    "output_dir": "data/source_images/fairface/"
+  }
+}

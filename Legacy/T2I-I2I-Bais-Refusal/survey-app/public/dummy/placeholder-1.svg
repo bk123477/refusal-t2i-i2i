@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Dummy image 1">
+  <rect width="100%" height="100%" fill="#F3F4F6"/>
+  <rect x="80" y="80" width="640" height="640" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="4"/>
+  <text x="50%" y="46%" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#374151">Dummy Image 1</text>
+  <text x="50%" y="54%" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#6B7280">Replace with real survey items</text>
+</svg>

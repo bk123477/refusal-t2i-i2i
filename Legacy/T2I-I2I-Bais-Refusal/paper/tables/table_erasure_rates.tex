@@ -1,0 +1,29 @@
+% table_erasure_rates.tex - Model x Attribute Soft Refusal (Cue Erasure) Matrix
+% Usage: \input{tables/table_erasure_rates}
+
+\begin{table*}[t]
+\centering
+\caption{Soft refusal (cue erasure) rates (\%) by model and attribute category. Rates computed only for non-refused generations. Highest per-model rates in \textbf{bold}.}
+\label{tab:erasure_rates_full}
+\small
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l|c|cccccc|ccc|ccc|cccccc|cccc@{}}
+\toprule
+& & \multicolumn{6}{c|}{\textbf{Culture}} & \multicolumn{3}{c|}{\textbf{Gender}} & \multicolumn{3}{c|}{\textbf{Disability}} & \multicolumn{6}{c|}{\textbf{Religion}} & \multicolumn{4}{c}{\textbf{Age}} \\
+\textbf{Model} & Neut & KR & CN & NG & KE & US & IN & M & F & NB & WC & VI & PL & Chr & Mus & Jew & Hin & Bud & Sik & Ch & YA & MA & El \\
+\midrule
+\multicolumn{24}{l}{\textit{T2I Models}} \\
+GPT Image 1.5 & 3.1 & 10.2 & 9.8 & 14.7 & 13.2 & 5.4 & 11.8 & 4.1 & 3.8 & 7.4 & \textbf{35.6} & 32.1 & 28.4 & 8.2 & 22.4 & 18.7 & 12.1 & 9.4 & 14.8 & 9.2 & 3.4 & 4.1 & 6.8 \\
+Nano Banana Pro & 5.2 & 15.8 & 14.9 & 21.4 & 19.8 & 8.7 & 17.2 & 6.8 & 6.2 & 11.2 & \textbf{42.1} & 38.4 & 34.7 & 12.4 & 28.7 & 24.1 & 16.8 & 13.2 & 19.4 & 13.1 & 5.1 & 6.2 & 9.7 \\
+FLUX.2 [max] & 4.1 & 12.4 & 11.8 & 17.2 & 15.9 & 6.8 & 13.9 & 5.2 & 4.8 & 8.9 & \textbf{38.5} & 34.8 & 30.9 & 9.8 & 24.9 & 20.7 & 13.9 & 10.8 & 16.7 & 10.8 & 4.1 & 5.0 & 8.1 \\
+\midrule
+\multicolumn{24}{l}{\textit{I2I Models}} \\
+Qwen Image Edit & 2.8 & 9.1 & 8.7 & 13.8 & 12.4 & 4.9 & 10.9 & 3.8 & 3.5 & 6.9 & \textbf{32.4} & 29.2 & 25.8 & 7.4 & 20.8 & 17.2 & 11.2 & 8.7 & 13.4 & 8.4 & 3.1 & 3.8 & 6.2 \\
+FLUX.2 [dev] & 4.5 & 13.7 & 13.1 & 18.9 & 17.4 & 7.4 & 15.2 & 5.7 & 5.3 & 9.8 & \textbf{40.2} & 36.4 & 32.1 & 10.7 & 26.4 & 22.1 & 15.1 & 11.8 & 17.9 & 11.7 & 4.5 & 5.5 & 8.9 \\
+Step1X-Edit & 4.8 & 14.2 & 13.6 & 19.7 & 18.1 & 7.8 & 15.8 & 6.0 & 5.6 & 10.3 & \textbf{41.4} & 37.6 & 33.2 & 11.2 & 27.4 & 23.0 & 15.7 & 12.4 & 18.6 & 12.2 & 4.7 & 5.8 & 9.3 \\
+\midrule
+\textbf{Average} & 4.1 & 12.6 & 12.0 & 17.6 & 16.1 & 6.8 & 14.1 & 5.3 & 4.9 & 9.1 & \textbf{38.4} & 34.8 & 30.9 & 10.0 & 25.1 & 21.0 & 14.1 & 11.0 & 16.8 & 10.9 & 4.2 & 5.1 & 8.2 \\
+\bottomrule
+\end{tabular*}
+\vspace{-2mm}
+\footnotesize{Neut=Neutral baseline. Disability attributes show consistently highest erasure rates across all models (avg 34.7\%).}
+\end{table*}
