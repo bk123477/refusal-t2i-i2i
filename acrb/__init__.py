@@ -1,16 +1,12 @@
 """
 ACRB: Attribute-Conditioned Refusal Bias Framework
 
-A comprehensive toolkit for auditing fairness in T2I and I2I generative models
+A comprehensive toolkit for auditing fairness in I2I generative models
 by measuring attribute-conditioned refusal bias across demographic and cultural attributes.
-
-Paper: "ACRB: A Unified Framework for Auditing Attribute-Conditioned Refusal Bias
-        via Dynamic LLM-Driven Red-Teaming" (IJCAI-ECAI 2026)
 
 Key Components:
 - pipeline: Main ACRB pipeline (Algorithm 1 implementation)
-- prompt_generation: Dynamic prompt synthesis with LLM red-teaming
-- models: T2I/I2I model wrappers
+- models: I2I model wrappers
 - metrics: Hard refusal detection + soft refusal (cue erasure) scoring
 - analysis: Sensitivity analysis and mixed-effects modeling
 - preprocessing: I2I visibility controls
@@ -22,7 +18,6 @@ Quick Start:
 
     config = ACRBConfig(
         model_name="flux-2-dev",
-        mode="t2i",
         max_base_prompts=10,
         llm_model="gemini-3-flash-preview"
     )
@@ -40,19 +35,8 @@ __author__ = "ACRB Research Team"
 # Main pipeline (Algorithm 1)
 from .pipeline import ACRBPipeline, ACRBConfig, ACRBResult
 
-# Prompt generation
-from .prompt_generation import (
-    BasePromptGenerator,
-    AttributeExpander,
-    LLMBackend,
-    BasePrompt,
-    ExpandedPrompt,
-    ATTRIBUTE_CATEGORIES,
-    SAFETY_DOMAINS
-)
-
 # Model wrappers
-from .models import T2IModelWrapper, I2IModelWrapper
+from .models import I2IModelWrapper
 
 # Metrics
 from .metrics import (
@@ -110,17 +94,7 @@ __all__ = [
     "ACRBConfig",
     "ACRBResult",
 
-    # Prompt generation
-    "BasePromptGenerator",
-    "AttributeExpander",
-    "LLMBackend",
-    "BasePrompt",
-    "ExpandedPrompt",
-    "ATTRIBUTE_CATEGORIES",
-    "SAFETY_DOMAINS",
-
     # Models
-    "T2IModelWrapper",
     "I2IModelWrapper",
 
     # Metrics
