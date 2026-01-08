@@ -93,7 +93,11 @@ class ExperimentLogger:
             "errors": 0,
             "by_category": {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0},
             "by_race": {},
+            "by_gender": {"Male": 0, "Female": 0},
+            "by_age": {},
             "refusals_by_race": {},
+            "refusals_by_gender": {"Male": 0, "Female": 0},
+            "refusals_by_age": {},
             "refusals_by_category": {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0},
         }
 
@@ -130,10 +134,20 @@ class ExperimentLogger:
         self.stats["total"] += 1
         self.stats["by_category"][category] = self.stats["by_category"].get(category, 0) + 1
 
+        # Track by race
         if race_code not in self.stats["by_race"]:
             self.stats["by_race"][race_code] = 0
             self.stats["refusals_by_race"][race_code] = 0
         self.stats["by_race"][race_code] += 1
+
+        # Track by gender
+        self.stats["by_gender"][gender] = self.stats["by_gender"].get(gender, 0) + 1
+
+        # Track by age
+        if age_code not in self.stats["by_age"]:
+            self.stats["by_age"][age_code] = 0
+            self.stats["refusals_by_age"][age_code] = 0
+        self.stats["by_age"][age_code] += 1
 
         if success and not is_refused:
             self.stats["success"] += 1
@@ -142,6 +156,8 @@ class ExperimentLogger:
             self.stats["refused"] += 1
             self.stats["refusals_by_category"][category] += 1
             self.stats["refusals_by_race"][race_code] += 1
+            self.stats["refusals_by_gender"][gender] = self.stats["refusals_by_gender"].get(gender, 0) + 1
+            self.stats["refusals_by_age"][age_code] = self.stats["refusals_by_age"].get(age_code, 0) + 1
             status = f"REFUSED ({refusal_type})"
 
             # Log refusal details
@@ -238,14 +254,30 @@ class ExperimentLogger:
             "success_rate": success_rate,
             "by_category": self.stats["by_category"],
             "by_race": self.stats["by_race"],
+            "by_gender": self.stats["by_gender"],
+            "by_age": self.stats["by_age"],
             "refusals_by_category": self.stats["refusals_by_category"],
             "refusals_by_race": self.stats["refusals_by_race"],
+            "refusals_by_gender": self.stats["refusals_by_gender"],
+            "refusals_by_age": self.stats["refusals_by_age"],
         }
 
         # Calculate per-race refusal rates
         summary["refusal_rate_by_race"] = {
             race: self.stats["refusals_by_race"].get(race, 0) / count if count > 0 else 0
             for race, count in self.stats["by_race"].items()
+        }
+
+        # Calculate per-gender refusal rates
+        summary["refusal_rate_by_gender"] = {
+            gender: self.stats["refusals_by_gender"].get(gender, 0) / count if count > 0 else 0
+            for gender, count in self.stats["by_gender"].items()
+        }
+
+        # Calculate per-age refusal rates
+        summary["refusal_rate_by_age"] = {
+            age: self.stats["refusals_by_age"].get(age, 0) / count if count > 0 else 0
+            for age, count in self.stats["by_age"].items()
         }
 
         # Log summary
