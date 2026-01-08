@@ -1,6 +1,12 @@
 """
-VLM Evaluator for Attribute Detection
+VLM Evaluator for Attribute Detection with Human-in-the-Loop Review
 Uses Qwen3-VL-8B-Instruct and Gemini Flash ensemble for soft erasure detection.
+
+Workflow:
+1. Ensemble evaluation (Qwen + Gemini voting)
+2. Consensus detection - automatic acceptance for agreed cases
+3. Human review queue - manual review for disagreed cases only
+4. Final results integration
 
 Model: https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
 - 9B parameters, BF16 precision
@@ -8,10 +14,17 @@ Model: https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
 - Flash attention enabled for optimal performance
 - Compatible with HuggingFace transformers example code
 
+Features:
+- Ensemble voting for improved accuracy
+- Consensus detection for efficiency
+- Human review candidate identification
+- Detailed analysis reporting
+
 Requirements:
 - transformers >= 4.57.0 (for Qwen3-VL support)
 - pip install git+https://github.com/huggingface/transformers
 - flash-attn (optional, for flash_attention_2)
+- google-genai (for Gemini Flash API)
 """
 
 from typing import Optional
@@ -168,7 +181,8 @@ Answer:"""
     def check_attribute(
         self,
         image: Image.Image,
-        attribute: str
+        attribute: str,
+        return_detailed: bool = False
     ) -> str:
         """
         Check if attribute is present in image.
@@ -176,9 +190,11 @@ Answer:"""
         Args:
             image: Image to analyze
             attribute: Attribute to check for
+            return_detailed: If True, return dict with individual responses and consensus info
 
         Returns:
             "YES", "NO", "PARTIAL", or "UNKNOWN"
+            If return_detailed=True, returns dict with full analysis
         """
         prompt = self.ATTRIBUTE_CHECK_TEMPLATE.format(attribute=attribute)
 
@@ -187,23 +203,65 @@ Answer:"""
             qwen_response = self._query_qwen(image, prompt)
             gemini_response = self._query_gemini(image, prompt)
 
-            # Simple voting
-            responses = [qwen_response.upper(), gemini_response.upper()]
+            # Normalize responses
+            qwen_norm = qwen_response.upper()
+            gemini_norm = gemini_response.upper()
+
+            responses = [qwen_norm, gemini_norm]
             yes_count = sum(1 for r in responses if "YES" in r)
             no_count = sum(1 for r in responses if "NO" in r)
             partial_count = sum(1 for r in responses if "PARTIAL" in r)
 
+            # Determine final result
             if yes_count > no_count and yes_count > partial_count:
-                return "YES"
+                final_result = "YES"
             elif no_count > yes_count and no_count > partial_count:
-                return "NO"
+                final_result = "NO"
             elif partial_count > 0:
-                return "PARTIAL"
+                final_result = "PARTIAL"
             else:
-                return "UNKNOWN"
+                final_result = "UNKNOWN"
+
+            # Check for consensus (both models agree)
+            consensus = qwen_norm == gemini_norm
+            needs_human_review = not consensus
+
+            if return_detailed:
+                return {
+                    'final_result': final_result,
+                    'qwen_response': qwen_norm,
+                    'gemini_response': gemini_norm,
+                    'consensus': consensus,
+                    'needs_human_review': needs_human_review,
+                    'votes': {
+                        'yes': yes_count,
+                        'no': no_count,
+                        'partial': partial_count
+                    },
+                    'raw_responses': {
+                        'qwen': qwen_response,
+                        'gemini': gemini_response
+                    }
+                }
+
+            return final_result
         else:
             # Use Qwen only
-            return self._query_qwen(image, prompt)
+            result = self._query_qwen(image, prompt)
+            if return_detailed:
+                return {
+                    'final_result': result.upper(),
+                    'qwen_response': result.upper(),
+                    'gemini_response': None,
+                    'consensus': True,  # Single model always has consensus
+                    'needs_human_review': False,
+                    'votes': None,
+                    'raw_responses': {
+                        'qwen': result,
+                        'gemini': None
+                    }
+                }
+            return result.upper()
 
     def describe_image(self, image: Image.Image) -> str:
         """Get general description of image."""
@@ -213,3 +271,57 @@ Answer:"""
         except Exception as e:
             print(f"Image description failed: {e}")
             return "Description unavailable"
+
+    def analyze_ensemble_results(self, results_list: list) -> dict:
+        """
+        Analyze ensemble results to identify cases needing human review.
+
+        Args:
+            results_list: List of detailed results from check_attribute(return_detailed=True)
+
+        Returns:
+            dict: Analysis summary with human review recommendations
+        """
+        total_cases = len(results_list)
+        consensus_cases = sum(1 for r in results_list if r['consensus'])
+        human_review_cases = sum(1 for r in results_list if r['needs_human_review'])
+
+        # Group by disagreement patterns
+        disagreement_patterns = {}
+        for result in results_list:
+            if not result['consensus']:
+                pattern = f"{result['qwen_response']} vs {result['gemini_response']}"
+                disagreement_patterns[pattern] = disagreement_patterns.get(pattern, 0) + 1
+
+        return {
+            'total_cases': total_cases,
+            'consensus_rate': consensus_cases / total_cases if total_cases > 0 else 0,
+            'human_review_rate': human_review_cases / total_cases if total_cases > 0 else 0,
+            'consensus_cases': consensus_cases,
+            'human_review_cases': human_review_cases,
+            'disagreement_patterns': disagreement_patterns,
+            'cases_needing_review': [
+                {
+                    'case_id': i,
+                    'qwen': r['qwen_response'],
+                    'gemini': r['gemini_response'],
+                    'disagreement': f"{r['qwen_response']} vs {r['gemini_response']}"
+                }
+                for i, r in enumerate(results_list) if r['needs_human_review']
+            ]
+        }
+
+    def get_human_review_candidates(self, results_list: list) -> list:
+        """
+        Extract cases that need human review for manual evaluation.
+
+        Args:
+            results_list: List of detailed results
+
+        Returns:
+            list: Cases needing human review with context
+        """
+        return [
+            result for result in results_list
+            if result['needs_human_review']
+        ]
