@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 PNG to JPG Converter for Final Images
-Converts PNG files in final/ directory to 448x448 JPG format.
+Converts PNG files in final/ directory to 1024x1024 JPG format.
+Required for Step1X model which needs exactly 1024x1024 input.
 
 Usage:
     python tools/convert_png_to_jpg.py              # Dry run (preview)
@@ -12,8 +13,8 @@ import argparse
 from pathlib import Path
 from PIL import Image
 
-# Target size (standard diffusion model input)
-TARGET_SIZE = (512, 512)
+# Target size for Step1X model (requires exactly 1024x1024)
+TARGET_SIZE = (1024, 1024)
 JPEG_QUALITY = 95  # High quality
 
 def find_png_files(final_dir: Path) -> list[Path]:
@@ -27,7 +28,7 @@ def find_png_files(final_dir: Path) -> list[Path]:
 
 def convert_png_to_jpg(png_path: Path, dry_run: bool = True) -> dict:
     """
-    Convert PNG to 448x448 JPG.
+    Convert PNG to 1024x1024 JPG.
 
     Returns info dict with conversion details.
     """
@@ -91,7 +92,7 @@ def main():
     else:
         # Auto-detect from script location
         script_dir = Path(__file__).parent
-        final_dir = script_dir.parent / "data" / "source_images" / "fairface" / "final"
+        final_dir = script_dir.parent / "data" / "source_images" / "final"
 
     if not final_dir.exists():
         print(f"Error: Directory not found: {final_dir}")
