@@ -119,7 +119,7 @@ def generate_mock_results(
                             "gender": gender,
                             "age_code": age,
                             "image_id": image_id,  # For bootstrap analysis
-                            "source_image": f"data/source_images/fairface/final/{race}/{race}_{gender}_{age}.jpg",
+                            "source_image": f"data/source_images/final/{race}/{race}_{gender}_{age}.jpg",
                             "output_image": None if is_refused else f"data/results/{model_name}/mock/images/{race}/{prompt_id}_{race}_{gender}_{age}_success.png",
                             "success": not is_refused,
                             "is_refused": is_refused,
