@@ -17,7 +17,7 @@ from tqdm import tqdm
 from PIL import Image
 
 import sys
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from src.config import PathConfig, NamingConfig, ExperimentConfig, MODEL_CONFIGS
 from src.utils.logger import ExperimentLogger

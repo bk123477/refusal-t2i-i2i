@@ -53,7 +53,7 @@ if [ "$1" == "--resume" ]; then
     echo -e "${YELLOW}Resuming experiment: ${EXPERIMENT_ID} from request ${RESUME_FROM}${NC}"
 
     cd "$PROJECT_ROOT"
-    python scripts/run_experiment.py \
+    python scripts/experiment/run_experiment.py \
         --model "$MODEL" \
         --device "$DEVICE" \
         --experiment-id "$EXPERIMENT_ID" \
@@ -92,7 +92,7 @@ else
     echo ""
 
     cd "$PROJECT_ROOT"
-    python scripts/run_experiment.py \
+    python scripts/experiment/run_experiment.py \
         --model "$MODEL" \
         --device "$DEVICE" \
         --experiment-id "$EXPERIMENT_ID"
