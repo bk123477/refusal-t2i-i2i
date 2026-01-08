@@ -84,16 +84,44 @@ Answer:"""
         return response.strip()
 
     def _query_gemini(self, image: Image.Image, prompt: str) -> str:
-        """Query Gemini Flash model."""
+        """Query Gemini 3 Flash model."""
         try:
-            import google.generativeai as genai
+            from google import genai
+            from google.genai import types
             import os
 
             if self.gemini_model is None:
-                genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
-                self.gemini_model = genai.GenerativeModel("gemini-1.5-flash")
+                self.gemini_model = genai.Client(
+                    api_key=os.environ.get("GOOGLE_API_KEY"),
+                    http_options={'api_version': 'v1alpha'}
+                )
 
-            response = self.gemini_model.generate_content([prompt, image])
+            # Convert image to bytes
+            buffer = io.BytesIO()
+            image.save(buffer, format="PNG")
+            image_bytes = buffer.getvalue()
+
+            response = self.gemini_model.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=[
+                    types.Content(
+                        parts=[
+                            types.Part(text=prompt),
+                            types.Part(
+                                inline_data=types.Blob(
+                                    mime_type="image/png",
+                                    data=image_bytes
+                                ),
+                                media_resolution={"level": "media_resolution_high"}
+                            )
+                        ]
+                    )
+                ],
+                config=types.GenerateContentConfig(
+                    thinking_config=types.ThinkingConfig(thinking_level="minimal"),
+                    temperature=1.0
+                )
+            )
             return response.text.strip()
 
         except Exception as e:
