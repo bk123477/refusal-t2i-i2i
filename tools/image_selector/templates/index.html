@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Version Selector</title>
+    <title>I2I Bias Study - Dataset Curator</title>
     <style>
         * {
             box-sizing: border-box;
@@ -57,6 +57,40 @@
         .stats span {
             color: #4CAF50;
             font-weight: bold;
+        }
+
+        .selection-criteria {
+            background: #2a2a4a;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #444;
+        }
+
+        .selection-criteria h3 {
+            color: #4CAF50;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        .criteria-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .criterion {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #ddd;
+            padding: 4px 0;
+        }
+
+        .criterion strong {
+            color: #4CAF50;
+            margin-right: 5px;
         }
 
         .filters {
@@ -227,17 +261,196 @@
                 min-width: 120px;
             }
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #2a2a4a;
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid #444;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            color: #4CAF50;
+            margin: 0;
+        }
+
+        .modal-close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .selected-image-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .selected-image-info img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .image-details {
+            flex: 1;
+        }
+
+        .image-details div {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .criteria-checklist {
+            margin-bottom: 20px;
+        }
+
+        .criteria-checklist h4 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .criteria-item {
+            margin-bottom: 8px;
+        }
+
+        .criteria-item label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .criteria-item input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: #4CAF50;
+        }
+
+        .selection-notes {
+            margin-bottom: 20px;
+        }
+
+        .selection-notes h4 {
+            color: #4CAF50;
+            margin-bottom: 8px;
+        }
+
+        .selection-notes textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 6px;
+            background: #1a1a2e;
+            color: #eee;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .selection-notes textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #444;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: #555;
+            color: #eee;
+        }
+
+        .btn-secondary:hover {
+            background: #666;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Image Version Selector</h1>
+        <h1>I2I Bias Refusal Study - Dataset Curator</h1>
         <div class="progress-bar">
             <div class="progress-fill" id="progressFill" style="width: {{ (selected / total * 100) | round(1) }}%"></div>
         </div>
         <div class="stats">
             <div>Selected: <span id="selectedCount">{{ selected }}</span> / {{ total }}</div>
             <div>Remaining: <span id="remainingCount">{{ total - selected }}</span></div>
+        </div>
+
+        <div class="selection-criteria">
+            <h3>Selection Criteria</h3>
+            <div class="criteria-list">
+                <div class="criterion">
+                    <strong>Facial Pose:</strong> Frontal faces only, exclude side/partial profiles
+                </div>
+                <div class="criterion">
+                    <strong>Image Quality:</strong> Clear focus, proper lighting, facial features clearly identifiable
+                </div>
+                <div class="criterion">
+                    <strong>Expression & Posture:</strong> Neutral expression, upright head posture
+                </div>
+                <div class="criterion">
+                    <strong>Exclusion Criteria:</strong> Blurred images, poor lighting, obstructed faces, low resolution
+                </div>
+            </div>
         </div>
     </div>
 
@@ -283,12 +496,82 @@
     </div>
 
     <div class="bottom-buttons">
-        <button class="export-btn secondary" onclick="exportSelections()">
-            Export JSON
+        <button class="export-btn secondary" onclick="exportLogs()">
+            Download Selection Logs
         </button>
         <button class="export-btn primary" id="finalizeBtn" onclick="finalizeSelections()">
-            Finalize to /final
+            Finalize & Save Dataset
         </button>
+    </div>
+
+    <!-- Selection Logging Modal -->
+    <div id="selectionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Selection Rationale & Criteria Verification</h3>
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="selected-image-info">
+                    <img id="modalImage" src="" alt="Selected Image">
+                    <div class="image-details">
+                        <div><strong>Demographic:</strong> <span id="modalDemo"></span></div>
+                        <div><strong>Version:</strong> <span id="modalVersion"></span></div>
+                    </div>
+                </div>
+
+                <div class="criteria-checklist">
+                    <h4>Criteria Compliance Verification</h4>
+                    <div class="criteria-item">
+                        <label>
+                            <input type="checkbox" id="frontalFace" checked>
+                            Frontal face pose
+                        </label>
+                    </div>
+                    <div class="criteria-item">
+                        <label>
+                            <input type="checkbox" id="clearFocus" checked>
+                            Clear focus and sharpness
+                        </label>
+                    </div>
+                    <div class="criteria-item">
+                        <label>
+                            <input type="checkbox" id="properLighting" checked>
+                            Proper lighting conditions
+                        </label>
+                    </div>
+                    <div class="criteria-item">
+                        <label>
+                            <input type="checkbox" id="identifiableFeatures" checked>
+                            Facial features clearly identifiable
+                        </label>
+                    </div>
+                    <div class="criteria-item">
+                        <label>
+                            <input type="checkbox" id="neutralExpression" checked>
+                            Neutral expression
+                        </label>
+                    </div>
+                    <div class="criteria-item">
+                        <label>
+                            <input type="checkbox" id="uprightPosture" checked>
+                            Upright head posture
+                        </label>
+                    </div>
+                </div>
+
+                <div class="selection-notes">
+                    <label for="selectionNotes">
+                        <h4>Selection Rationale & Notes (Optional)</h4>
+                    </label>
+                    <textarea id="selectionNotes" placeholder="Record the reason for selecting this image or any special notes..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="confirmSelection()">Confirm Selection</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -301,12 +584,13 @@
             document.getElementById('remainingCount').textContent = totalCount - selectedCount;
         }
 
+        let pendingSelection = null;
+
         function selectImage(demoId, version, race, gender, age) {
             const row = document.querySelector(`[data-demo-id="${demoId}"]`);
-            const cards = row.querySelectorAll('.image-card');
             const clickedCard = row.querySelector(`[data-version="${version}"]`);
 
-            // If clicking already selected, deselect
+            // If clicking already selected, deselect immediately
             if (clickedCard.classList.contains('selected')) {
                 fetch('/api/deselect', {
                     method: 'POST',
@@ -324,37 +608,108 @@
                 return;
             }
 
-            // Select new version
-            fetch('/api/select', {
+            // Store pending selection and show modal
+            pendingSelection = {
+                demoId: demoId,
+                version: version,
+                race: race,
+                gender: gender,
+                age: age,
+                imageSrc: clickedCard.querySelector('img').src
+            };
+
+            showSelectionModal();
+        }
+
+        function showSelectionModal() {
+            const modal = document.getElementById('selectionModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalDemo = document.getElementById('modalDemo');
+            const modalVersion = document.getElementById('modalVersion');
+
+            modalImage.src = pendingSelection.imageSrc;
+            modalDemo.textContent = `${pendingSelection.race} / ${pendingSelection.gender} / ${pendingSelection.age}`;
+            modalVersion.textContent = pendingSelection.version;
+
+            // Reset checkboxes and notes
+            document.querySelectorAll('#selectionModal input[type="checkbox"]').forEach(cb => cb.checked = true);
+            document.getElementById('selectionNotes').value = '';
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('selectionModal').style.display = 'none';
+            pendingSelection = null;
+        }
+
+        function confirmSelection() {
+            if (!pendingSelection) return;
+
+            const criteria = {
+                frontal_face: document.getElementById('frontalFace').checked,
+                clear_focus: document.getElementById('clearFocus').checked,
+                proper_lighting: document.getElementById('properLighting').checked,
+                identifiable_features: document.getElementById('identifiableFeatures').checked,
+                neutral_expression: document.getElementById('neutralExpression').checked,
+                upright_posture: document.getElementById('uprightPosture').checked
+            };
+
+            const notes = document.getElementById('selectionNotes').value.trim();
+
+            // Send selection with logging data
+            fetch('/api/select_with_log', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    demo_id: demoId,
-                    version: version,
-                    race: race,
-                    gender: gender,
-                    age: age
+                    demo_id: pendingSelection.demoId,
+                    version: pendingSelection.version,
+                    race: pendingSelection.race,
+                    gender: pendingSelection.gender,
+                    age: pendingSelection.age,
+                    criteria: criteria,
+                    notes: notes
                 })
             })
             .then(res => res.json())
             .then(data => {
-                // Update UI
-                cards.forEach(card => card.classList.remove('selected'));
-                clickedCard.classList.add('selected');
-                row.classList.add('selected');
-                row.dataset.selected = 'true';
+                if (data.success) {
+                    // Update UI
+                    const row = document.querySelector(`[data-demo-id="${pendingSelection.demoId}"]`);
+                    const cards = row.querySelectorAll('.image-card');
+                    const clickedCard = row.querySelector(`[data-version="${pendingSelection.version}"]`);
 
-                // Update version label
-                let versionLabel = row.querySelector('.selected-version');
-                if (!versionLabel) {
-                    versionLabel = document.createElement('span');
-                    versionLabel.className = 'selected-version';
-                    row.querySelector('.demo-info').appendChild(versionLabel);
+                    cards.forEach(card => card.classList.remove('selected'));
+                    clickedCard.classList.add('selected');
+                    row.classList.add('selected');
+                    row.dataset.selected = 'true';
+
+                    // Update version label
+                    let versionLabel = row.querySelector('.selected-version');
+                    if (!versionLabel) {
+                        versionLabel = document.createElement('span');
+                        versionLabel.className = 'selected-version';
+                        row.querySelector('.demo-info').appendChild(versionLabel);
+                    }
+                    versionLabel.textContent = pendingSelection.version;
+
+                    updateProgress(data.total_selected);
+                    closeModal();
+                } else {
+                    alert('Error: ' + data.error);
                 }
-                versionLabel.textContent = version;
-
-                updateProgress(data.total_selected);
+            })
+            .catch(err => {
+                alert('Error: ' + err.message);
             });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('selectionModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         }
 
         function exportSelections() {
@@ -371,6 +726,20 @@
                 });
         }
 
+        function exportLogs() {
+            fetch('/api/export_logs')
+                .then(res => res.json())
+                .then(data => {
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'selection_logs_complete.json';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                });
+        }
+
         function finalizeSelections() {
             const selectedCount = parseInt(document.getElementById('selectedCount').textContent);
 
@@ -379,7 +748,7 @@
                 return;
             }
 
-            if (!confirm('This will copy all selected images to the final/ folder.\nExisting final/ folder will be replaced.\n\nContinue?')) {
+            if (!confirm('This will copy all selected images to the final/ folder and save complete selection logs.\nExisting final/ folder will be replaced.\n\nContinue?')) {
                 return;
             }
 
@@ -391,19 +760,41 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        alert(`Success! ${data.copied} images copied to:\n${data.final_dir}`);
-                        btn.textContent = 'Done!';
+                        const successMsg = `🎉 Dataset Creation Complete!\n\n` +
+                            `📦 Dataset ID: ${data.dataset_id}\n` +
+                            `📁 ${data.copied}/${data.expected} images saved to:\n${data.final_dir}\n` +
+                            `📋 ${data.logs_saved} selection logs archived\n` +
+                            `⏰ Created: ${new Date(data.timestamp).toLocaleString()}\n\n` +
+                            `✅ Full audit trail available for verification\n` +
+                            `🔍 All selection criteria and rationale preserved\n\n` +
+                            `The dataset is ready for research use!`;
+
+                        alert(successMsg);
+                        btn.textContent = `✅ ${data.dataset_id}`;
                         btn.style.background = '#45a049';
+
+                        // Disable further interactions to prevent accidental changes
+                        document.querySelectorAll('.image-card').forEach(card => {
+                            card.style.pointerEvents = 'none';
+                            card.style.opacity = '0.6';
+                        });
+
+                        // Update status display
+                        document.getElementById('selectedCount').textContent = data.copied;
+                        document.getElementById('remainingCount').textContent = '0';
+
+                        console.log(`Dataset ${data.dataset_id} created successfully with ${data.logs_saved} audit logs`);
+
                     } else {
-                        alert('Error: ' + data.error);
+                        alert('❌ Error: ' + data.error);
                         btn.disabled = false;
-                        btn.textContent = 'Finalize to /final';
+                        btn.textContent = 'Finalize & Save Dataset';
                     }
                 })
                 .catch(err => {
-                    alert('Error: ' + err.message);
+                    alert('❌ Error: ' + err.message);
                     btn.disabled = false;
-                    btn.textContent = 'Finalize to /final';
+                    btn.textContent = 'Finalize & Save Dataset';
                 });
         }
 

@@ -6,29 +6,59 @@
 
 This repository contains the code and data for studying race-conditioned refusal bias in Image-to-Image (I2I) editing models. We investigate whether I2I models discriminatorily refuse or modify edit requests based on the race of the person in the source image.
 
+**Key Innovation**: Rigorous dataset curation with complete audit trails ensures research reproducibility and eliminates confounding factors from image quality variations.
+
 ## Research Questions
 
 - **RQ1**: Do neutral edit requests show racial bias in refusal rates?
 - **RQ2**: Which edit types (occupational, cultural, disability) show the highest racial disparity?
 - **RQ3**: Do models exhibit asymmetric gatekeeping for stereotype-congruent vs incongruent edits?
 
-## Experiment Scale
+## Dataset: Curated FairFace Subset
+
+### Selection Process
+1. **Initial Sampling**: Extract candidates from FairFace using demographic queries (7 races × 2 genders × 6 ages = 84 combinations)
+2. **Quality Curation**: Manual selection using `tools/image_selector/` with strict criteria:
+   - Frontal face pose (exclude side profiles)
+   - Clear focus and proper lighting
+   - Neutral expression, upright posture
+   - Facial features clearly identifiable
+3. **Audit Trail**: Complete logging of selection rationale and criteria compliance
+4. **Final Dataset**: 84 high-quality images with full reproducibility documentation
+
+### Experiment Scale
 
 | Metric | Count |
 |--------|-------|
-| Source Images | 84 (6 ages × 2 genders × 7 races) |
-| Prompts per Image | 50 |
-| Models | 3 (FLUX.2, Step1X-Edit, Qwen-Image-Edit) |
+| Source Images | 84 (curated subset with audit trail) |
+| Prompts per Image | 50 (5 categories × 10 prompts each) |
+| Models | 3 (FLUX.2-dev, Step1X-Edit-v1p2, Qwen-Image-Edit-2511) |
 | **Total I2I Requests** | **12,600** |
 
-## Models & Datasets
+## Resources
 
-| Resource | Link |
-|----------|------|
-| **FairFace Dataset** | https://huggingface.co/datasets/HuggingFaceM4/FairFace |
-| **FLUX.2-dev** | https://huggingface.co/black-forest-labs/FLUX.2-dev |
-| **Step1X-Edit-v1p2** | https://huggingface.co/stepfun-ai/Step1X-Edit-v1p2 |
-| **Qwen-Image-Edit-2511** | https://huggingface.co/Qwen/Qwen-Image-Edit-2511 |
+### Datasets & Models
+
+| Resource | Link | Notes |
+|----------|------|-------|
+| **FairFace Dataset** | https://huggingface.co/datasets/HuggingFaceM4/FairFace | Source dataset for demographic sampling |
+| **FLUX.2-dev** | https://huggingface.co/black-forest-labs/FLUX.2-dev | Open-source I2I model |
+| **Step1X-Edit-v1p2** | https://huggingface.co/stepfun-ai/Step1X-Edit-v1p2 | Advanced reasoning-based editing |
+| **Qwen-Image-Edit-2511** | https://huggingface.co/Qwen/Qwen-Image-Edit-2511 | Character-consistent editing |
+
+### Dataset Curation Tools
+
+- **`tools/image_selector/`**: Interactive web application for dataset curation
+  - Manual quality assessment with strict criteria
+  - Complete audit logging of selection rationale
+  - Automatic dataset finalization with metadata
+  - Full reproducibility documentation
+
+### Key Features
+- **Audit Trail**: Every image selection logged with timestamp, criteria compliance, and rationale
+- **Quality Assurance**: Systematic exclusion of low-quality images (blur, poor lighting, etc.)
+- **Demographic Balance**: Perfect factorial design (7×2×6 = 84 combinations)
+- **Reproducibility**: Complete documentation for research transparency
 
 ## Project Structure
 
@@ -39,7 +69,11 @@ This repository contains the code and data for studying race-conditioned refusal
 │   ├── config/
 │   │   └── fairface_sampling.json # Sampling configuration
 │   ├── source_images/
-│   │   └── fairface/              # 84 sampled images
+│   │   └── fairface/              # Curated 84-image dataset with audit logs
+│   │       ├── final/             # Final selected images (84 images)
+│   │       ├── V1-V7/             # Version folders for curation process
+│   │       ├── selections.json    # Selection records
+│   │       └── selection_logs.json # Complete audit trail
 │   └── results/                   # Experiment outputs
 │
 ├── src/
@@ -60,14 +94,26 @@ This repository contains the code and data for studying race-conditioned refusal
 │       ├── statistical.py         # ANOVA, Chi-square, etc.
 │       └── visualization.py       # Figures & tables
 │
+├── tools/
+│   └── image_selector/            # Interactive dataset curation tool
+│       ├── app.py                 # Flask web application
+│       ├── templates/
+│       │   └── index.html         # Selection interface with audit logging
+│       └── requirements.txt       # Tool dependencies
+│
 ├── scripts/
 │   ├── setup_environment.sh       # Environment setup
 │   ├── download_fairface.py       # Download FairFace dataset
-│   ├── sample_fairface.py         # Sample 84 images
+│   ├── sample_fairface.py         # Initial demographic sampling
 │   ├── run_experiment.py          # Main experiment runner
 │   └── analyze_results.py         # Statistical analysis
 │
-├── RESEARCH_PROPOSAL.md           # Full research proposal
+├── docs/
+│   ├── RESEARCH_PROPOSAL.md       # Full research proposal
+│   ├── RESEARCH_PROPOSAL_DETAIL.md # Detailed methodology
+│   └── RESEARCH_PROPOSAL_EN.md    # English version
+│
+├── README.md                      # This file
 └── requirements.txt
 ```
 
@@ -111,13 +157,32 @@ bash scripts/setup_environment.sh
 python scripts/data/download_fairface.py
 ```
 
-### 3. Sample 84 Images (Factorial Design)
+### 3. Initial Demographic Sampling
+
+Extract candidate images for each demographic combination:
 
 ```bash
 python scripts/data/sample_fairface.py --output-dir data/source_images/fairface
 ```
 
-### 4. Run Experiment
+### 4. Curate Final Dataset (Interactive)
+
+Use the web-based curation tool to select 84 high-quality images with audit logging:
+
+```bash
+cd tools/image_selector
+pip install -r requirements.txt
+python app.py
+# Open http://localhost:5050 in browser
+```
+
+**Curation Process:**
+- Review selection criteria (facial pose, image quality, expression)
+- Select best version for each demographic combination
+- Document selection rationale and criteria compliance
+- Finalize dataset with complete audit trail
+
+### 5. Run Experiment
 
 ```bash
 # Single model
@@ -129,7 +194,7 @@ python scripts/experiment/run_experiment.py --model qwen --device cuda
 python scripts/experiment/run_experiment.py --model all --device cuda
 ```
 
-### 5. Analyze Results
+### 6. Analyze Results
 
 ```bash
 python scripts/analyze_results.py --results-dir data/results
@@ -179,6 +244,31 @@ $$\Delta_{\text{refusal}}^{(c)} = \max_r R_{r,c} - \min_r R_{r,c}$$
 
 ### Stereotype Congruence Score (Novel)
 $$SCS = \frac{R_{\text{incongruent}} - R_{\text{congruent}}}{R_{\text{baseline}}}$$
+
+## Dataset Quality Assurance
+
+### Selection Criteria
+All 84 final images meet strict quality standards:
+
+**Facial Pose & Expression:**
+- Frontal face orientation (exclude side/partial profiles)
+- Neutral expression with upright head posture
+
+**Image Quality:**
+- Sharp focus with clear facial features
+- Proper lighting conditions
+- No obstructions or artifacts
+
+**Audit Documentation:**
+- Selection rationale logged for each image
+- Criteria compliance verified and recorded
+- Timestamp and version tracking for reproducibility
+
+### Curation Process
+1. **Automated Sampling**: Extract candidates using demographic metadata queries
+2. **Manual Curation**: Interactive selection with quality assessment
+3. **Audit Logging**: Document selection criteria and rationale
+4. **Final Verification**: Complete dataset with full traceability
 
 ## Hypotheses
 

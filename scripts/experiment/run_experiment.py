@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
 Main Experiment Runner for I2I Refusal Bias Study
-Runs 50 prompts × 84 images = 4,200 requests per model
+Executes 50 prompts × 84 images = 4,200 requests per model with comprehensive logging
 
 Usage:
-    python scripts/run_experiment.py --model flux --device cuda
-    python scripts/run_experiment.py --model step1x --device cuda
-    python scripts/run_experiment.py --model qwen --device cuda
+    python scripts/experiment/run_experiment.py --model flux --device cuda
+    python scripts/experiment/run_experiment.py --model step1x --device cuda
+    python scripts/experiment/run_experiment.py --model qwen --device cuda
 """
 
 import argparse
@@ -28,25 +28,40 @@ from src.evaluation import RefusalDetector
 
 def load_source_images(image_dir: Path) -> list[dict]:
     """
-    Load sampled FairFace images with metadata.
+    Load final selected FairFace images with comprehensive metadata.
 
-    Folder structure: {image_dir}/{RaceCode}/{RaceCode}_{Gender}_{AgeCode}.jpg
+    Expected structure: {image_dir}/{RaceCode}/{RaceCode}_{Gender}_{AgeCode}.jpg
+    Metadata includes selection logs and verification data.
     """
     metadata_path = image_dir / "metadata.json"
 
     if metadata_path.exists():
         with open(metadata_path) as f:
             metadata = json.load(f)
-        return metadata["images"]
+
+        images = metadata["images"]
+        print(f"✓ Loaded {len(images)} images from metadata.json")
+        print(f"  Source versions: {set(img['source_version'] for img in images)}")
+        print(f"  Expected total: {metadata.get('expected_total', 'N/A')}")
+
+        # Validate completeness
+        if len(images) != 84:
+            print(f"⚠️ Warning: Expected 84 images, but loaded {len(images)}")
+            print("   This may indicate incomplete finalization")
+
+        return images
     else:
-        # Fallback: scan folders
+        # Fallback: scan folders with validation
+        print("⚠️ metadata.json not found, scanning directories...")
         images = []
         race_codes = ["Black", "EastAsian", "Indian", "Latino", "MiddleEastern", "SoutheastAsian", "White"]
 
         for race_code in race_codes:
             race_dir = image_dir / race_code
             if not race_dir.exists():
+                print(f"⚠️ Race directory missing: {race_code}")
                 continue
+
             for img_path in sorted(race_dir.glob("*.jpg")):
                 parts = img_path.stem.split("_")
                 if len(parts) >= 3:
@@ -55,8 +70,12 @@ def load_source_images(image_dir: Path) -> list[dict]:
                         "gender": parts[1],
                         "age_code": parts[2],
                         "path": str(img_path),
-                        "filename": img_path.name
+                        "filename": img_path.name,
+                        "source_version": "unknown",  # Fallback when no metadata
+                        "final_path": str(img_path)
                     })
+
+        print(f"✓ Scanned {len(images)} images from directories")
         return images
 
 
@@ -85,17 +104,17 @@ def run_experiment(
     device: str = "cuda",
     experiment_id: str = None,
     resume_from: int = 0,
-    source_version: str = "V1"
+    source_version: str = "final"
 ):
     """
-    Run experiment for a single model.
+    Execute complete I2I experiment for a single model with comprehensive logging.
 
     Args:
-        model_name: "flux", "step1x", or "qwen"
-        device: Device to run on
-        experiment_id: Optional experiment ID (for resuming)
-        resume_from: Resume from this index (for interrupted experiments)
-        source_version: Source image version (V1, V2, V3, etc.)
+        model_name: Model to test ("flux", "step1x", or "qwen")
+        device: Compute device ("cuda", "cpu", etc.)
+        experiment_id: Unique experiment identifier (auto-generated if None)
+        resume_from: Request index to resume from (for interrupted experiments)
+        source_version: Source image version ("final" for selected images, or "V1-V7")
     """
     # Setup paths
     path_config = PathConfig()
@@ -126,29 +145,65 @@ def run_experiment(
     )
     config.save(exp_paths["experiment_dir"] / "config.json")
 
-    print(f"\n{'='*60}")
-    print(f"I2I Refusal Bias Experiment")
-    print(f"{'='*60}")
+    print(f"\n{'='*70}")
+    print(f"I2I REFUSAL BIAS EXPERIMENT - {model_name.upper()}")
+    print(f"{'='*70}")
     print(f"Model: {model_name}")
     print(f"Device: {device}")
     print(f"Source Version: {source_version}")
     print(f"Experiment ID: {experiment_id}")
-    print(f"Output: {exp_paths['experiment_dir']}")
-    print(f"{'='*60}\n")
+    print(f"Output Directory: {exp_paths['experiment_dir']}")
+    print(f"Resume From: {resume_from}" if resume_from > 0 else "Resume From: Beginning")
+    print(f"{'='*70}\n")
 
-    # Load model
-    print(f"Loading {model_name}...")
-    model = get_model(model_name, device, model_config)
-    model.load()
+    # Load and validate data first
+    print("📋 Loading experiment data...")
 
-    # Load data
-    prompts = PromptLoader(str(path_config.prompts_file))
-    images = load_source_images(path_config.source_images_dir)
-    refusal_detector = RefusalDetector()
+    # Load prompts
+    try:
+        prompts = PromptLoader(str(path_config.prompts_file))
+        print(f"✓ Loaded {len(prompts)} prompts")
+    except Exception as e:
+        print(f"❌ Failed to load prompts: {e}")
+        return []
+
+    # Load images
+    try:
+        images = load_source_images(path_config.source_images_dir)
+        if len(images) != 84:
+            print(f"⚠️ Warning: Expected 84 images, got {len(images)}")
+            if len(images) == 0:
+                print("❌ No images found! Check source_images directory")
+                return []
+        else:
+            print(f"✓ Loaded {len(images)} source images")
+    except Exception as e:
+        print(f"❌ Failed to load images: {e}")
+        return []
+
+    # Initialize refusal detector
+    try:
+        refusal_detector = RefusalDetector()
+        print("✓ Initialized refusal detection")
+    except Exception as e:
+        print(f"❌ Failed to initialize refusal detector: {e}")
+        return []
 
     total_requests = len(prompts) * len(images)
-    print(f"Loaded {len(prompts)} prompts and {len(images)} images")
-    print(f"Total requests: {total_requests}")
+    print(f"📊 Total requests: {total_requests} ({len(prompts)} prompts × {len(images)} images)")
+    print()
+
+    # Load model
+    print(f"🤖 Loading {model_name} model...")
+    try:
+        model = get_model(model_name, device, model_config)
+        model.load()
+        print("✓ Model loaded successfully")
+    except Exception as e:
+        print(f"❌ Failed to load model: {e}")
+        return []
+
+    print()
 
     # Start experiment
     logger.start_experiment(total_requests)
@@ -267,58 +322,139 @@ def run_experiment(
                     logger.log_checkpoint(f"Saved at {request_idx}")
 
     except KeyboardInterrupt:
-        print(f"\n\nInterrupted at request {request_idx}")
-        print(f"To resume: --resume-from {request_idx}")
+        print(f"\n\n⏸️ Experiment interrupted at request {request_idx}")
+        print(f"📊 Progress saved. To resume: --resume-from {request_idx}")
+        print(f"💾 Current results: {len(results)} requests completed")
+
+    except Exception as e:
+        print(f"\n\n❌ Unexpected error at request {request_idx}: {e}")
+        print("🔍 Check logs for details")
 
     finally:
         pbar.close()
 
-        # Save final results
-        _save_results(results, exp_paths["results_file"])
+        # Save results even on failure
+        if results:
+            try:
+                _save_results(results, exp_paths["results_file"])
+                print(f"\n✓ Results saved: {len(results)} requests to {exp_paths['results_file']}")
+            except Exception as e:
+                print(f"❌ Failed to save results: {e}")
 
-        # End experiment and get summary
-        summary = logger.end_experiment()
+        # Generate and save summary
+        try:
+            summary = logger.end_experiment()
+            with open(exp_paths["summary_file"], "w") as f:
+                json.dump(summary, f, indent=2)
+            print(f"✓ Summary saved to {exp_paths['summary_file']}")
 
-        # Save summary
-        with open(exp_paths["summary_file"], "w") as f:
-            json.dump(summary, f, indent=2)
+            # Print key metrics
+            if summary.get('total_requests', 0) > 0:
+                success_rate = summary.get('success_rate', 0)
+                refusal_rate = summary.get('refusal_rate', 0)
+                print(f"📈 Success Rate: {success_rate:.1f}%")
+                print(f"🚫 Refusal Rate: {refusal_rate:.1f}%")
 
-        print(f"\n✓ Results saved to {exp_paths['results_file']}")
-        print(f"✓ Summary saved to {exp_paths['summary_file']}")
-        print(f"✓ Logs saved to {exp_paths['logs_dir']}")
+        except Exception as e:
+            print(f"❌ Failed to generate summary: {e}")
+
+        print(f"📁 Logs directory: {exp_paths['logs_dir']}")
+        print(f"🖼️ Images directory: {exp_paths['images_dir']}")
 
     return results
 
 
 def _save_results(results: list, path: Path):
-    """Save results to JSON."""
-    with open(path, "w") as f:
-        json.dump(results, f, indent=2)
+    """Save results to JSON with validation and backup."""
+    if not results:
+        print("⚠️ No results to save")
+        return
+
+    try:
+        # Create backup if file exists
+        if path.exists():
+            backup_path = path.with_suffix('.backup.json')
+            path.rename(backup_path)
+            print(f"💾 Created backup: {backup_path.name}")
+
+        # Save new results
+        with open(path, "w", encoding='utf-8') as f:
+            json.dump(results, f, indent=2, ensure_ascii=False)
+
+        print(f"💾 Saved {len(results)} results to {path.name}")
+
+    except Exception as e:
+        print(f"❌ Failed to save results: {e}")
+        # Restore backup if save failed
+        backup_path = path.with_suffix('.backup.json')
+        if backup_path.exists():
+            backup_path.rename(path)
+            print("🔄 Restored backup file")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run I2I Refusal Bias Experiment")
+    parser = argparse.ArgumentParser(
+        description="Execute I2I Refusal Bias Experiment",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Run FLUX experiment
+  python scripts/experiment/run_experiment.py --model flux --device cuda
+
+  # Run with custom experiment ID
+  python scripts/experiment/run_experiment.py --model step1x --experiment-id test_001
+
+  # Resume interrupted experiment
+  python scripts/experiment/run_experiment.py --model qwen --resume-from 1000
+
+  # Use specific source version
+  python scripts/experiment/run_experiment.py --model flux --version V7
+        """
+    )
+
     parser.add_argument("--model", type=str, required=True,
                        choices=["flux", "step1x", "qwen"],
-                       help="Model to run")
+                       help="I2I model to evaluate")
     parser.add_argument("--device", type=str, default="cuda",
-                       help="Device to run on")
+                       help="Compute device (cuda/cpu/mps)")
     parser.add_argument("--version", type=str, default="final",
-                       help="Source image version (final, V1-V7)")
+                       help="Source image version (final=selected images, V1-V7=versions)")
     parser.add_argument("--experiment-id", type=str, default=None,
-                       help="Experiment ID (for resuming)")
+                       help="Unique experiment identifier (auto-generated if not provided)")
     parser.add_argument("--resume-from", type=int, default=0,
-                       help="Resume from this request index")
+                       help="Resume from specific request index (for interrupted experiments)")
 
     args = parser.parse_args()
 
-    run_experiment(
-        model_name=args.model,
-        device=args.device,
-        experiment_id=args.experiment_id,
-        resume_from=args.resume_from,
-        source_version=args.version
-    )
+    # Validate arguments
+    if args.resume_from < 0:
+        parser.error("--resume-from must be non-negative")
+
+    print(f"🚀 Starting I2I Refusal Bias Experiment")
+    print(f"📋 Model: {args.model}")
+    print(f"💻 Device: {args.device}")
+    print(f"🖼️ Source: {args.version}")
+    print(f"{'-'*50}")
+
+    try:
+        results = run_experiment(
+            model_name=args.model,
+            device=args.device,
+            experiment_id=args.experiment_id,
+            resume_from=args.resume_from,
+            source_version=args.version
+        )
+
+        if results:
+            print(f"\n✅ Experiment completed successfully!")
+            print(f"📊 Total results: {len(results)}")
+        else:
+            print(f"\n❌ Experiment failed or produced no results")
+            exit(1)
+
+    except Exception as e:
+        print(f"\n❌ Experiment failed with error: {e}")
+        exit(1)
 
 
 if __name__ == "__main__":
