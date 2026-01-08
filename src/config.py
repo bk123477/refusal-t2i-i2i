@@ -20,15 +20,28 @@ class PathConfig:
     results_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "results")
     logs_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "logs")
 
-    # Source images
-    source_images_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "source_images" / "fairface")
+    # Source images base (versions inside: V1/, V2/, V3/)
+    source_images_base: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "source_images" / "fairface")
+
+    # Default version
+    source_version: str = "V1"
 
     # Prompts
     prompts_file: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "prompts" / "i2i_prompts.json")
 
+    @property
+    def source_images_dir(self) -> Path:
+        """Get source images directory for current version."""
+        return self.source_images_base / self.source_version
+
+    def set_version(self, version: str):
+        """Set source image version."""
+        self.source_version = version
+        return self
+
     def __post_init__(self):
         """Convert all paths to Path objects and create directories."""
-        for attr_name in ['project_root', 'data_dir', 'results_dir', 'logs_dir', 'source_images_dir', 'prompts_file']:
+        for attr_name in ['project_root', 'data_dir', 'results_dir', 'logs_dir', 'source_images_base', 'prompts_file']:
             attr = getattr(self, attr_name)
             if isinstance(attr, str):
                 setattr(self, attr_name, Path(attr))

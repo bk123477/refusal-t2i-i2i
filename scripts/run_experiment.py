@@ -84,7 +84,8 @@ def run_experiment(
     model_name: str,
     device: str = "cuda",
     experiment_id: str = None,
-    resume_from: int = 0
+    resume_from: int = 0,
+    source_version: str = "V1"
 ):
     """
     Run experiment for a single model.
@@ -94,9 +95,11 @@ def run_experiment(
         device: Device to run on
         experiment_id: Optional experiment ID (for resuming)
         resume_from: Resume from this index (for interrupted experiments)
+        source_version: Source image version (V1, V2, V3, etc.)
     """
     # Setup paths
     path_config = PathConfig()
+    path_config.set_version(source_version)
     naming = NamingConfig()
 
     if experiment_id is None:
@@ -128,6 +131,7 @@ def run_experiment(
     print(f"{'='*60}")
     print(f"Model: {model_name}")
     print(f"Device: {device}")
+    print(f"Source Version: {source_version}")
     print(f"Experiment ID: {experiment_id}")
     print(f"Output: {exp_paths['experiment_dir']}")
     print(f"{'='*60}\n")
@@ -299,6 +303,8 @@ def main():
                        help="Model to run")
     parser.add_argument("--device", type=str, default="cuda",
                        help="Device to run on")
+    parser.add_argument("--version", type=str, default="V1",
+                       help="Source image version (V1, V2, V3, etc.)")
     parser.add_argument("--experiment-id", type=str, default=None,
                        help="Experiment ID (for resuming)")
     parser.add_argument("--resume-from", type=int, default=0,
@@ -310,7 +316,8 @@ def main():
         model_name=args.model,
         device=args.device,
         experiment_id=args.experiment_id,
-        resume_from=args.resume_from
+        resume_from=args.resume_from,
+        source_version=args.version
     )
 
 
