@@ -227,6 +227,22 @@ def run_experiment(
     results = []
     request_idx = 0
 
+    # Load previous results if resuming
+    if resume_from > 0:
+        results_file = exp_paths["results_file"]
+        if results_file.exists():
+            try:
+                with open(results_file, 'r') as f:
+                    results = json.load(f)
+                print(f"✓ Loaded {len(results)} previous results from {results_file.name}")
+            except Exception as e:
+                print(f"⚠️ Warning: Could not load previous results: {e}")
+                print("   Starting fresh results list")
+                results = []
+        else:
+            print(f"⚠️ Warning: No previous results.json found at {results_file}")
+            print("   Starting fresh results list")
+
     # Run experiment
     pbar = tqdm(total=total_requests, desc=f"{model_name}", initial=resume_from)
 
