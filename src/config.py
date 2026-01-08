@@ -217,7 +217,14 @@ class ExperimentConfig:
     # Generation settings
     num_inference_steps: int = 50
     guidance_scale: float = 4.0
+    true_cfg_scale: float = 6.0  # For Step1X and Qwen
     seed: int = 42
+
+    # Model-specific settings
+    enable_thinking: bool = True  # Step1X
+    enable_reflection: bool = True  # Step1X
+    use_quantized: bool = False  # FLUX
+    use_remote_text_encoder: bool = False  # FLUX
 
     # Batch settings
     save_interval: int = 10  # Save results every N images
@@ -244,7 +251,12 @@ class ExperimentConfig:
             "device": self.device,
             "num_inference_steps": self.num_inference_steps,
             "guidance_scale": self.guidance_scale,
+            "true_cfg_scale": self.true_cfg_scale,
             "seed": self.seed,
+            "enable_thinking": self.enable_thinking,
+            "enable_reflection": self.enable_reflection,
+            "use_quantized": self.use_quantized,
+            "use_remote_text_encoder": self.use_remote_text_encoder,
             "save_interval": self.save_interval,
             "source_version": self.source_version,
             "categories_filter": self.categories_filter,
@@ -272,7 +284,7 @@ MODEL_CONFIGS = {
         "use_remote_text_encoder": False,
     },
     "step1x": {
-        "num_inference_steps": 50,
+        "num_inference_steps": 28,  # Step1X requires exactly 28 steps
         "true_cfg_scale": 6.0,
         "enable_thinking": True,
         "enable_reflection": True,

@@ -40,6 +40,12 @@ def load_source_images(image_dir: Path) -> list[dict]:
             metadata = json.load(f)
 
         images = metadata["images"]
+
+        # Fix paths to use current image_dir instead of stored absolute paths
+        for img in images:
+            # Build correct path: image_dir / race_code / filename
+            img["path"] = str(image_dir / img["race_code"] / img["filename"])
+
         print(f"✓ Loaded {len(images)} images from metadata.json")
         print(f"  Source versions: {set(img['source_version'] for img in images)}")
         print(f"  Expected total: {metadata.get('expected_total', 'N/A')}")

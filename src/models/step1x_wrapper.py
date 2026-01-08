@@ -56,7 +56,8 @@ class Step1XWrapper(I2IModel):
                 self.MODEL_ID,
                 torch_dtype=torch.bfloat16
             )
-            self.pipe = self.pipe.to(self.device)
+            # Use sequential CPU offload to fit in 24GB VRAM
+            self.pipe.enable_sequential_cpu_offload()
 
             # Setup RegionE for faster inference (optional)
             if self.use_region_e:
