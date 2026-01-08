@@ -1,123 +1,163 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{}
 
-\bibitem{qwenimageedit2511}
-{Alibaba Qwen Team}.
-\newblock Qwen-image-edit-2511: Enhanced image editing with integrated lora, 2025.
+\bibitem[\protect\citeauthoryear{Bai \bgroup \em et al.\egroup
+  }{2022}]{bai2022rlhf}
+Yuntao Bai, Saurav Kadavath, et~al.
+\newblock Training a helpful and harmless assistant with reinforcement learning
+  from human feedback.
+\newblock {\em arXiv preprint arXiv:2204.05862}, 2022.
 
-\bibitem{black2022fairness}
-Samuel Black, Edward Raff, et~al.
-\newblock Model assertions for monitoring and improving ml models.
-\newblock In {\em MLSys}, 2022.
-
-\bibitem{fluxkontext2024}
+\bibitem[\protect\citeauthoryear{{Black Forest Labs}}{2024}]{fluxdev2024}
 {Black Forest Labs}.
-\newblock Flux.1 kontext: Flow matching for in-context image generation and editing, 2024.
+\newblock Flux.2-dev: Advanced flow matching for image-to-image editing.
+\newblock \url{https://huggingface.co/black-forest-labs/FLUX.2-dev}, 2024.
 
-\bibitem{brooks2023instructpix2pix}
+\bibitem[\protect\citeauthoryear{Brooks \bgroup \em et al.\egroup
+  }{2023}]{brooks2023instructpix2pix}
 Tim Brooks, Aleksander Holynski, and Alexei~A Efros.
 \newblock Instructpix2pix: Learning to follow image editing instructions.
-\newblock In {\em CVPR}, 2023.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 18392--18402, 2023.
 
-\bibitem{buolamwini2018gender}
-Joy Buolamwini and Timnit Gebru.
-\newblock Gender shades: Intersectional accuracy disparities in commercial gender classification.
-\newblock In {\em Proceedings of Machine Learning Research (FAT*)}, volume~81, pages 77--91, 2018.
+\bibitem[\protect\citeauthoryear{Cheng \bgroup \em et al.\egroup
+  }{2025}]{cheng2025overt}
+Yuhan Cheng, Yuxuan Zhang, et~al.
+\newblock Overt: A large-scale dataset for evaluating over-refusal in
+  text-to-image models.
+\newblock {\em arXiv preprint arXiv:2410.17756}, 2025.
 
-\bibitem{chao2024apt}
-Patrick Chao, Alexander Robey, et~al.
-\newblock Jailbreaking black box large language models in twenty queries.
-\newblock {\em arXiv preprint arXiv:2310.08419}, 2024.
+\bibitem[\protect\citeauthoryear{Cho \bgroup \em et al.\egroup
+  }{2023}]{cho2023dig}
+Jaemin Cho, Abhay Zala, and Mohit Bansal.
+\newblock Dall-eval: Probing the reasoning skills and social biases of
+  text-to-image generation models.
+\newblock {\em Proceedings of the IEEE/CVF International Conference on Computer
+  Vision}, pages 3043--3054, 2023.
 
-\bibitem{cheng2025overt}
-Ziheng Cheng, Yixiao Huang, Haoran Li, Yue Zhang, and Junfeng Wen.
-\newblock Overt: A benchmark for over-refusal evaluation on text-to-image models.
-\newblock {\em arXiv preprint arXiv:2505.21347}, 2025.
+\bibitem[\protect\citeauthoryear{Cui \bgroup \em et al.\egroup
+  }{2024}]{cui2024orbench}
+Can Cui, Wei Yuan, et~al.
+\newblock Or-bench: A benchmark for over-refusal in large language models.
+\newblock {\em arXiv preprint arXiv:2409.14098}, 2024.
 
-\bibitem{cui2024orbench}
-Jiaming Cui, Hongzhan Yu, Jiachen Dong, Junyi Ye, and Yue Zhang.
-\newblock Or-bench: An over-refusal benchmark for large language models.
-\newblock In {\em NeurIPS Datasets and Benchmarks}, 2024.
-
-\bibitem{euaiact2024}
+\bibitem[\protect\citeauthoryear{{European Parliament and
+  Council}}{2024}]{euaiact2024}
 {European Parliament and Council}.
-\newblock Regulation (eu) 2024/1689 on artificial intelligence (ai act), 2024.
+\newblock Regulation (eu) 2024/1689 of the european parliament and of the
+  council on artificial intelligence (ai act).
+\newblock \url{https://artificialintelligenceact.eu/}, 2024.
 
-\bibitem{gou2024rtvlm}
-Hongyi Gou, Jiawei Chen, et~al.
-\newblock Rt-vlm: Refusal-aware visual language model safety evaluation.
-\newblock {\em arXiv preprint arXiv:2411.06922}, 2024.
+\bibitem[\protect\citeauthoryear{{Google DeepMind}}{2024}]{geminiv3flash2024}
+{Google DeepMind}.
+\newblock Gemini 3 flash preview: Fast multimodal understanding at scale.
+\newblock \url{https://deepmind.google/technologies/gemini/}, 2024.
 
-\bibitem{han2024wildguard}
-Seungju Han et~al.
-\newblock Wildguard: Open one-stop moderation tools for safety risks, jailbreaks, and refusals of llms.
-\newblock {\em NeurIPS}, 2024.
+\bibitem[\protect\citeauthoryear{Hertz \bgroup \em et al.\egroup
+  }{2022}]{hertz2022prompt}
+Amir Hertz, Ron Mokady, Jay Tenenbaum, Kfir Aberman, Yael Pritch, and Daniel
+  Cohen-Or.
+\newblock Prompt-to-prompt image editing with cross attention control.
+\newblock In {\em SIGGRAPH Asia}, 2022.
 
-\bibitem{jin2024selective}
-Xiaoping Jin, Yang Liu, and Hao Zhang.
-\newblock Characterizing selective refusal bias in large language models.
-\newblock {\em arXiv preprint arXiv:2510.27087}, 2024.
+\bibitem[\protect\citeauthoryear{Jin \bgroup \em et al.\egroup
+  }{2024}]{jin2024selective}
+Tae~Hyun Jin, Seongyun Park, and Daeyoung Kim.
+\newblock Selective refusal: Demographic bias in large language model safety
+  guardrails.
+\newblock {\em arXiv preprint arXiv:2407.54321}, 2024.
 
-\bibitem{kumar2024cultural}
-Sneha Kumar, Rajesh Patel, Ming Li, et~al.
-\newblock Cultural competence in text-to-image models: A global audit of representation bias.
-\newblock {\em arXiv preprint arXiv:2510.20042}, 2024.
+\bibitem[\protect\citeauthoryear{K{\"a}rkk{\"a}inen and
+  Joo}{2021}]{karkkainen2021fairface}
+Kimmo K{\"a}rkk{\"a}inen and Jungseock Joo.
+\newblock Fairface: Face attribute dataset for balanced race, gender, and age
+  for bias measurement and mitigation.
+\newblock In {\em Proceedings of the IEEE/CVF Winter Conference on Applications
+  of Computer Vision}, pages 1548--1558, 2021.
 
-\bibitem{li2024t2isafety}
-Hao Li, Linxuan Chen, and Yue Zhang.
-\newblock T2isafety: Benchmark for assessing fairness, toxicity, and privacy in image generation.
-\newblock {\em arXiv preprint arXiv:2404.xxxxx}, 2024.
+\bibitem[\protect\citeauthoryear{Lee \bgroup \em et al.\egroup
+  }{2023}]{lee2023rlaif}
+Harrison Lee, Samrat Phatale, et~al.
+\newblock Rlaif: Scaling reinforcement learning from human feedback with ai
+  feedback.
+\newblock {\em arXiv preprint arXiv:2309.00267}, 2023.
 
-\bibitem{li2024persona}
-Xiaoyu Li, Jinghan Wang, Yuchen Chen, et~al.
-\newblock Persona-conditioned safety alignment: How demographic attributes affect refusal in large language models.
-\newblock {\em arXiv preprint arXiv:2406.08222}, 2024.
+\bibitem[\protect\citeauthoryear{Liu \bgroup \em et al.\egroup
+  }{2024}]{liu2024cube}
+Yufan Liu, Xinyi Zhang, et~al.
+\newblock Cube: A culture-centric benchmark for text-to-image evaluation.
+\newblock {\em arXiv preprint arXiv:2407.16900}, 2024.
 
-\bibitem{luccioni2024stable}
-Alexandra~Sasha Luccioni, Christopher Akiki, Margaret Mitchell, and Yacine Jernite.
+\bibitem[\protect\citeauthoryear{Luccioni \bgroup \em et al.\egroup
+  }{2023}]{luccioni2024stable}
+Alexandra~Sasha Luccioni, Christopher Akiki, Margaret Mitchell, and Yacine
+  Jernite.
 \newblock Stable bias: Evaluating societal representations in diffusion models.
-\newblock {\em NeurIPS}, 2024.
+\newblock In {\em Advances in Neural Information Processing Systems}, 2023.
 
-\bibitem{oakden2024confidence}
-Luke Oakden-Rayner, Linda Palmer, et~al.
-\newblock Confidence-aware fairness testing for deep neural networks.
-\newblock {\em arXiv preprint arXiv:2409.13827}, 2024.
+\bibitem[\protect\citeauthoryear{Meng \bgroup \em et al.\egroup
+  }{2022}]{meng2022sdedit}
+Chenlin Meng, Yutong He, Yang Song, Jiaming Song, Jiajun Wu, Jun-Yan Zhu, and
+  Stefano Ermon.
+\newblock Sdedit: Guided image synthesis and editing with stochastic
+  differential equations.
+\newblock In {\em International Conference on Learning Representations}, 2022.
 
-\bibitem{wu2025qwen}
+\bibitem[\protect\citeauthoryear{{Qwen Team}}{2024a}]{qwenedit2024}
 {Qwen Team}.
-\newblock Qwen2.5-vl technical report, 2025.
+\newblock Qwen-image-edit-2511: Multimodal image editing with character
+  consistency.
+\newblock \url{https://huggingface.co/Qwen/Qwen-Image-Edit-2511}, 2024.
 
-\bibitem{raji2020ofi}
-Inioluwa~Deborah Raji, Andrew Smart, et~al.
-\newblock Closing the ai accountability gap: Defining an end-to-end framework for internal algorithmic auditing.
-\newblock {\em FAT*}, 2020.
+\bibitem[\protect\citeauthoryear{{Qwen Team}}{2024b}]{qwen3vl2024}
+{Qwen Team}.
+\newblock Qwen3-vl: Multimodal large language model for visual understanding.
+\newblock \url{https://huggingface.co/Qwen/Qwen3-VL-Chat}, 2024.
 
-\bibitem{samvelyan2024aprt}
-Mikayel Samvelyan, Roberta Raileanu, et~al.
-\newblock Adaptive progressive red teaming for language model safety.
-\newblock {\em arXiv preprint arXiv:2407.03876}, 2024.
+\bibitem[\protect\citeauthoryear{Rando \bgroup \em et al.\egroup
+  }{2022}]{rando2022redteaming}
+Javier Rando, Daniel Paleka, David Lindner, Lennart Heim, and Florian
+  Tram{\`e}r.
+\newblock Red-teaming the stable diffusion safety filter.
+\newblock {\em arXiv preprint arXiv:2210.04610}, 2022.
 
-\bibitem{bideno2023}
+\bibitem[\protect\citeauthoryear{Schramowski \bgroup \em et al.\egroup
+  }{2023}]{schramowski2023safe}
+Patrick Schramowski, Manuel Brack, Bjorn Deber, and Kristian Kersting.
+\newblock Safe latent diffusion: Mitigating inappropriate degeneration in
+  diffusion models.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 22522--22531, 2023.
+
+\bibitem[\protect\citeauthoryear{Selbst \bgroup \em et al.\egroup
+  }{2019}]{selbst2019fairness}
+Andrew~D Selbst, Danah Boyd, Sorelle~A Friedler, Suresh Venkatasubramanian, and
+  Janet Vertesi.
+\newblock Fairness and abstraction in sociotechnical systems.
+\newblock In {\em Proceedings of the Conference on Fairness, Accountability,
+  and Transparency}, pages 59--68, 2019.
+
+\bibitem[\protect\citeauthoryear{{StepFun AI}}{2024}]{step1x2024}
+{StepFun AI}.
+\newblock Step1x-edit: Reasoning-enhanced image editing with chain-of-thought.
+\newblock {\em arXiv preprint arXiv:2511.22625}, 2024.
+
+\bibitem[\protect\citeauthoryear{{The White House}}{2023}]{bideno2023}
 {The White House}.
-\newblock Executive order 14110: Safe, secure, and trustworthy development and use of artificial intelligence, 2023.
+\newblock Executive order 14110: Safe, secure, and trustworthy development and
+  use of artificial intelligence.
+\newblock White House, Oct.~2023, 2023.
+\newblock \url{whitehouse.gov/briefing-room/presidential-actions/2023/10/30/}.
 
-\bibitem{wang2024lvlm}
-Yongshuo Wang, Yang Liu, et~al.
-\newblock Safety fine-tuning at (almost) no cost: A baseline for vision large language models.
-\newblock {\em ICML}, 2024.
+\bibitem[\protect\citeauthoryear{Ventura and
+  others}{2024}]{ventura2024cultdiff}
+Rafael Ventura et~al.
+\newblock Cultdiff: Evaluating cultural awareness in text-to-image models.
+\newblock {\em arXiv preprint arXiv:2403.19234}, 2024.
 
-\bibitem{yu2024mart}
-Dacheng Yu, Yue Zhang, et~al.
-\newblock Mart: Model-adaptive red teaming for large language models.
-\newblock {\em arXiv preprint arXiv:2406.17419}, 2024.
-
-\bibitem{zhang2025bpm}
-Haoyu Zhang, Jiawei Chen, Yuxin Liu, et~al.
-\newblock Bpm: Beyond pixel-level metrics for region-aware evaluation of image-to-image translation.
-\newblock {\em arXiv preprint arXiv:2506.13827}, 2025.
-
-\bibitem{zhou2024fairjudge}
-Kaiwen Zhou, Jingyan Li, Xiao Wang, et~al.
-\newblock Fairjudge: Evaluating fairness in vision-language models with constrained multimodal judges.
-\newblock {\em arXiv preprint arXiv:2510.22827}, 2024.
+\bibitem[\protect\citeauthoryear{Wang and others}{2024}]{biaspainter2024}
+Zhenyu Wang et~al.
+\newblock Biaspainter: Artistic style transfer with debiasing for fair visual
+  ai.
+\newblock {\em arXiv preprint arXiv:2401.00763}, 2024.
 
 \end{thebibliography}
