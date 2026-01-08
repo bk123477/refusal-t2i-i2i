@@ -1,17 +1,15 @@
 """
 VLM Evaluator for Attribute Detection
-Uses Qwen3-VL (or Qwen2-VL fallback) and Gemini Flash ensemble for soft erasure detection.
+Uses Qwen3-VL-8B-Instruct and Gemini Flash ensemble for soft erasure detection.
+
+Model: https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
+- 9B parameters, BF16 precision
+- Enhanced visual perception and multimodal reasoning
+- Optimized for RTX 4090 (24GB VRAM)
 
 Requirements:
 - transformers >= 4.57.0 (for Qwen3-VL support)
 - pip install git+https://github.com/huggingface/transformers
-
-Model priority (memory efficient first):
-1. Qwen3-VL-8B-Instruct-FP8 (most recommended for RTX 4090)
-2. Qwen3-VL-8B-Instruct (BF16)
-3. Qwen3-VL-4B-Instruct-FP8
-4. Qwen3-VL-2B-Instruct-FP8
-5. Qwen2-VL-7B-Instruct (fallback)
 """
 
 from typing import Optional
@@ -43,71 +41,42 @@ Answer:"""
         return base64.b64encode(buffer.getvalue()).decode()
 
     def _load_qwen(self):
-        """Load Qwen3-VL model with memory optimization."""
+        """Load Qwen3-VL-8B-Instruct model.
+
+        Model: https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
+        - 9B parameters, BF16
+        - Enhanced visual perception and reasoning
+        - Optimized for RTX 4090 (24GB VRAM)
+        """
         if self.qwen_model is None:
-            # Try Qwen3-VL models in order of preference (smaller to larger)
-            model_candidates = [
-                ("Qwen/Qwen3-VL-8B-Instruct-FP8", "FP8 quantized (most memory efficient)"),
-                ("Qwen/Qwen3-VL-8B-Instruct", "BF16 (good balance)"),
-                ("Qwen/Qwen3-VL-4B-Instruct-FP8", "FP8 4B (lightweight)"),
-                ("Qwen/Qwen3-VL-2B-Instruct-FP8", "FP8 2B (fastest)")
-            ]
-
-            for model_name, description in model_candidates:
-                try:
-                    print(f"Trying to load {model_name} ({description})...")
-
-                    from transformers import Qwen3VLMoeForConditionalGeneration, AutoProcessor
-
-                    # Memory optimization settings
-                    if "FP8" in model_name:
-                        # FP8 models are more memory efficient
-                        self.qwen_model = Qwen3VLMoeForConditionalGeneration.from_pretrained(
-                            model_name,
-                            torch_dtype="auto",
-                            device_map="auto",
-                            trust_remote_code=True
-                        )
-                    else:
-                        # Regular models with bfloat16 for memory efficiency
-                        self.qwen_model = Qwen3VLMoeForConditionalGeneration.from_pretrained(
-                            model_name,
-                            torch_dtype="bfloat16",
-                            device_map="auto",
-                            trust_remote_code=True
-                        )
-
-                    self.qwen_processor = AutoProcessor.from_pretrained(model_name, trust_remote_code=True)
-                    print(f"✅ Qwen3-VL loaded successfully: {model_name}")
-                    return
-
-                except Exception as e:
-                    print(f"❌ Failed to load {model_name}: {e}")
-                    continue
-
-            # If all Qwen3-VL models fail, fallback to Qwen2-VL
-            print("Falling back to Qwen2-VL-7B-Instruct...")
             try:
-                from transformers import Qwen2VLForConditionalGeneration
-                self.qwen_model = Qwen2VLForConditionalGeneration.from_pretrained(
-                    "Qwen/Qwen2-VL-7B-Instruct",
-                    torch_dtype="auto",
-                    device_map="auto"
+                print("Loading Qwen3-VL-8B-Instruct...")
+
+                from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
+
+                self.qwen_model = Qwen3VLForConditionalGeneration.from_pretrained(
+                    "Qwen/Qwen3-VL-8B-Instruct",
+                    torch_dtype="bfloat16",
+                    device_map="auto",
+                    trust_remote_code=True
                 )
-                self.qwen_processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct")
-                print("✅ Qwen2-VL loaded successfully (fallback)")
-            except Exception as e2:
-                print(f"❌ All fallback attempts failed: {e2}")
+                self.qwen_processor = AutoProcessor.from_pretrained(
+                    "Qwen/Qwen3-VL-8B-Instruct",
+                    trust_remote_code=True
+                )
+                print("✅ Qwen3-VL-8B-Instruct loaded successfully")
+            except Exception as e:
+                print(f"❌ Failed to load Qwen3-VL-8B-Instruct: {e}")
+                print("💡 Make sure transformers is updated: pip install git+https://github.com/huggingface/transformers")
 
     def _query_qwen(self, image: Image.Image, prompt: str) -> str:
-        """Query Qwen3-VL model."""
+        """Query Qwen3-VL-8B-Instruct model."""
         self._load_qwen()
 
         if self.qwen_model is None:
             return "UNKNOWN"
 
         try:
-            # Qwen3-VL format
             messages = [
                 {
                     "role": "user",
@@ -139,38 +108,8 @@ Answer:"""
             return response.strip()
 
         except Exception as e:
-            print(f"Qwen3-VL query failed, trying fallback method: {e}")
-            # Fallback to Qwen2-VL style if Qwen3-VL fails
-            try:
-                messages = [
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "image", "image": image},
-                            {"type": "text", "text": prompt}
-                        ]
-                    }
-                ]
-
-                text = self.qwen_processor.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=True
-                )
-                inputs = self.qwen_processor(
-                    text=[text],
-                    images=[image],
-                    return_tensors="pt"
-                ).to(self.qwen_model.device)
-
-                output_ids = self.qwen_model.generate(**inputs, max_new_tokens=10)
-                response = self.qwen_processor.batch_decode(
-                    output_ids[:, inputs.input_ids.shape[1]:],
-                    skip_special_tokens=True
-                )[0]
-
-                return response.strip()
-            except Exception as e2:
-                print(f"Fallback method also failed: {e2}")
-                return "UNKNOWN"
+            print(f"Qwen3-VL query failed: {e}")
+            return "UNKNOWN"
 
     def _query_gemini(self, image: Image.Image, prompt: str) -> str:
         """Query Gemini 3 Flash model."""
