@@ -69,9 +69,12 @@ This repository contains the code and data for studying race-conditioned refusal
 │   ├── config/
 │   │   └── fairface_sampling.json # Sampling configuration
 │   ├── source_images/
-│   │   └── fairface/              # Curated 84-image dataset with audit logs
-│   │       ├── final/             # Final selected images (84 images)
-│   │       ├── V1-V7/             # Version folders for curation process
+│   │   ├── final/                 # Final 84 images (512×512 JPG)
+│   │   │   ├── Black/             # 12 images per race
+│   │   │   ├── White/
+│   │   │   └── .../
+│   │   └── fairface/              # Curation process files
+│   │       ├── V1-V7/             # Version folders
 │   │       ├── selections.json    # Selection records
 │   │       └── selection_logs.json # Complete audit trail
 │   └── results/                   # Experiment outputs
@@ -112,10 +115,13 @@ This repository contains the code and data for studying race-conditioned refusal
 │   │   └── sample_fairface_parallel.py # Parallel sampling
 │   └── experiment/
 │       ├── run_experiment.py      # Main experiment runner
-│       ├── run_flux.sh            # FLUX.2-dev experiment script
-│       ├── run_qwen.sh            # Qwen experiment script
-│       ├── run_step1x.sh          # Step1X experiment script
-│       └── setup_environment.sh   # Environment setup
+│       ├── run_flux.sh            # FLUX experiment (interactive categories)
+│       ├── run_step1x.sh          # Step1X experiment
+│       ├── run_qwen.sh            # Qwen experiment
+│       ├── category_selector.py   # Interactive category selection CLI
+│       └── test/                   # Quick test scripts (1 image × 5 prompts)
+│           ├── run_test.sh
+│           └── test_single_prompt.py
 │
 ├── docs/
 │   ├── RESEARCH_PROPOSAL.md       # Full research proposal
@@ -194,13 +200,29 @@ python app.py
 ### 5. Run Experiment
 
 ```bash
-# Single model
-python scripts/experiment/run_experiment.py --model flux --device cuda
-python scripts/experiment/run_experiment.py --model step1x --device cuda
-python scripts/experiment/run_experiment.py --model qwen --device cuda
+# Interactive category selection (recommended)
+bash scripts/experiment/run_flux.sh
+bash scripts/experiment/run_step1x.sh
+bash scripts/experiment/run_qwen.sh
 
-# All models
-python scripts/experiment/run_experiment.py --model all --device cuda
+# Run all categories directly
+bash scripts/experiment/run_flux.sh --all
+
+# Run specific categories only
+bash scripts/experiment/run_flux.sh --categories A,B,C
+
+# Show help
+bash scripts/experiment/run_flux.sh --help
+```
+
+**Output Location:**
+```
+data/results/{model}/{experiment_id}/
+├── config.json       # Experiment settings (seed, categories, etc.)
+├── results.json      # Full results (4,200 requests)
+├── summary.json      # Statistics by race/gender/age
+├── images/           # Generated images by race
+└── logs/             # Detailed logs (refusals, errors, timings)
 ```
 
 ### 6. Analyze Results
