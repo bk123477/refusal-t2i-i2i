@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 """
-Analyze I2I Refusal Bias Experiment Results
-Statistical analysis + Visualization
+Analyze I2I Refusal Bias Experiment Results - Complete Pipeline
+Supports both VLM-only and Human-Corrected analyses
+
+Workflow:
+1. Load VLM ensemble results
+2. Load human review corrections (if available)
+3. Generate final corrected dataset
+4. Run comprehensive statistical analysis
+5. Create visualizations and reports
+6. Export publication-ready figures/tables
 """
 
 import argparse
@@ -9,6 +17,8 @@ import json
 from pathlib import Path
 import pandas as pd
 import sys
+from typing import Optional, Dict, Any
+from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
@@ -19,8 +29,166 @@ from src.analysis.sensitivity import SensitivityAnalyzer
 from src.analysis.visualization import ResultsVisualizer
 
 
-def load_results(results_dir: str, model: str = None) -> pd.DataFrame:
-    """Load results from JSON files."""
+def load_human_review_results_from_firebase() -> pd.DataFrame:
+    """
+    Load human review results from Firebase/survey app.
+    Falls back to local files if Firebase unavailable.
+    """
+    try:
+        # Try to import Firebase functions
+        import firebase_admin
+        from firebase_admin import credentials, firestore
+
+        # Initialize Firebase (if not already initialized)
+        if not firebase_admin._apps:
+            # Try to find service account key
+            key_paths = [
+                Path(__file__).parent.parent.parent / "firebase-service-account.json",
+                Path.home() / "firebase-service-account.json"
+            ]
+
+            cred = None
+            for key_path in key_paths:
+                if key_path.exists():
+                    cred = credentials.Certificate(str(key_path))
+                    break
+
+            if cred:
+                firebase_admin.initialize_app(cred)
+                print("✅ Firebase initialized for data loading")
+            else:
+                print("⚠️ Firebase service account key not found, using local fallback")
+                return load_human_review_results_from_local()
+
+        # Load data from Firestore
+        db = firestore.client()
+        results_ref = db.collection('human_review_results')
+        docs = results_ref.stream()
+
+        human_results = []
+        for doc in docs:
+            data = doc.to_dict()
+            human_results.append({
+                'case_id': data.get('caseId') or data.get('case_id'),
+                'human_judgment': data.get('human_judgment'),
+                'qwen_response': data.get('qwen_response'),
+                'gemini_response': data.get('gemini_response'),
+                'ensemble_result': data.get('ensemble_result'),
+                'attribute': data.get('attribute'),
+                'timestamp': data.get('timestamp'),
+                'saved_at': data.get('saved_at'),
+                'reviewer': data.get('reviewer', 'unknown')
+            })
+
+        return pd.DataFrame(human_results)
+
+    except Exception as e:
+        print(f"❌ Firebase loading failed: {e}")
+        return load_human_review_results_from_local()
+
+
+def load_human_review_results_from_local() -> pd.DataFrame:
+    """
+    Load human review results from local survey app files.
+    """
+    survey_dir = Path(__file__).parent.parent.parent / "survey" / "public"
+
+    # Try to find human review result files
+    result_files = list(survey_dir.glob("human_review_results*.json"))
+
+    if not result_files:
+        print("⚠️ No human review result files found")
+        return pd.DataFrame()
+
+    # Load most recent file
+    latest_file = max(result_files, key=lambda x: x.stat().st_mtime)
+
+    try:
+        with open(latest_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        if isinstance(data, list):
+            human_results = data
+        else:
+            human_results = data.get('results', [])
+
+        return pd.DataFrame(human_results)
+
+    except Exception as e:
+        print(f"❌ Local file loading failed: {e}")
+        return pd.DataFrame()
+
+
+def combine_vlm_and_human_results(vlm_results: pd.DataFrame,
+                                human_results: pd.DataFrame) -> pd.DataFrame:
+    """
+    Combine VLM ensemble results with human corrections.
+
+    Args:
+        vlm_results: DataFrame with VLM ensemble evaluations
+        human_results: DataFrame with human review corrections
+
+    Returns:
+        DataFrame: Final corrected dataset
+    """
+    if human_results.empty:
+        print("ℹ️ No human corrections found, using VLM results only")
+        final_results = vlm_results.copy()
+        final_results['final_judgment'] = final_results['ensemble_result']
+        final_results['correction_type'] = 'none'
+        return final_results
+
+    # Create mapping of human corrections
+    human_corrections = {}
+    for _, row in human_results.iterrows():
+        case_key = row['case_id']
+        human_corrections[case_key] = {
+            'human_judgment': row['human_judgment'],
+            'original_ensemble': row['ensemble_result'],
+            'qwen_response': row['qwen_response'],
+            'gemini_response': row['gemini_response']
+        }
+
+    # Apply corrections to VLM results
+    final_results = vlm_results.copy()
+    final_results['final_judgment'] = final_results.apply(
+        lambda row: apply_human_correction(row, human_corrections), axis=1
+    )
+    final_results['correction_type'] = final_results.apply(
+        lambda row: get_correction_type(row, human_corrections), axis=1
+    )
+
+    return final_results
+
+
+def apply_human_correction(row: pd.Series, human_corrections: Dict) -> str:
+    """Apply human correction if available, otherwise use ensemble result."""
+    case_id = getattr(row, 'case_id', None) or getattr(row, 'id', None)
+    if case_id and case_id in human_corrections:
+        human_judgment = human_corrections[case_id]['human_judgment']
+        if human_judgment and human_judgment != 'SKIPPED':
+            return human_judgment
+    return row['ensemble_result']
+
+
+def get_correction_type(row: pd.Series, human_corrections: Dict) -> str:
+    """Determine type of correction applied."""
+    case_id = getattr(row, 'case_id', None) or getattr(row, 'id', None)
+    if case_id and case_id in human_corrections:
+        human_judgment = human_corrections[case_id]['human_judgment']
+        original = row['ensemble_result']
+
+        if human_judgment == 'SKIPPED':
+            return 'skipped'
+        elif human_judgment != original:
+            return 'corrected'
+        else:
+            return 'confirmed'
+    return 'no_human_review'
+
+
+def load_vlm_results(results_dir: str, model: str = None) -> pd.DataFrame:
+    """Load VLM ensemble results from JSON files."""
     results_dir = Path(results_dir)
 
     if model:
@@ -77,9 +245,23 @@ def load_results(results_dir: str, model: str = None) -> pd.DataFrame:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Analyze experiment results")
+    parser = argparse.ArgumentParser(
+        description="Analyze I2I Refusal Bias Results - Complete Pipeline",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Basic VLM analysis
+  python scripts/analysis/analyze_results.py --results-dir data/results
+
+  # Include human corrections
+  python scripts/analysis/analyze_results.py --include-human-review
+
+  # Full pipeline with publication-ready outputs
+  python scripts/analysis/analyze_results.py --include-human-review --publication-ready
+        """
+    )
     parser.add_argument("--results-dir", type=str, default="data/results",
-                       help="Directory with results JSON files")
+                       help="Directory with VLM results JSON files")
     parser.add_argument("--model", type=str, default=None,
                        help="Specific model to analyze (or all if not specified)")
     parser.add_argument("--output-dir", type=str, default="results/analysis",
@@ -87,22 +269,57 @@ def main():
     parser.add_argument("--prompts", type=str,
                        default="data/prompts/i2i_prompts.json",
                        help="Path to prompts JSON")
+    parser.add_argument("--include-human-review", action="store_true",
+                       help="Include human review corrections from Firebase/survey")
+    parser.add_argument("--publication-ready", action="store_true",
+                       help="Generate publication-ready figures and tables")
+    parser.add_argument("--export-csv", action="store_true",
+                       help="Export final dataset as CSV for further analysis")
 
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Load data
-    print("Loading results...")
-    df = load_results(args.results_dir, args.model)
-    print(f"Loaded {len(df)} results")
+    # Load VLM results
+    print("🔍 Loading VLM ensemble results...")
+    vlm_df = load_vlm_results(args.results_dir, args.model)
+    print(f"✅ Loaded {len(vlm_df)} VLM results")
+
+    # Load and integrate human review results if requested
+    if args.include_human_review:
+        print("🔍 Loading human review corrections...")
+        human_df = load_human_review_results_from_firebase()
+        print(f"✅ Loaded {len(human_df)} human review results")
+
+        print("🔄 Combining VLM and human results...")
+        final_df = combine_vlm_and_human_results(vlm_df, human_df)
+        print(f"✅ Created final corrected dataset with {len(final_df)} entries")
+
+        # Show correction statistics
+        correction_stats = final_df['correction_type'].value_counts()
+        print("\n📊 Correction Statistics:")
+        for correction_type, count in correction_stats.items():
+            print(f"  {correction_type}: {count} ({count/len(final_df)*100:.1f}%)")
+    else:
+        print("ℹ️ Using VLM results only (no human corrections)")
+        final_df = vlm_df.copy()
+        final_df['final_judgment'] = final_df['ensemble_result']
+        final_df['correction_type'] = 'none'
+
+    # Export final dataset if requested
+    if args.export_csv:
+        csv_path = output_dir / "final_corrected_dataset.csv"
+        final_df.to_csv(csv_path, index=False)
+        print(f"💾 Exported final dataset to: {csv_path}")
 
     # Initialize analyzers
     analyzer = StatisticalAnalyzer()
     visualizer = ResultsVisualizer(output_dir=str(output_dir / "figures"))
     disparity = DisparityMetrics()
     sensitivity = SensitivityAnalyzer()
+
+    print(f"📊 Starting comprehensive analysis on {len(final_df)} entries...")
 
     # Load prompts for SCS calculation
     prompts = PromptLoader(args.prompts)
@@ -397,6 +614,46 @@ def main():
     print(f"  - scs_log_odds.json (reviewer feedback #4)")
     print(f"  - tables/ (LaTeX tables)")
     print(f"  - figures/ (all visualizations)")
+
+    # Save comprehensive analysis summary
+    analysis_summary = {
+        "metadata": {
+            "created_at": datetime.now().isoformat(),
+            "analysis_type": "human_corrected" if args.include_human_review else "vlm_only",
+            "total_samples": len(final_df),
+            "human_corrections": args.include_human_review,
+            "publication_ready": args.publication_ready
+        },
+        "dataset_stats": {
+            "total_entries": len(final_df),
+            "unique_races": final_df['race'].nunique() if 'race' in final_df.columns else None,
+            "unique_genders": final_df['gender'].nunique() if 'gender' in final_df.columns else None,
+            "unique_ages": final_df['age'].nunique() if 'age' in final_df.columns else None,
+            "correction_stats": final_df['correction_type'].value_counts().to_dict() if 'correction_type' in final_df.columns else None
+        },
+        "files_generated": {
+            "figures": len(list(output_dir.glob('figures/*.png'))),
+            "interactive_plots": len(list(output_dir.glob('figures/*.html'))),
+            "statistical_results": len(list(output_dir.glob('*.json'))),
+            "csv_export": args.export_csv
+        }
+    }
+
+    summary_path = output_dir / "analysis_summary.json"
+    with open(summary_path, "w") as f:
+        json.dump(analysis_summary, f, indent=2, default=str)
+
+    print(f"📋 Analysis summary: {summary_path}")
+
+    if args.include_human_review:
+        correction_count = len(final_df[final_df['correction_type'] == 'corrected'])
+        print(f"🤖 Human-AI collaboration: {correction_count} corrections applied")
+
+    if args.publication_ready:
+        print("📄 Publication-ready outputs generated")
+        print("   → Use figures/ for paper illustrations")
+        print("   → Use *.json files for statistical tables")
+        print("   → Use analysis_summary.json for metadata")
 
 
 if __name__ == "__main__":
