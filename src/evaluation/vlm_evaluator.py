@@ -5,11 +5,13 @@ Uses Qwen3-VL-8B-Instruct and Gemini Flash ensemble for soft erasure detection.
 Model: https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
 - 9B parameters, BF16 precision
 - Enhanced visual perception and multimodal reasoning
-- Optimized for RTX 4090 (24GB VRAM)
+- Flash attention enabled for optimal performance
+- Compatible with HuggingFace transformers example code
 
 Requirements:
 - transformers >= 4.57.0 (for Qwen3-VL support)
 - pip install git+https://github.com/huggingface/transformers
+- flash-attn (optional, for flash_attention_2)
 """
 
 from typing import Optional
@@ -54,29 +56,28 @@ Answer:"""
 
                 from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
 
+                # Follow HuggingFace example with flash attention for better performance
                 self.qwen_model = Qwen3VLForConditionalGeneration.from_pretrained(
                     "Qwen/Qwen3-VL-8B-Instruct",
-                    torch_dtype="bfloat16",
-                    device_map="auto",
-                    trust_remote_code=True
+                    dtype="auto",
+                    attn_implementation="flash_attention_2",
+                    device_map="auto"
                 )
-                self.qwen_processor = AutoProcessor.from_pretrained(
-                    "Qwen/Qwen3-VL-8B-Instruct",
-                    trust_remote_code=True
-                )
+                self.qwen_processor = AutoProcessor.from_pretrained("Qwen/Qwen3-VL-8B-Instruct")
                 print("✅ Qwen3-VL-8B-Instruct loaded successfully")
             except Exception as e:
                 print(f"❌ Failed to load Qwen3-VL-8B-Instruct: {e}")
                 print("💡 Make sure transformers is updated: pip install git+https://github.com/huggingface/transformers")
 
     def _query_qwen(self, image: Image.Image, prompt: str) -> str:
-        """Query Qwen3-VL-8B-Instruct model."""
+        """Query Qwen3-VL-8B-Instruct model following HuggingFace example."""
         self._load_qwen()
 
         if self.qwen_model is None:
             return "UNKNOWN"
 
         try:
+            # Format messages exactly like HuggingFace example
             messages = [
                 {
                     "role": "user",
@@ -87,17 +88,25 @@ Answer:"""
                 }
             ]
 
-            # Preparation for inference
+            # Preparation for inference - following HuggingFace example exactly
             inputs = self.qwen_processor.apply_chat_template(
                 messages,
                 tokenize=True,
                 add_generation_prompt=True,
                 return_dict=True,
                 return_tensors="pt"
-            ).to(self.qwen_model.device)
+            )
+            inputs = inputs.to(self.qwen_model.device)
 
-            # Inference: Generation of the output
-            generated_ids = self.qwen_model.generate(**inputs, max_new_tokens=10)
+            # Inference: Generation of the output (optimized for short responses)
+            generated_ids = self.qwen_model.generate(
+                **inputs,
+                max_new_tokens=10,
+                do_sample=False,  # Greedy decoding for consistent results
+                top_p=0.8,
+                top_k=20,
+                temperature=0.7
+            )
             generated_ids_trimmed = [
                 out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
             ]
