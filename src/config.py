@@ -20,11 +20,11 @@ class PathConfig:
     results_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "results")
     logs_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "logs")
 
-    # Source images base (versions inside: V1/, V2/, V3/)
+    # Source images base (versions inside: V1/, V2/, ..., V7/, final/)
     source_images_base: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "source_images" / "fairface")
 
-    # Default version
-    source_version: str = "V1"
+    # Default version (use 'final' for curated images)
+    source_version: str = "final"
 
     # Prompts
     prompts_file: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "prompts" / "i2i_prompts.json")

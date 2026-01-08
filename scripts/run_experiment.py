@@ -303,8 +303,8 @@ def main():
                        help="Model to run")
     parser.add_argument("--device", type=str, default="cuda",
                        help="Device to run on")
-    parser.add_argument("--version", type=str, default="V1",
-                       help="Source image version (V1, V2, V3, etc.)")
+    parser.add_argument("--version", type=str, default="final",
+                       help="Source image version (final, V1-V7)")
     parser.add_argument("--experiment-id", type=str, default=None,
                        help="Experiment ID (for resuming)")
     parser.add_argument("--resume-from", type=int, default=0,
