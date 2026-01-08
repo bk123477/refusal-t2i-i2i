@@ -154,7 +154,7 @@ bash scripts/setup_environment.sh
 ### 2. Download FairFace Dataset
 
 ```bash
-python scripts/download_fairface.py
+python scripts/data/download_fairface.py
 ```
 
 ### 3. Initial Demographic Sampling
@@ -162,7 +162,7 @@ python scripts/download_fairface.py
 Extract candidate images for each demographic combination:
 
 ```bash
-python scripts/sample_fairface.py --output-dir data/source_images/fairface
+python scripts/data/sample_fairface.py --output-dir data/source_images/fairface
 ```
 
 ### 4. Curate Final Dataset (Interactive)
