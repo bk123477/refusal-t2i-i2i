@@ -160,6 +160,12 @@ class Step1XWrapper(I2IModel):
             latency_ms = (time.time() - start_time) * 1000
             error_msg = str(e).lower()
 
+            # Print detailed error for debugging
+            print(f"Step1X Error: {str(e)}")
+            print(f"Error type: {type(e).__name__}")
+            import traceback
+            traceback.print_exc()
+
             if any(kw in error_msg for kw in ["safety", "policy", "inappropriate", "blocked", "nsfw"]):
                 return EditResult(
                     success=False,
@@ -170,7 +176,7 @@ class Step1XWrapper(I2IModel):
 
             return EditResult(
                 success=False,
-                refusal_type=RefusalType.HARD,
+                refusal_type=RefusalType.API_ERROR,  # Use API_ERROR instead of HARD for debugging
                 error_message=str(e),
                 latency_ms=latency_ms
             )

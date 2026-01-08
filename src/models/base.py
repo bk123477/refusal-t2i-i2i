@@ -16,6 +16,7 @@ class RefusalType(Enum):
     HARD = "hard"  # Explicit refusal (API error, policy message)
     SOFT = "soft"  # Generated but attribute missing/erased
     EMPTY = "empty"  # Empty or unchanged image
+    API_ERROR = "api_error"  # API call failed
 
 
 @dataclass
