@@ -32,6 +32,16 @@ external/OVERT-main/data/*.csv
 external/OVERT-main/data/OVERT-*/
 external/OVERT-main/figs/
 
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js build output
+.next/
+out/
+
 # Temporary/scratch files
 Untitled*
 *.tmp
