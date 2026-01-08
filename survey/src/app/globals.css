@@ -2,14 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Warm, muted color palette - less AI-like */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #252525;
+  --bg-tertiary: #2f2f2f;
+  --text-primary: #e8e6e3;
+  --text-secondary: #a8a5a0;
+  --text-muted: #6b6966;
+  --border-color: #3a3836;
+  --accent-blue: #5a7d9a;
+  --accent-green: #6b8f71;
+  --accent-red: #9e6b6b;
+  --accent-yellow: #a89a6b;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .image-container {
-  @apply relative overflow-hidden rounded-lg border border-gray-700;
+  @apply relative overflow-hidden rounded-lg;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
 }
 
 .keyboard-hint {
-  @apply absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded text-xs font-mono;
+  @apply absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-mono;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Custom button styles - muted, professional look */
+.btn-primary {
+  background-color: var(--accent-blue);
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  background-color: #4a6d8a;
+}
+
+.btn-success {
+  background-color: var(--accent-green);
+  transition: all 0.2s ease;
+}
+.btn-success:hover {
+  background-color: #5a7f61;
+}
+
+.btn-danger {
+  background-color: var(--accent-red);
+  transition: all 0.2s ease;
+}
+.btn-danger:hover {
+  background-color: #8e5b5b;
+}
+
+.btn-warning {
+  background-color: var(--accent-yellow);
+  transition: all 0.2s ease;
+}
+.btn-warning:hover {
+  background-color: #988a5b;
+}
+
+.btn-neutral {
+  background-color: var(--bg-tertiary);
+  transition: all 0.2s ease;
+}
+.btn-neutral:hover {
+  background-color: #3f3f3f;
+}
+
+/* Form elements */
+.select-custom {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Progress bar */
+.progress-bar {
+  background-color: var(--bg-tertiary);
+}
+.progress-fill {
+  background-color: var(--accent-blue);
+}
+
+/* Card/Panel styling */
+.panel {
+  background-color: var(--bg-secondary);
+  border-radius: 0.5rem;
+}
+
+/* Badge styling */
+.badge {
+  @apply px-2 py-0.5 rounded text-xs font-medium;
+}
+.badge-blue {
+  background-color: var(--accent-blue);
+}
+.badge-neutral {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
 }

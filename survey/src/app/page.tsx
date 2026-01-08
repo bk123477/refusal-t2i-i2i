@@ -1,6 +1,18 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit
+} from 'firebase/firestore'
+import { db } from '../lib/firebase'
 
 interface HumanReviewItem {
   id: number
@@ -38,34 +50,76 @@ interface EvaluationResult {
   timestamp: number
 }
 
-// Load human review data
+// Load human review data from Firebase
 async function loadHumanReviewData(): Promise<HumanReviewItem[]> {
   try {
-    // Try to load the latest human review file
+    const humanReviewRef = collection(db, 'human_reviews')
+    const q = query(humanReviewRef, orderBy('created_at', 'desc'), limit(1))
+    const querySnapshot = await getDocs(q)
+
+    if (!querySnapshot.empty) {
+      const latestDoc = querySnapshot.docs[0]
+      const data = latestDoc.data()
+      console.log(`Loaded human review data from Firebase: ${data.review_queue?.length || 0} items`)
+      return data.review_queue || []
+    }
+  } catch (error) {
+    console.warn('Could not load human review data from Firebase:', error)
+  }
+
+  // Fallback to local files if Firebase fails
+  try {
     const response = await fetch('/human_review_queue_latest.json')
     if (response.ok) {
       const data = await response.json()
       return data.review_queue || []
     }
   } catch (error) {
-    console.warn('Could not load human review data:', error)
-  }
-
-  // Fallback: try to find any human review file
-  try {
-    const files = ['human_review_queue_20241208_120000.json', 'human_review_queue.json']
-    for (const file of files) {
-      const response = await fetch(`/${file}`)
-      if (response.ok) {
-        const data = await response.json()
-        return data.review_queue || []
-      }
-    }
-  } catch (error) {
-    console.warn('Could not find human review files:', error)
+    console.warn('Could not load local human review data:', error)
   }
 
   return []
+}
+
+// Save human review result to Firebase
+async function saveHumanReviewResult(result: any) {
+  try {
+    const resultsRef = collection(db, 'human_review_results')
+    await addDoc(resultsRef, {
+      ...result,
+      saved_at: new Date().toISOString(),
+      user_agent: navigator.userAgent
+    })
+    console.log('Human review result saved to Firebase')
+  } catch (error) {
+    console.error('Failed to save to Firebase:', error)
+    // Fallback: save to local storage
+    const existing = JSON.parse(localStorage.getItem('humanReviewResults') || '[]')
+    existing.push({ ...result, saved_at: new Date().toISOString(), fallback: true })
+    localStorage.setItem('humanReviewResults', JSON.stringify(existing))
+    console.log('Saved to localStorage as fallback')
+  }
+}
+
+// Load human review results from Firebase
+async function loadHumanReviewResults(): Promise<any[]> {
+  try {
+    const resultsRef = collection(db, 'human_review_results')
+    const q = query(resultsRef, orderBy('timestamp', 'desc'))
+    const querySnapshot = await getDocs(q)
+
+    const results = []
+    querySnapshot.forEach((doc) => {
+      results.push({ id: doc.id, ...doc.data() })
+    })
+
+    console.log(`Loaded ${results.length} human review results from Firebase`)
+    return results
+  } catch (error) {
+    console.error('Failed to load from Firebase:', error)
+    // Fallback to local storage
+    return JSON.parse(localStorage.getItem('humanReviewResults') || '[]')
+  }
 }
 
 // Demo data - replace with actual data loading
@@ -91,18 +145,43 @@ export default function EvaluationPage() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [results, setResults] = useState<EvaluationResult[]>([])
   const [humanReviewResults, setHumanReviewResults] = useState<any[]>([])
+  const [firebaseConnected, setFirebaseConnected] = useState<boolean | null>(null)
   const [filters, setFilters] = useState({
     model: 'all',
     race: 'all',
     category: 'all'
   })
 
-  // Load human review data on mount
+  // Check Firebase connection
   useEffect(() => {
-    loadHumanReviewData().then(data => {
-      setHumanReviewItems(data)
-      console.log(`Loaded ${data.length} human review items`)
-    })
+    const checkFirebase = async () => {
+      try {
+        // Try to access Firestore
+        await getDocs(collection(db, '_test'))
+        setFirebaseConnected(true)
+      } catch (error) {
+        console.warn('Firebase connection check failed:', error)
+        setFirebaseConnected(false)
+      }
+    }
+    checkFirebase()
+  }, [])
+
+  // Load human review data and existing results on mount
+  useEffect(() => {
+    const loadData = async () => {
+      // Load review items
+      const reviewData = await loadHumanReviewData()
+      setHumanReviewItems(reviewData)
+
+      // Load existing results
+      const existingResults = await loadHumanReviewResults()
+      setHumanReviewResults(existingResults)
+
+      console.log(`Loaded ${reviewData.length} human review items and ${existingResults.length} existing results`)
+    }
+
+    loadData()
   }, [])
 
   // Switch to human review mode if data is available
@@ -131,12 +210,12 @@ export default function EvaluationPage() {
     }
   }, [currentItem, currentIndex, items.length])
 
-  const handleHumanReviewLabel = useCallback((label: 'yes' | 'no' | 'partial' | 'skip') => {
+  const handleHumanReviewLabel = useCallback(async (label: 'yes' | 'no' | 'partial' | 'skip') => {
     if (!currentData[currentIndex] || mode !== 'human-review') return
 
     const currentHumanItem = currentData[currentIndex] as HumanReviewItem
 
-    // Update the item status
+    // Update the item status locally
     const updatedItems = [...humanReviewItems]
     updatedItems[currentIndex] = {
       ...currentHumanItem,
@@ -148,7 +227,7 @@ export default function EvaluationPage() {
 
     setHumanReviewItems(updatedItems)
 
-    // Save result
+    // Save result to Firebase
     const result = {
       caseId: currentHumanItem.case_id,
       human_judgment: label === 'skip' ? 'SKIPPED' : label.toUpperCase(),
@@ -156,9 +235,11 @@ export default function EvaluationPage() {
       qwen_response: currentHumanItem.qwen_response,
       gemini_response: currentHumanItem.gemini_response,
       ensemble_result: currentHumanItem.ensemble_result,
-      attribute: currentHumanItem.attribute
+      attribute: currentHumanItem.attribute,
+      disagreement_type: currentHumanItem.disagreement_type
     }
 
+    await saveHumanReviewResult(result)
     setHumanReviewResults(prev => [...prev, result])
 
     // Move to next item
@@ -198,14 +279,37 @@ export default function EvaluationPage() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleLabel, handleHumanReviewLabel, currentIndex, items.length, humanReviewItems.length, mode])
 
-  const exportResults = () => {
-    const data = JSON.stringify(results, null, 2)
-    const blob = new Blob([data], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `evaluation_results_${Date.now()}.json`
-    a.click()
+  const exportResults = async () => {
+    try {
+      // Load all results from Firebase
+      const allResults = await loadHumanReviewResults()
+      const data = JSON.stringify({
+        export_timestamp: new Date().toISOString(),
+        total_results: allResults.length,
+        mode: mode,
+        results: mode === 'evaluation' ? results : allResults
+      }, null, 2)
+
+      const blob = new Blob([data], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${mode}_results_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`
+      a.click()
+      URL.revokeObjectURL(url)
+
+      console.log(`Exported ${allResults.length} results`)
+    } catch (error) {
+      console.error('Export failed:', error)
+      // Fallback to current session data
+      const data = JSON.stringify(results, null, 2)
+      const blob = new Blob([data], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `fallback_results_${Date.now()}.json`
+      a.click()
+    }
   }
 
   if (!currentItem) {
@@ -232,32 +336,46 @@ export default function EvaluationPage() {
     <div className="min-h-screen p-4">
       {/* Mode Selector */}
       <div className="max-w-7xl mx-auto mb-4">
-        <div className="flex gap-2 mb-4">
-          <button
-            onClick={() => setMode('evaluation')}
-            className={`px-4 py-2 rounded text-sm font-medium ${
-              mode === 'evaluation'
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
-          >
-            I2I Evaluation ({items.length} items)
-          </button>
-          <button
-            onClick={() => setMode('human-review')}
-            className={`px-4 py-2 rounded text-sm font-medium ${
-              mode === 'human-review'
-                ? 'bg-green-600 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
-          >
-            Human Review ({humanReviewItems.length} items)
-            {humanReviewItems.length > 0 && (
-              <span className="ml-2 bg-red-500 text-white text-xs px-1 py-0.5 rounded">
-                {humanReviewItems.filter(item => item.review_status === 'pending').length} pending
-              </span>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setMode('evaluation')}
+              className={`px-4 py-2 rounded text-sm font-medium ${
+                mode === 'evaluation'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              I2I Evaluation ({items.length} items)
+            </button>
+            <button
+              onClick={() => setMode('human-review')}
+              className={`px-4 py-2 rounded text-sm font-medium ${
+                mode === 'human-review'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Human Review ({humanReviewItems.length} items)
+              {humanReviewItems.length > 0 && (
+                <span className="ml-2 bg-red-500 text-white text-xs px-1 py-0.5 rounded">
+                  {humanReviewItems.filter(item => item.review_status === 'pending').length} pending
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Firebase Status */}
+          <div className="flex items-center gap-2 text-sm">
+            <span>Firebase:</span>
+            {firebaseConnected === null ? (
+              <span className="text-yellow-600">🔄 Checking...</span>
+            ) : firebaseConnected ? (
+              <span className="text-green-600">🟢 Connected</span>
+            ) : (
+              <span className="text-red-600">🔴 Offline (using localStorage)</span>
             )}
-          </button>
+          </div>
         </div>
       </div>
 
