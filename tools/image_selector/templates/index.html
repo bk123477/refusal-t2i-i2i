@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Version Selector</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: #1a1a2e;
+            padding: 15px 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #333;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .stats span {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #444;
+            background: #2a2a4a;
+            color: #eee;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #3a3a5a;
+        }
+
+        .filter-btn.active {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .demographic-row {
+            background: #2a2a4a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .demographic-row.selected {
+            border: 2px solid #4CAF50;
+        }
+
+        .demographic-row.hidden {
+            display: none;
+        }
+
+        .demo-info {
+            min-width: 180px;
+            padding-right: 15px;
+            border-right: 1px solid #444;
+        }
+
+        .demo-info h3 {
+            font-size: 14px;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .demo-info p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .demo-info .selected-version {
+            margin-top: 8px;
+            padding: 4px 8px;
+            background: #4CAF50;
+            border-radius: 4px;
+            font-size: 11px;
+            display: inline-block;
+        }
+
+        .images-container {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .image-card {
+            flex-shrink: 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 8px;
+            padding: 8px;
+            background: #1a1a2e;
+        }
+
+        .image-card:hover {
+            background: #3a3a5a;
+            transform: scale(1.02);
+        }
+
+        .image-card.selected {
+            background: #2e5a2e;
+            box-shadow: 0 0 0 3px #4CAF50;
+        }
+
+        .image-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .image-card .version-label {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #888;
+        }
+
+        .image-card.selected .version-label {
+            color: #4CAF50;
+        }
+
+        .bottom-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .export-btn {
+            padding: 15px 30px;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .export-btn.secondary {
+            background: #555;
+        }
+
+        .export-btn.secondary:hover {
+            background: #666;
+        }
+
+        .export-btn.primary {
+            background: #4CAF50;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .export-btn.primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .export-btn:disabled {
+            background: #666 !important;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none !important;
+        }
+
+        @media (max-width: 900px) {
+            .image-card img {
+                width: 100px;
+                height: 100px;
+            }
+            .demo-info {
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Image Version Selector</h1>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: {{ (selected / total * 100) | round(1) }}%"></div>
+        </div>
+        <div class="stats">
+            <div>Selected: <span id="selectedCount">{{ selected }}</span> / {{ total }}</div>
+            <div>Remaining: <span id="remainingCount">{{ total - selected }}</span></div>
+        </div>
+    </div>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All (84)</button>
+        <button class="filter-btn" data-filter="selected">Selected</button>
+        <button class="filter-btn" data-filter="unselected">Unselected</button>
+        <span style="color:#555">|</span>
+        {% for race in ['Black', 'EastAsian', 'Indian', 'Latino', 'MiddleEastern', 'SoutheastAsian', 'White'] %}
+        <button class="filter-btn" data-filter-race="{{ race }}">{{ race }}</button>
+        {% endfor %}
+    </div>
+
+    <div id="demographicsContainer">
+        {% for demo in demographics %}
+        <div class="demographic-row {% if demo.id in selections %}selected{% endif %}"
+             data-demo-id="{{ demo.id }}"
+             data-race="{{ demo.race }}"
+             data-selected="{{ 'true' if demo.id in selections else 'false' }}">
+
+            <div class="demo-info">
+                <h3>{{ demo.race }}</h3>
+                <p>{{ demo.gender }} / {{ demo.age }}</p>
+                {% if demo.id in selections %}
+                <span class="selected-version">{{ selections[demo.id].version }}</span>
+                {% endif %}
+            </div>
+
+            <div class="images-container">
+                {% for version in versions %}
+                <div class="image-card {% if demo.id in selections and selections[demo.id].version == version %}selected{% endif %}"
+                     data-version="{{ version }}"
+                     onclick="selectImage('{{ demo.id }}', '{{ version }}', '{{ demo.race }}', '{{ demo.gender }}', '{{ demo.age }}')">
+                    <img src="/images/{{ version }}/{{ demo.race }}/{{ demo.race }}_{{ demo.gender }}_{{ demo.age }}.jpg"
+                         alt="{{ version }}"
+                         loading="lazy">
+                    <div class="version-label">{{ version }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="bottom-buttons">
+        <button class="export-btn secondary" onclick="exportSelections()">
+            Export JSON
+        </button>
+        <button class="export-btn primary" id="finalizeBtn" onclick="finalizeSelections()">
+            Finalize to /final
+        </button>
+    </div>
+
+    <script>
+        const totalCount = {{ total }};
+
+        function updateProgress(selectedCount) {
+            const percent = (selectedCount / totalCount * 100).toFixed(1);
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('selectedCount').textContent = selectedCount;
+            document.getElementById('remainingCount').textContent = totalCount - selectedCount;
+        }
+
+        function selectImage(demoId, version, race, gender, age) {
+            const row = document.querySelector(`[data-demo-id="${demoId}"]`);
+            const cards = row.querySelectorAll('.image-card');
+            const clickedCard = row.querySelector(`[data-version="${version}"]`);
+
+            // If clicking already selected, deselect
+            if (clickedCard.classList.contains('selected')) {
+                fetch('/api/deselect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ demo_id: demoId })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    clickedCard.classList.remove('selected');
+                    row.classList.remove('selected');
+                    row.dataset.selected = 'false';
+                    row.querySelector('.selected-version')?.remove();
+                    updateProgress(data.total_selected);
+                });
+                return;
+            }
+
+            // Select new version
+            fetch('/api/select', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    demo_id: demoId,
+                    version: version,
+                    race: race,
+                    gender: gender,
+                    age: age
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Update UI
+                cards.forEach(card => card.classList.remove('selected'));
+                clickedCard.classList.add('selected');
+                row.classList.add('selected');
+                row.dataset.selected = 'true';
+
+                // Update version label
+                let versionLabel = row.querySelector('.selected-version');
+                if (!versionLabel) {
+                    versionLabel = document.createElement('span');
+                    versionLabel.className = 'selected-version';
+                    row.querySelector('.demo-info').appendChild(versionLabel);
+                }
+                versionLabel.textContent = version;
+
+                updateProgress(data.total_selected);
+            });
+        }
+
+        function exportSelections() {
+            fetch('/api/export')
+                .then(res => res.json())
+                .then(data => {
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'selected_images.json';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                });
+        }
+
+        function finalizeSelections() {
+            const selectedCount = parseInt(document.getElementById('selectedCount').textContent);
+
+            if (selectedCount !== totalCount) {
+                alert(`All ${totalCount} images must be selected before finalizing.\nCurrently selected: ${selectedCount}`);
+                return;
+            }
+
+            if (!confirm('This will copy all selected images to the final/ folder.\nExisting final/ folder will be replaced.\n\nContinue?')) {
+                return;
+            }
+
+            const btn = document.getElementById('finalizeBtn');
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+
+            fetch('/api/finalize', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Success! ${data.copied} images copied to:\n${data.final_dir}`);
+                        btn.textContent = 'Done!';
+                        btn.style.background = '#45a049';
+                    } else {
+                        alert('Error: ' + data.error);
+                        btn.disabled = false;
+                        btn.textContent = 'Finalize to /final';
+                    }
+                })
+                .catch(err => {
+                    alert('Error: ' + err.message);
+                    btn.disabled = false;
+                    btn.textContent = 'Finalize to /final';
+                });
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+                const raceFilter = btn.dataset.filterRace;
+
+                // Update button states
+                if (filter) {
+                    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+                if (raceFilter) {
+                    document.querySelectorAll('[data-filter-race]').forEach(b => b.classList.toggle('active', b === btn));
+                }
+
+                // Apply filters
+                const activeFilter = document.querySelector('[data-filter].active')?.dataset.filter || 'all';
+                const activeRace = document.querySelector('[data-filter-race].active')?.dataset.filterRace;
+
+                document.querySelectorAll('.demographic-row').forEach(row => {
+                    let show = true;
+
+                    // Status filter
+                    if (activeFilter === 'selected' && row.dataset.selected !== 'true') show = false;
+                    if (activeFilter === 'unselected' && row.dataset.selected === 'true') show = false;
+
+                    // Race filter
+                    if (activeRace && row.dataset.race !== activeRace) show = false;
+
+                    row.classList.toggle('hidden', !show);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
