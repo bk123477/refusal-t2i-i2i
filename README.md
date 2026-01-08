@@ -121,12 +121,12 @@ python scripts/sample_fairface.py --output-dir data/source_images/fairface
 
 ```bash
 # Single model
-python scripts/run_experiment.py --model flux --device cuda
-python scripts/run_experiment.py --model step1x --device cuda
-python scripts/run_experiment.py --model qwen --device cuda
+python scripts/experiment/run_experiment.py --model flux --device cuda
+python scripts/experiment/run_experiment.py --model step1x --device cuda
+python scripts/experiment/run_experiment.py --model qwen --device cuda
 
 # All models
-python scripts/run_experiment.py --model all --device cuda
+python scripts/experiment/run_experiment.py --model all --device cuda
 ```
 
 ### 5. Analyze Results
