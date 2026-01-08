@@ -243,11 +243,56 @@ npm run dev
 - **Offline Support**: Falls back to local storage if Firebase unavailable
 - **Progress Tracking**: Real-time progress updates across sessions
 
-### 7. Analyze Results
+### 7. Analyze Results (Complete Pipeline)
 
+#### Basic Analysis (VLM Only)
 ```bash
-python scripts/analyze_results.py --results-dir data/results
+python scripts/analysis/analyze_results.py --results-dir data/results
 ```
+
+#### Full Pipeline with Human Corrections
+```bash
+# Include human review corrections from Firebase/survey app
+python scripts/analysis/analyze_results.py \
+    --include-human-review \
+    --publication-ready \
+    --export-csv \
+    --output-dir results/final_analysis
+```
+
+#### Advanced Options
+```bash
+# Specific model analysis
+python scripts/analysis/analyze_results.py --model FLUX.2-dev
+
+# Custom output directory
+python scripts/analysis/analyze_results.py --output-dir results/custom_analysis
+
+# Export final corrected dataset
+python scripts/analysis/analyze_results.py --export-csv --include-human-review
+```
+
+#### Generated Outputs
+```
+results/final_analysis/
+├── analysis_summary.json       # Complete analysis metadata
+├── final_corrected_dataset.csv # Human-corrected dataset (if requested)
+├── statistical_results.json    # ANOVA, Chi-square, mixed effects
+├── bootstrap_results.json      # Robustness analysis
+├── figures/                    # Publication-ready visualizations
+│   ├── bias_heatmap.png       # Race/gender bias patterns
+│   ├── disparity_barplot.png   # Statistical significance
+│   ├── model_comparison.html   # Interactive model comparison
+│   └── scs_analysis.png        # Stereotype congruence scores
+└── tables/                     # LaTeX tables for papers
+    ├── anova_results.tex      # Statistical test results
+    └── disparity_metrics.tex   # Bias metrics summary
+```
+
+#### Human-AI Collaboration Stats
+- **85% Consensus**: Automatic acceptance (Qwen ↔ Gemini agree)
+- **15% Corrections**: Human expert review (disagreements)
+- **Complete Audit Trail**: Every decision logged and traceable
 
 ## Model Configuration
 
