@@ -102,11 +102,20 @@ This repository contains the code and data for studying race-conditioned refusal
 │       └── requirements.txt       # Tool dependencies
 │
 ├── scripts/
-│   ├── setup_environment.sh       # Environment setup
-│   ├── download_fairface.py       # Download FairFace dataset
-│   ├── sample_fairface.py         # Initial demographic sampling
-│   ├── run_experiment.py          # Main experiment runner
-│   └── analyze_results.py         # Statistical analysis
+│   ├── analysis/
+│   │   ├── analyze_results.py     # Statistical analysis & visualization
+│   │   ├── compare_models.py      # Cross-model comparison
+│   │   └── test_analysis_pipeline.py # Analysis pipeline testing
+│   ├── data/
+│   │   ├── download_fairface.py   # Download FairFace dataset
+│   │   ├── sample_fairface.py     # Initial demographic sampling
+│   │   └── sample_fairface_parallel.py # Parallel sampling
+│   └── experiment/
+│       ├── run_experiment.py      # Main experiment runner
+│       ├── run_flux.sh            # FLUX.2-dev experiment script
+│       ├── run_qwen.sh            # Qwen experiment script
+│       ├── run_step1x.sh          # Step1X experiment script
+│       └── setup_environment.sh   # Environment setup
 │
 ├── docs/
 │   ├── RESEARCH_PROPOSAL.md       # Full research proposal
