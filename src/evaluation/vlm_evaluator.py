@@ -6,7 +6,8 @@ Workflow:
 1. Ensemble evaluation (Qwen + Gemini voting)
 2. Consensus detection - automatic acceptance for agreed cases
 3. Human review queue - manual review for disagreed cases only
-4. Final results integration
+4. Survey app integration - human review via web interface
+5. Final results integration with human corrections
 
 Model: https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct
 - 9B parameters, BF16 precision
@@ -18,7 +19,8 @@ Features:
 - Ensemble voting for improved accuracy
 - Consensus detection for efficiency
 - Human review candidate identification
-- Detailed analysis reporting
+- Survey app integration for human evaluation
+- Detailed analysis reporting and data export
 
 Requirements:
 - transformers >= 4.57.0 (for Qwen3-VL support)
@@ -325,3 +327,72 @@ Answer:"""
             result for result in results_list
             if result['needs_human_review']
         ]
+
+    def save_human_review_data(self, results_list: list, output_path: str = None) -> str:
+        """
+        Save human review candidates to JSON file for survey app consumption.
+
+        Args:
+            results_list: List of detailed evaluation results
+            output_path: Custom output path (optional)
+
+        Returns:
+            str: Path to saved JSON file
+        """
+        import json
+        from pathlib import Path
+        from datetime import datetime
+
+        if output_path is None:
+            # Default path in survey app's public directory
+            project_root = Path(__file__).parent.parent.parent
+            survey_dir = project_root / "survey" / "public"
+            survey_dir.mkdir(exist_ok=True)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_path = survey_dir / f"human_review_queue_{timestamp}.json"
+
+        # Prepare data for survey app
+        review_data = {
+            "metadata": {
+                "created_at": datetime.now().isoformat(),
+                "total_cases": len(results_list),
+                "human_review_cases": len([r for r in results_list if r['needs_human_review']]),
+                "consensus_cases": len([r for r in results_list if r['consensus']]),
+                "consensus_rate": len([r for r in results_list if r['consensus']]) / len(results_list) if results_list else 0
+            },
+            "review_queue": []
+        }
+
+        for i, result in enumerate(results_list):
+            if result['needs_human_review']:
+                # Convert image to base64 for web display
+                image_b64 = ""
+                if 'image' in result:  # Assuming image is passed separately
+                    image_b64 = self._image_to_base64(result['image'])
+
+                review_item = {
+                    "id": i,
+                    "case_id": f"case_{i:04d}",
+                    "attribute": result.get('attribute', 'unknown'),
+                    "qwen_response": result['qwen_response'],
+                    "gemini_response": result['gemini_response'],
+                    "ensemble_result": result['final_result'],
+                    "disagreement_type": f"{result['qwen_response']} vs {result['gemini_response']}",
+                    "image_data": image_b64,  # Base64 encoded image
+                    "image_path": result.get('image_path', ''),  # Original path if available
+                    "review_status": "pending",  # pending, reviewed, skipped
+                    "human_judgment": "",  # YES, NO, PARTIAL, UNCLEAR
+                    "human_notes": "",
+                    "reviewed_at": "",
+                    "reviewer": ""
+                }
+                review_data["review_queue"].append(review_item)
+
+        # Save to file
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(review_data, f, indent=2, ensure_ascii=False)
+
+        print(f"Human review data saved to: {output_path}")
+        print(f"Total cases requiring review: {len(review_data['review_queue'])}")
+
+        return str(output_path)
