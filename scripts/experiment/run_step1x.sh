@@ -31,8 +31,10 @@
 #   pip install RegionE  # optional
 #
 # Usage:
-#   bash scripts/run_step1x.sh
-#   bash scripts/run_step1x.sh --resume <experiment_id> <request_idx>
+#   bash scripts/experiment/run_step1x.sh                    # Interactive category selection
+#   bash scripts/experiment/run_step1x.sh --all              # All categories (no prompt)
+#   bash scripts/experiment/run_step1x.sh --categories A,B   # Run specific categories
+#   bash scripts/experiment/run_step1x.sh --resume ID IDX    # Resume experiment
 #============================================================
 
 set -e
@@ -41,7 +43,7 @@ set -e
 MODEL="step1x"
 DEVICE="cuda"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
 
 # Colors for output
 RED='\033[0;31m'
@@ -56,10 +58,58 @@ echo "  I2I Refusal Bias Study"
 echo "============================================================"
 echo -e "${NC}"
 
-# Check if resuming
-if [ "$1" == "--resume" ]; then
-    EXPERIMENT_ID="$2"
-    RESUME_FROM="$3"
+# Parse arguments
+CATEGORIES=""
+RESUME_MODE=false
+EXPERIMENT_ID=""
+RESUME_FROM=""
+INTERACTIVE=true
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --resume)
+            RESUME_MODE=true
+            EXPERIMENT_ID="$2"
+            RESUME_FROM="$3"
+            shift 3
+            ;;
+        --categories)
+            CATEGORIES="$2"
+            INTERACTIVE=false
+            shift 2
+            ;;
+        --all)
+            CATEGORIES="A,B,C,D,E"
+            INTERACTIVE=false
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: $0 [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  (no options)           Interactive category selection"
+            echo "  --all                  Run all categories (A-E)"
+            echo "  --categories A,B,C     Run specific categories"
+            echo "  --resume <id> <idx>    Resume experiment"
+            echo ""
+            echo "Categories: A(Neutral), B(Occupational), C(Cultural), D(Vulnerability), E(Harmful)"
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}Unknown option: $1${NC}"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
+# Main execution logic
+if [ "$RESUME_MODE" = true ]; then
+    if [ -z "$EXPERIMENT_ID" ] || [ -z "$RESUME_FROM" ]; then
+        echo -e "${RED}Usage: $0 --resume <experiment_id> <request_index>${NC}"
+        exit 1
+    fi
+
     echo -e "${YELLOW}Resuming experiment: ${EXPERIMENT_ID} from request ${RESUME_FROM}${NC}"
 
     cd "$PROJECT_ROOT"
@@ -72,9 +122,28 @@ else
     # New experiment
     EXPERIMENT_ID=$(date +"%Y%m%d_%H%M%S")
 
+    # Interactive category selection if no categories specified
+    if [ "$INTERACTIVE" = true ] && [ -z "$CATEGORIES" ]; then
+        echo -e "${YELLOW}No categories specified. Starting interactive selection...${NC}"
+        echo ""
+        CATEGORIES=$(python "$SCRIPT_DIR/category_selector.py" --quick) || {
+            echo -e "${RED}Category selection cancelled${NC}"
+            exit 1
+        }
+    fi
+
+    # Default to all if still empty
+    if [ -z "$CATEGORIES" ]; then
+        CATEGORIES="A,B,C,D,E"
+    fi
+
     echo "Model: $MODEL"
     echo "Device: $DEVICE"
     echo "Experiment ID: $EXPERIMENT_ID"
+    echo "Categories: $CATEGORIES"
+    num_cats=$(echo "$CATEGORIES" | tr ',' '\n' | wc -l | tr -d ' ')
+    estimated=$((num_cats * 10 * 84))
+    echo "Estimated requests: $estimated"
     echo ""
 
     # Check prerequisites
@@ -91,9 +160,9 @@ else
     }
 
     # Check if source images exist
-    if [ ! -d "$PROJECT_ROOT/data/source_images/fairface" ] || [ -z "$(ls -A $PROJECT_ROOT/data/source_images/fairface 2>/dev/null)" ]; then
+    if [ ! -d "$PROJECT_ROOT/data/source_images/final" ]; then
         echo -e "${RED}ERROR: Source images not found!${NC}"
-        echo "Please run: python scripts/sample_fairface.py"
+        echo "Please complete image selection first"
         exit 1
     fi
 
@@ -120,7 +189,8 @@ else
     python scripts/experiment/run_experiment.py \
         --model "$MODEL" \
         --device "$DEVICE" \
-        --experiment-id "$EXPERIMENT_ID"
+        --experiment-id "$EXPERIMENT_ID" \
+        --categories "$CATEGORIES"
 fi
 
 echo ""

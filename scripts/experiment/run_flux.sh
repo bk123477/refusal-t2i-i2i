@@ -23,8 +23,10 @@
 #   └── summary.json      # Statistical summary & metrics
 #
 # Usage:
-#   bash scripts/experiment/run_flux.sh                    # New experiment
-#   bash scripts/experiment/run_flux.sh --resume ID IDX   # Resume experiment
+#   bash scripts/experiment/run_flux.sh                    # Interactive category selection
+#   bash scripts/experiment/run_flux.sh --all              # All categories (no prompt)
+#   bash scripts/experiment/run_flux.sh --categories A,B   # Run specific categories
+#   bash scripts/experiment/run_flux.sh --resume ID IDX    # Resume experiment
 #===============================================================================
 
 set -e
@@ -102,15 +104,68 @@ check_prerequisites() {
     echo ""
 }
 
+# Parse arguments
+CATEGORIES=""
+RESUME_MODE=false
+EXPERIMENT_ID=""
+RESUME_FROM=""
+INTERACTIVE=true
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --resume)
+            RESUME_MODE=true
+            EXPERIMENT_ID="$2"
+            RESUME_FROM="$3"
+            shift 3
+            ;;
+        --categories)
+            CATEGORIES="$2"
+            INTERACTIVE=false
+            shift 2
+            ;;
+        --all)
+            CATEGORIES="A,B,C,D,E"
+            INTERACTIVE=false
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: $0 [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  (no options)           Interactive category selection menu"
+            echo "  --all                  Run all categories (A-E, 50 prompts)"
+            echo "  --categories A,B,C     Run specific categories"
+            echo "  --resume <id> <idx>    Resume interrupted experiment"
+            echo ""
+            echo "Categories:"
+            echo "  A: Neutral Baseline (10 prompts) - methodology validation"
+            echo "  B: Occupational Stereotype (10 prompts)"
+            echo "  C: Cultural/Religious Expression (10 prompts)"
+            echo "  D: Vulnerability Attributes (10 prompts)"
+            echo "  E: Harmful/Safety-Triggering (10 prompts)"
+            echo ""
+            echo "Examples:"
+            echo "  $0                     # Interactive menu for selection"
+            echo "  $0 --all               # Run all 50 prompts x 84 images"
+            echo "  $0 --categories A      # Only neutral baseline (840 requests)"
+            echo "  $0 --categories B,C,D  # 3 categories (2,520 requests)"
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}Unknown option: $1${NC}"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
 # Main execution logic
-if [ "$1" == "--resume" ]; then
-    if [ $# -ne 3 ]; then
+if [ "$RESUME_MODE" = true ]; then
+    if [ -z "$EXPERIMENT_ID" ] || [ -z "$RESUME_FROM" ]; then
         echo -e "${RED}Usage: $0 --resume <experiment_id> <request_index>${NC}"
         exit 1
     fi
-
-    EXPERIMENT_ID="$2"
-    RESUME_FROM="$3"
 
     echo -e "${YELLOW}Resuming FLUX experiment${NC}"
     echo "   Experiment ID: $EXPERIMENT_ID"
@@ -128,11 +183,38 @@ else
     # New experiment
     EXPERIMENT_ID=$(date +"%Y%m%d_%H%M%S")
 
+    # Interactive category selection if no categories specified
+    if [ "$INTERACTIVE" = true ] && [ -z "$CATEGORIES" ]; then
+        echo -e "${YELLOW}No categories specified. Starting interactive selection...${NC}"
+        echo ""
+
+        # Run Python category selector
+        CATEGORIES=$(python "$SCRIPT_DIR/category_selector.py" --quick) || {
+            echo -e "${RED}Category selection cancelled${NC}"
+            exit 1
+        }
+
+        if [ -z "$CATEGORIES" ]; then
+            echo -e "${RED}No categories selected. Exiting.${NC}"
+            exit 1
+        fi
+    fi
+
     echo -e "${GREEN}Starting New FLUX Experiment${NC}"
     echo "   Model: $MODEL"
     echo "   Device: $DEVICE"
     echo "   Experiment ID: $EXPERIMENT_ID"
-    echo "   Estimated requests: 4,200"
+    if [ -n "$CATEGORIES" ]; then
+        echo "   Categories: $CATEGORIES"
+        # Calculate estimated requests based on categories
+        num_cats=$(echo "$CATEGORIES" | tr ',' '\n' | wc -l | tr -d ' ')
+        estimated=$((num_cats * 10 * 84))
+        echo "   Estimated requests: $estimated (${num_cats} categories x 10 prompts x 84 images)"
+    else
+        CATEGORIES="A,B,C,D,E"
+        echo "   Categories: All (A-E)"
+        echo "   Estimated requests: 4,200"
+    fi
     echo ""
 
     # Run prerequisite checks
@@ -154,7 +236,8 @@ else
     python scripts/experiment/run_experiment.py \
         --model "$MODEL" \
         --device "$DEVICE" \
-        --experiment-id "$EXPERIMENT_ID"
+        --experiment-id "$EXPERIMENT_ID" \
+        --categories "$CATEGORIES"
 fi
 
 echo ""
