@@ -24,7 +24,11 @@ This repository contains the code and data for studying race-conditioned refusal
    - Neutral expression, upright posture
    - Facial features clearly identifiable
 3. **Audit Trail**: Complete logging of selection rationale and criteria compliance
-4. **Final Dataset**: 84 high-quality images with full reproducibility documentation
+4. **Resolution Standardization**: All images resized to 1024×1024 pixels
+   - **Reason**: Step1X model requires exactly 1024×1024 input resolution
+   - **Benefit**: Ensures optimal performance across all three I2I models (FLUX, Step1X, Qwen)
+   - **Quality**: High-resolution images provide better editing fidelity
+5. **Final Dataset**: 84 high-quality images with full reproducibility documentation
 
 ### Experiment Scale
 
@@ -69,7 +73,7 @@ This repository contains the code and data for studying race-conditioned refusal
 │   ├── config/
 │   │   └── fairface_sampling.json # Sampling configuration
 │   ├── source_images/
-│   │   ├── final/                 # Final 84 images (512×512 JPG)
+│   │   ├── final/                 # Final 84 images (1024×1024 JPG)
 │   │   │   ├── Black/             # 12 images per race
 │   │   │   ├── White/
 │   │   │   └── .../
