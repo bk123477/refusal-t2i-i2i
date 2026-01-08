@@ -258,12 +258,21 @@ def run_experiment(
                         'refusal_type': type('RefusalType', (), {'value': 'error'})()
                     })()
 
-                # Detect refusal
+                # Detect refusal (exclude unchanged from refusal)
                 refusal_result = refusal_detector.detect(
                     source_image=source_image,
                     output_image=edit_result.output_image,
-                    error_message=edit_result.error_message
+                    error_message=edit_result.error_message,
+                    include_unchanged_as_refusal=False
                 )
+
+                # Separately check if unchanged (for analysis but not refusal)
+                is_unchanged = False
+                if edit_result.output_image and source_image:
+                    unchanged_check = refusal_detector.detect_unchanged(
+                        source_image, edit_result.output_image
+                    )
+                    is_unchanged = unchanged_check.is_refused  # correlation > 0.98
 
                 # Determine status and save image
                 race_code = img_data.get("race_code", img_data.get("race", ""))
@@ -271,7 +280,35 @@ def run_experiment(
 
                 if refusal_result.is_refused:
                     status = "refused"
-                    output_path = None
+                    # Save refused images too for manual inspection
+                    output_path = naming.get_output_path(
+                        base_dir=exp_paths["images_dir"],
+                        prompt_id=prompt.id,
+                        race_code=race_code,
+                        gender=img_data["gender"],
+                        age_code=age_code,
+                        status=status
+                    )
+                    # Create race subfolder if needed
+                    output_path.parent.mkdir(parents=True, exist_ok=True)
+                    if edit_result.output_image:
+                        edit_result.output_image.save(output_path)
+                    else:
+                        output_path = None  # No image to save
+                elif is_unchanged:
+                    status = "unchanged"
+                    # Save unchanged images with special status
+                    output_path = naming.get_output_path(
+                        base_dir=exp_paths["images_dir"],
+                        prompt_id=prompt.id,
+                        race_code=race_code,
+                        gender=img_data["gender"],
+                        age_code=age_code,
+                        status=status
+                    )
+                    output_path.parent.mkdir(parents=True, exist_ok=True)
+                    if edit_result.output_image:
+                        edit_result.output_image.save(output_path)
                 elif edit_result.success:
                     status = "success"
                     # Save output image with race subfolder
@@ -301,6 +338,7 @@ def run_experiment(
                     age_code=age_code,
                     success=edit_result.success,
                     is_refused=refusal_result.is_refused,
+                    is_unchanged=is_unchanged,
                     refusal_type=refusal_result.refusal_type,
                     error_message=edit_result.error_message,
                     latency_ms=edit_result.latency_ms,
@@ -322,6 +360,7 @@ def run_experiment(
                     "output_image": str(output_path) if output_path else None,
                     "success": edit_result.success,
                     "is_refused": refusal_result.is_refused,
+                    "is_unchanged": is_unchanged,
                     "refusal_type": refusal_result.refusal_type,
                     "refusal_confidence": refusal_result.confidence,
                     "latency_ms": edit_result.latency_ms,

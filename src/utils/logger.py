@@ -76,6 +76,7 @@ class ExperimentLogger:
         # Setup loggers
         self.main_log = self.log_dir / "experiment.log"
         self.refusal_log = self.log_dir / "refusals.jsonl"
+        self.unchanged_log = self.log_dir / "unchanged.jsonl"
         self.error_log = self.log_dir / "errors.jsonl"
         self.timing_log = self.log_dir / "timings.jsonl"
 
@@ -90,6 +91,7 @@ class ExperimentLogger:
             "total": 0,
             "success": 0,
             "refused": 0,
+            "unchanged": 0,
             "errors": 0,
             "by_category": {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0},
             "by_race": {},
@@ -99,6 +101,8 @@ class ExperimentLogger:
             "refusals_by_gender": {"Male": 0, "Female": 0},
             "refusals_by_age": {},
             "refusals_by_category": {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0},
+            "unchanged_by_race": {},
+            "unchanged_by_category": {"A": 0, "B": 0, "C": 0, "D": 0, "E": 0},
         }
 
         self.start_time = None
@@ -125,6 +129,7 @@ class ExperimentLogger:
         age_code: str,
         success: bool,
         is_refused: bool,
+        is_unchanged: bool = False,
         refusal_type: Optional[str] = None,
         error_message: Optional[str] = None,
         latency_ms: float = 0,
@@ -138,6 +143,7 @@ class ExperimentLogger:
         if race_code not in self.stats["by_race"]:
             self.stats["by_race"][race_code] = 0
             self.stats["refusals_by_race"][race_code] = 0
+            self.stats["unchanged_by_race"][race_code] = 0
         self.stats["by_race"][race_code] += 1
 
         # Track by gender
@@ -149,10 +155,7 @@ class ExperimentLogger:
             self.stats["refusals_by_age"][age_code] = 0
         self.stats["by_age"][age_code] += 1
 
-        if success and not is_refused:
-            self.stats["success"] += 1
-            status = "SUCCESS"
-        elif is_refused:
+        if is_refused:
             self.stats["refused"] += 1
             self.stats["refusals_by_category"][category] += 1
             self.stats["refusals_by_race"][race_code] += 1
@@ -172,9 +175,29 @@ class ExperimentLogger:
                 "refusal_type": refusal_type,
                 "error_message": error_message,
             })
+        elif is_unchanged:
+            self.stats["unchanged"] += 1
+            self.stats["unchanged_by_category"][category] += 1
+            self.stats["unchanged_by_race"][race_code] += 1
+            status = "UNCHANGED"
+
+            # Log unchanged details
+            self._log_unchanged({
+                "timestamp": datetime.now().isoformat(),
+                "prompt_id": prompt_id,
+                "prompt_text": prompt_text,
+                "category": category,
+                "race_code": race_code,
+                "gender": gender,
+                "age_code": age_code,
+                "output_path": output_path,
+            })
+        elif success:
+            self.stats["success"] += 1
+            status = "SUCCESS"
         else:
             self.stats["errors"] += 1
-            status = f"ERROR"
+            status = "ERROR"
 
             # Log error details
             self._log_error({
@@ -207,6 +230,11 @@ class ExperimentLogger:
         with open(self.refusal_log, "a") as f:
             f.write(json.dumps(data) + "\n")
 
+    def _log_unchanged(self, data: dict):
+        """Append unchanged to JSONL log."""
+        with open(self.unchanged_log, "a") as f:
+            f.write(json.dumps(data) + "\n")
+
     def _log_error(self, data: dict):
         """Append error to JSONL log."""
         with open(self.error_log, "a") as f:
@@ -224,6 +252,7 @@ class ExperimentLogger:
         self.logger.info(f"CHECKPOINT: {message}")
         self.logger.info(f"  Total: {self.stats['total']}")
         self.logger.info(f"  Success: {self.stats['success']}")
+        self.logger.info(f"  Unchanged: {self.stats['unchanged']}")
         self.logger.info(f"  Refused: {self.stats['refused']}")
         self.logger.info(f"  Errors: {self.stats['errors']}")
         if elapsed:
@@ -240,6 +269,8 @@ class ExperimentLogger:
         refusal_rate = self.stats["refused"] / total if total > 0 else 0
         success_rate = self.stats["success"] / total if total > 0 else 0
 
+        unchanged_rate = self.stats["unchanged"] / total if total > 0 else 0
+
         summary = {
             "experiment_id": self.experiment_id,
             "model_name": self.model_name,
@@ -248,10 +279,12 @@ class ExperimentLogger:
             "elapsed_seconds": elapsed.total_seconds() if elapsed else None,
             "total_requests": total,
             "success_count": self.stats["success"],
+            "unchanged_count": self.stats["unchanged"],
             "refusal_count": self.stats["refused"],
             "error_count": self.stats["errors"],
-            "refusal_rate": refusal_rate,
             "success_rate": success_rate,
+            "unchanged_rate": unchanged_rate,
+            "refusal_rate": refusal_rate,
             "by_category": self.stats["by_category"],
             "by_race": self.stats["by_race"],
             "by_gender": self.stats["by_gender"],
@@ -260,11 +293,19 @@ class ExperimentLogger:
             "refusals_by_race": self.stats["refusals_by_race"],
             "refusals_by_gender": self.stats["refusals_by_gender"],
             "refusals_by_age": self.stats["refusals_by_age"],
+            "unchanged_by_category": self.stats["unchanged_by_category"],
+            "unchanged_by_race": self.stats["unchanged_by_race"],
         }
 
         # Calculate per-race refusal rates
         summary["refusal_rate_by_race"] = {
             race: self.stats["refusals_by_race"].get(race, 0) / count if count > 0 else 0
+            for race, count in self.stats["by_race"].items()
+        }
+
+        # Calculate per-race unchanged rates
+        summary["unchanged_rate_by_race"] = {
+            race: self.stats["unchanged_by_race"].get(race, 0) / count if count > 0 else 0
             for race, count in self.stats["by_race"].items()
         }
 
@@ -281,17 +322,24 @@ class ExperimentLogger:
         }
 
         # Log summary
+        unchanged_rate = self.stats["unchanged"] / total if total > 0 else 0
+
         self.logger.info("=" * 60)
         self.logger.info("EXPERIMENT COMPLETE")
         self.logger.info("=" * 60)
         self.logger.info(f"Total: {total}")
         self.logger.info(f"Success: {self.stats['success']} ({success_rate:.1%})")
+        self.logger.info(f"Unchanged: {self.stats['unchanged']} ({unchanged_rate:.1%})")
         self.logger.info(f"Refused: {self.stats['refused']} ({refusal_rate:.1%})")
         self.logger.info(f"Errors: {self.stats['errors']}")
         self.logger.info(f"Duration: {elapsed}")
         self.logger.info("")
         self.logger.info("Refusal Rate by Race:")
         for race, rate in sorted(summary["refusal_rate_by_race"].items(), key=lambda x: -x[1]):
+            self.logger.info(f"  {race:20}: {rate:.1%}")
+        self.logger.info("")
+        self.logger.info("Unchanged Rate by Race:")
+        for race, rate in sorted(summary.get("unchanged_rate_by_race", {}).items(), key=lambda x: -x[1]):
             self.logger.info(f"  {race:20}: {rate:.1%}")
         self.logger.info("")
         self.logger.info("Refusal Rate by Category:")

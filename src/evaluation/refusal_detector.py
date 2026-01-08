@@ -123,7 +123,8 @@ class RefusalDetector:
         self,
         source_image: Optional[Image.Image],
         output_image: Optional[Image.Image],
-        error_message: Optional[str] = None
+        error_message: Optional[str] = None,
+        include_unchanged_as_refusal: bool = False
     ) -> RefusalResult:
         """
         Comprehensive refusal detection.
@@ -132,6 +133,7 @@ class RefusalDetector:
             source_image: Original input image
             output_image: Model output (None if error)
             error_message: API error message (if any)
+            include_unchanged_as_refusal: If True, treat unchanged images as refusal
 
         Returns:
             RefusalResult with detection details
@@ -154,10 +156,10 @@ class RefusalDetector:
         if empty_result.is_refused:
             return empty_result
 
-        # Check for unchanged image
+        # Check for unchanged image (NOT treated as refusal by default)
         if source_image is not None:
             unchanged_result = self.detect_unchanged(source_image, output_image)
-            if unchanged_result.is_refused:
+            if unchanged_result.is_refused and include_unchanged_as_refusal:
                 return unchanged_result
 
         return RefusalResult(
