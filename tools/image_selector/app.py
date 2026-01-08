@@ -21,6 +21,7 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 SOURCE_IMAGES_BASE = PROJECT_ROOT / "data" / "source_images" / "fairface"
 FINAL_DIR = SOURCE_IMAGES_BASE / "final"
 SELECTIONS_FILE = SOURCE_IMAGES_BASE / "selections.json"
+SELECTION_LOGS_FILE = SOURCE_IMAGES_BASE / "selection_logs.json"
 
 # Demographics
 RACES = ['Black', 'EastAsian', 'Indian', 'Latino', 'MiddleEastern', 'SoutheastAsian', 'White']
@@ -60,6 +61,21 @@ def save_selections(selections):
         json.dump(selections, f, indent=2)
 
 
+def load_selection_logs():
+    """Load existing selection logs from file."""
+    if SELECTION_LOGS_FILE.exists():
+        with open(SELECTION_LOGS_FILE) as f:
+            return json.load(f)
+    return []
+
+
+def save_selection_logs(logs):
+    """Save selection logs to file."""
+    SELECTION_LOGS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(SELECTION_LOGS_FILE, 'w') as f:
+        json.dump(logs, f, indent=2)
+
+
 @app.route('/')
 def index():
     """Main page."""
@@ -87,7 +103,7 @@ def serve_image(version, race, filename):
 
 @app.route('/api/select', methods=['POST'])
 def select_image():
-    """Save a selection."""
+    """Save a selection (legacy endpoint, logs as basic selection)."""
     data = request.json
     demo_id = data['demo_id']
     version = data['version']
@@ -100,6 +116,55 @@ def select_image():
         'age': data['age']
     }
     save_selections(selections)
+
+    # Save basic selection log
+    logs = load_selection_logs()
+    log_entry = {
+        'timestamp': datetime.now().isoformat(),
+        'demo_id': demo_id,
+        'version': version,
+        'race': data['race'],
+        'gender': data['gender'],
+        'age': data['age'],
+        'action': 'select_basic'
+    }
+    logs.append(log_entry)
+    save_selection_logs(logs)
+
+    return jsonify({'success': True, 'total_selected': len(selections)})
+
+
+@app.route('/api/select_with_log', methods=['POST'])
+def select_image_with_log():
+    """Save a selection with logging information."""
+    data = request.json
+    demo_id = data['demo_id']
+    version = data['version']
+
+    selections = load_selections()
+    selections[demo_id] = {
+        'version': version,
+        'race': data['race'],
+        'gender': data['gender'],
+        'age': data['age']
+    }
+    save_selections(selections)
+
+    # Save selection log
+    logs = load_selection_logs()
+    log_entry = {
+        'timestamp': datetime.now().isoformat(),
+        'demo_id': demo_id,
+        'version': version,
+        'race': data['race'],
+        'gender': data['gender'],
+        'age': data['age'],
+        'criteria': data['criteria'],
+        'notes': data.get('notes', ''),
+        'action': 'select'
+    }
+    logs.append(log_entry)
+    save_selection_logs(logs)
 
     return jsonify({'success': True, 'total_selected': len(selections)})
 
@@ -115,6 +180,16 @@ def deselect_image():
         del selections[demo_id]
         save_selections(selections)
 
+        # Save deselection log
+        logs = load_selection_logs()
+        log_entry = {
+            'timestamp': datetime.now().isoformat(),
+            'demo_id': demo_id,
+            'action': 'deselect'
+        }
+        logs.append(log_entry)
+        save_selection_logs(logs)
+
     return jsonify({'success': True, 'total_selected': len(selections)})
 
 
@@ -127,12 +202,15 @@ def get_selections():
 
 @app.route('/api/export')
 def export_selections():
-    """Export final selected images info."""
+    """Export final selected images info with logs."""
     selections = load_selections()
+    selection_logs = load_selection_logs()
 
     export_data = {
         'total': len(selections),
-        'images': []
+        'export_timestamp': datetime.now().isoformat(),
+        'images': [],
+        'selection_logs_summary': selection_logs[-10:] if len(selection_logs) > 10 else selection_logs  # Last 10 logs
     }
 
     for demo_id, sel in selections.items():
@@ -156,9 +234,26 @@ def export_selections():
     return jsonify(export_data)
 
 
+@app.route('/api/export_logs')
+def export_logs():
+    """Export complete selection logs."""
+    selection_logs = load_selection_logs()
+    selections = load_selections()
+
+    export_data = {
+        'export_timestamp': datetime.now().isoformat(),
+        'total_logs': len(selection_logs),
+        'total_selections': len(selections),
+        'selections_summary': selections,
+        'detailed_logs': selection_logs
+    }
+
+    return jsonify(export_data)
+
+
 @app.route('/api/finalize', methods=['POST'])
 def finalize_selections():
-    """Copy selected images to final/ folder."""
+    """Copy selected images to final/ folder and save complete logs."""
     selections = load_selections()
 
     if len(selections) != 84:
@@ -203,22 +298,41 @@ def finalize_selections():
                 'path': str(dst_path)
             })
 
-    # Save metadata
+    # Load complete selection logs
+    selection_logs = load_selection_logs()
+
+    # Save metadata with complete logs
     metadata = {
         'created_at': datetime.now().isoformat(),
         'total_images': copied,
         'source_versions': dict((k, v['version']) for k, v in selections.items()),
         'folder_structure': '{RaceCode}/{RaceCode}_{Gender}_{AgeCode}.jpg',
-        'images': images_metadata
+        'images': images_metadata,
+        'selection_logs': selection_logs,
+        'final_selections': selections
     }
 
     with open(FINAL_DIR / 'metadata.json', 'w') as f:
         json.dump(metadata, f, indent=2)
 
+    # Also save complete logs separately
+    with open(FINAL_DIR / 'selection_logs_complete.json', 'w') as f:
+        json.dump({
+            'export_timestamp': datetime.now().isoformat(),
+            'total_logs': len(selection_logs),
+            'selections_summary': selections,
+            'detailed_logs': selection_logs
+        }, f, indent=2)
+
+    # Copy the ongoing logs file to final folder for backup
+    if SELECTION_LOGS_FILE.exists():
+        shutil.copy2(SELECTION_LOGS_FILE, FINAL_DIR / 'selection_logs_backup.json')
+
     return jsonify({
         'success': True,
         'copied': copied,
-        'final_dir': str(FINAL_DIR)
+        'final_dir': str(FINAL_DIR),
+        'logs_saved': len(selection_logs)
     })
 
 
