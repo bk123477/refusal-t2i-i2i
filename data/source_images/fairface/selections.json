@@ -1,0 +1,500 @@
+{
+  "Black_Male_40s": {
+    "version": "V1",
+    "race": "Black",
+    "gender": "Male",
+    "age": "40s"
+  },
+  "Black_Male_50s": {
+    "version": "V3",
+    "race": "Black",
+    "gender": "Male",
+    "age": "50s"
+  },
+  "Black_Male_60s": {
+    "version": "V6",
+    "race": "Black",
+    "gender": "Male",
+    "age": "60s"
+  },
+  "Black_Male_20s": {
+    "version": "V1",
+    "race": "Black",
+    "gender": "Male",
+    "age": "20s"
+  },
+  "Black_Male_30s": {
+    "version": "V4",
+    "race": "Black",
+    "gender": "Male",
+    "age": "30s"
+  },
+  "Black_Male_70plus": {
+    "version": "V5",
+    "race": "Black",
+    "gender": "Male",
+    "age": "70plus"
+  },
+  "Black_Female_20s": {
+    "version": "V5",
+    "race": "Black",
+    "gender": "Female",
+    "age": "20s"
+  },
+  "Black_Female_30s": {
+    "version": "V1",
+    "race": "Black",
+    "gender": "Female",
+    "age": "30s"
+  },
+  "Black_Female_50s": {
+    "version": "V4",
+    "race": "Black",
+    "gender": "Female",
+    "age": "50s"
+  },
+  "Black_Female_60s": {
+    "version": "V2",
+    "race": "Black",
+    "gender": "Female",
+    "age": "60s"
+  },
+  "Black_Female_70plus": {
+    "version": "V7",
+    "race": "Black",
+    "gender": "Female",
+    "age": "70plus"
+  },
+  "EastAsian_Male_20s": {
+    "version": "V4",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "20s"
+  },
+  "EastAsian_Male_30s": {
+    "version": "V4",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "30s"
+  },
+  "EastAsian_Male_40s": {
+    "version": "V3",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "40s"
+  },
+  "EastAsian_Male_50s": {
+    "version": "V3",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "50s"
+  },
+  "EastAsian_Male_60s": {
+    "version": "V6",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "60s"
+  },
+  "EastAsian_Male_70plus": {
+    "version": "V2",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "70plus"
+  },
+  "EastAsian_Female_20s": {
+    "version": "V2",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "20s"
+  },
+  "EastAsian_Female_30s": {
+    "version": "V3",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "30s"
+  },
+  "EastAsian_Female_40s": {
+    "version": "V1",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "40s"
+  },
+  "EastAsian_Female_50s": {
+    "version": "V2",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "50s"
+  },
+  "EastAsian_Female_60s": {
+    "version": "V6",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "60s"
+  },
+  "EastAsian_Female_70plus": {
+    "version": "V7",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "70plus"
+  },
+  "Indian_Male_20s": {
+    "version": "V2",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "20s"
+  },
+  "Indian_Male_30s": {
+    "version": "V5",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "30s"
+  },
+  "Indian_Male_40s": {
+    "version": "V1",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "40s"
+  },
+  "Indian_Male_50s": {
+    "version": "V3",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "50s"
+  },
+  "Indian_Male_60s": {
+    "version": "V1",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "60s"
+  },
+  "Indian_Male_70plus": {
+    "version": "V2",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "70plus"
+  },
+  "Indian_Female_20s": {
+    "version": "V2",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "20s"
+  },
+  "Indian_Female_30s": {
+    "version": "V7",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "30s"
+  },
+  "Indian_Female_40s": {
+    "version": "V3",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "40s"
+  },
+  "Indian_Female_50s": {
+    "version": "V4",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "50s"
+  },
+  "Indian_Female_60s": {
+    "version": "V6",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "60s"
+  },
+  "Indian_Female_70plus": {
+    "version": "V4",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "70plus"
+  },
+  "Latino_Male_20s": {
+    "version": "V2",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "20s"
+  },
+  "Latino_Male_30s": {
+    "version": "V1",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "30s"
+  },
+  "Latino_Male_40s": {
+    "version": "V4",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "40s"
+  },
+  "Latino_Male_50s": {
+    "version": "V4",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "50s"
+  },
+  "Latino_Male_60s": {
+    "version": "V7",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "60s"
+  },
+  "Latino_Male_70plus": {
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "70plus"
+  },
+  "Latino_Female_20s": {
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "20s"
+  },
+  "Latino_Female_30s": {
+    "version": "V2",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "30s"
+  },
+  "Latino_Female_40s": {
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "40s"
+  },
+  "Latino_Female_50s": {
+    "version": "V6",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "50s"
+  },
+  "Latino_Female_60s": {
+    "version": "V7",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "60s"
+  },
+  "Latino_Female_70plus": {
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "70plus"
+  },
+  "MiddleEastern_Male_20s": {
+    "version": "V3",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "20s"
+  },
+  "MiddleEastern_Male_30s": {
+    "version": "V3",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "30s"
+  },
+  "MiddleEastern_Male_40s": {
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "40s"
+  },
+  "MiddleEastern_Male_50s": {
+    "version": "V6",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "50s"
+  },
+  "MiddleEastern_Male_60s": {
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "60s"
+  },
+  "MiddleEastern_Male_70plus": {
+    "version": "V6",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "70plus"
+  },
+  "MiddleEastern_Female_20s": {
+    "version": "V3",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "20s"
+  },
+  "MiddleEastern_Female_30s": {
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "30s"
+  },
+  "MiddleEastern_Female_40s": {
+    "version": "V1",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "40s"
+  },
+  "MiddleEastern_Female_50s": {
+    "version": "V4",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "50s"
+  },
+  "MiddleEastern_Female_60s": {
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "60s"
+  },
+  "MiddleEastern_Female_70plus": {
+    "version": "V5",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "70plus"
+  },
+  "SoutheastAsian_Male_20s": {
+    "version": "V1",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "20s"
+  },
+  "SoutheastAsian_Male_30s": {
+    "version": "V4",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "30s"
+  },
+  "SoutheastAsian_Male_40s": {
+    "version": "V5",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "40s"
+  },
+  "SoutheastAsian_Male_50s": {
+    "version": "V5",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "50s"
+  },
+  "SoutheastAsian_Male_60s": {
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "60s"
+  },
+  "SoutheastAsian_Male_70plus": {
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "70plus"
+  },
+  "SoutheastAsian_Female_20s": {
+    "version": "V6",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "20s"
+  },
+  "SoutheastAsian_Female_30s": {
+    "version": "V6",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "30s"
+  },
+  "SoutheastAsian_Female_40s": {
+    "version": "V1",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "40s"
+  },
+  "SoutheastAsian_Female_50s": {
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "50s"
+  },
+  "SoutheastAsian_Female_60s": {
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "60s"
+  },
+  "SoutheastAsian_Female_70plus": {
+    "version": "V4",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "70plus"
+  },
+  "White_Male_20s": {
+    "version": "V7",
+    "race": "White",
+    "gender": "Male",
+    "age": "20s"
+  },
+  "White_Male_30s": {
+    "version": "V3",
+    "race": "White",
+    "gender": "Male",
+    "age": "30s"
+  },
+  "White_Male_40s": {
+    "version": "V6",
+    "race": "White",
+    "gender": "Male",
+    "age": "40s"
+  },
+  "White_Male_50s": {
+    "version": "V7",
+    "race": "White",
+    "gender": "Male",
+    "age": "50s"
+  },
+  "White_Male_60s": {
+    "version": "V3",
+    "race": "White",
+    "gender": "Male",
+    "age": "60s"
+  },
+  "White_Male_70plus": {
+    "version": "V1",
+    "race": "White",
+    "gender": "Male",
+    "age": "70plus"
+  },
+  "White_Female_20s": {
+    "version": "V5",
+    "race": "White",
+    "gender": "Female",
+    "age": "20s"
+  },
+  "White_Female_30s": {
+    "version": "V7",
+    "race": "White",
+    "gender": "Female",
+    "age": "30s"
+  },
+  "White_Female_40s": {
+    "version": "V3",
+    "race": "White",
+    "gender": "Female",
+    "age": "40s"
+  },
+  "White_Female_50s": {
+    "version": "V1",
+    "race": "White",
+    "gender": "Female",
+    "age": "50s"
+  },
+  "White_Female_60s": {
+    "version": "V4",
+    "race": "White",
+    "gender": "Female",
+    "age": "60s"
+  },
+  "White_Female_70plus": {
+    "version": "V3",
+    "race": "White",
+    "gender": "Female",
+    "age": "70plus"
+  }
+}

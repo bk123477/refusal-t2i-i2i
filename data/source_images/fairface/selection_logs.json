@@ -1,0 +1,1778 @@
+[
+  {
+    "timestamp": "2026-01-08T11:28:15.693667",
+    "demo_id": "Black_Male_20s",
+    "version": "V5",
+    "race": "Black",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T11:28:20.914722",
+    "demo_id": "Black_Male_40s",
+    "version": "V3",
+    "race": "Black",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T11:28:25.652311",
+    "demo_id": "Black_Male_60s",
+    "version": "V3",
+    "race": "Black",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": false,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": false,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T11:28:27.497911",
+    "demo_id": "Black_Male_60s",
+    "version": "V5",
+    "race": "Black",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T12:15:33.939735",
+    "demo_id": "Black_Male_70plus",
+    "version": "V5",
+    "race": "Black",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:02:04.142971",
+    "demo_id": "Black_Male_20s",
+    "action": "deselect"
+  },
+  {
+    "timestamp": "2026-01-08T13:02:16.265377",
+    "demo_id": "Black_Male_20s",
+    "version": "V1",
+    "race": "Black",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:02:23.266233",
+    "demo_id": "Black_Male_30s",
+    "action": "deselect"
+  },
+  {
+    "timestamp": "2026-01-08T13:02:24.613829",
+    "demo_id": "Black_Male_30s",
+    "version": "V4",
+    "race": "Black",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:02:44.345496",
+    "demo_id": "Black_Male_40s",
+    "version": "V1",
+    "race": "Black",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:03:22.913758",
+    "demo_id": "Black_Male_50s",
+    "version": "V3",
+    "race": "Black",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:03:33.103445",
+    "demo_id": "Black_Male_60s",
+    "version": "V6",
+    "race": "Black",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:04:06.237915",
+    "demo_id": "Black_Male_70plus",
+    "action": "deselect"
+  },
+  {
+    "timestamp": "2026-01-08T13:04:31.182915",
+    "demo_id": "Black_Male_70plus",
+    "version": "V5",
+    "race": "Black",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "crop",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:04:43.903279",
+    "demo_id": "Black_Female_20s",
+    "version": "V5",
+    "race": "Black",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:04:54.704042",
+    "demo_id": "Black_Female_30s",
+    "version": "V1",
+    "race": "Black",
+    "gender": "Female",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:05:05.151304",
+    "demo_id": "Black_Female_40s",
+    "version": "V4",
+    "race": "Black",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:05:21.029523",
+    "demo_id": "Black_Female_50s",
+    "version": "V4",
+    "race": "Black",
+    "gender": "Female",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:06:05.170743",
+    "demo_id": "Black_Female_60s",
+    "version": "V2",
+    "race": "Black",
+    "gender": "Female",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "crop",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:06:43.311441",
+    "demo_id": "Black_Female_70plus",
+    "version": "V7",
+    "race": "Black",
+    "gender": "Female",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:07:00.007520",
+    "demo_id": "EastAsian_Male_20s",
+    "version": "V4",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:07:15.622087",
+    "demo_id": "EastAsian_Male_30s",
+    "version": "V4",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:07:17.659584",
+    "demo_id": "EastAsian_Male_30s",
+    "action": "deselect"
+  },
+  {
+    "timestamp": "2026-01-08T13:07:23.669554",
+    "demo_id": "EastAsian_Male_30s",
+    "version": "V4",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:07:33.562692",
+    "demo_id": "EastAsian_Male_40s",
+    "version": "V3",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:07:48.643823",
+    "demo_id": "EastAsian_Male_50s",
+    "version": "V3",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:08:02.735259",
+    "demo_id": "EastAsian_Male_60s",
+    "version": "V6",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:08:08.868974",
+    "demo_id": "EastAsian_Male_70plus",
+    "version": "V2",
+    "race": "EastAsian",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:08:17.229284",
+    "demo_id": "EastAsian_Female_20s",
+    "version": "V2",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:08:25.670174",
+    "demo_id": "EastAsian_Female_30s",
+    "version": "V3",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:08:36.995585",
+    "demo_id": "EastAsian_Female_40s",
+    "version": "V1",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:08:42.668246",
+    "demo_id": "EastAsian_Female_50s",
+    "version": "V2",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:08:52.796789",
+    "demo_id": "EastAsian_Female_60s",
+    "version": "V6",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:09:00.267444",
+    "demo_id": "EastAsian_Female_70plus",
+    "version": "V7",
+    "race": "EastAsian",
+    "gender": "Female",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:09:10.912314",
+    "demo_id": "Indian_Male_20s",
+    "version": "V2",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:09:26.926667",
+    "demo_id": "Indian_Male_30s",
+    "version": "V5",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:09:34.884331",
+    "demo_id": "Indian_Male_40s",
+    "version": "V1",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:09:41.075568",
+    "demo_id": "Indian_Male_50s",
+    "version": "V3",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:09:51.019955",
+    "demo_id": "Indian_Male_60s",
+    "version": "V1",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:10:02.257489",
+    "demo_id": "Indian_Male_70plus",
+    "version": "V2",
+    "race": "Indian",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:10:10.379135",
+    "demo_id": "Indian_Female_20s",
+    "version": "V2",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:10:17.505898",
+    "demo_id": "Indian_Female_30s",
+    "version": "V7",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:10:34.050873",
+    "demo_id": "Indian_Female_40s",
+    "version": "V3",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:10:38.279203",
+    "demo_id": "Indian_Female_50s",
+    "version": "V4",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:11:00.864822",
+    "demo_id": "Indian_Female_60s",
+    "version": "V6",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:11:13.624079",
+    "demo_id": "Indian_Female_70plus",
+    "version": "V4",
+    "race": "Indian",
+    "gender": "Female",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:11:22.746206",
+    "demo_id": "Latino_Male_20s",
+    "version": "V2",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:11:34.547411",
+    "demo_id": "Latino_Male_30s",
+    "version": "V1",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:11:48.124670",
+    "demo_id": "Latino_Male_40s",
+    "version": "V4",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:01.183992",
+    "demo_id": "Latino_Male_50s",
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:02.537060",
+    "demo_id": "Latino_Male_50s",
+    "action": "deselect"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:05.951156",
+    "demo_id": "Latino_Male_50s",
+    "version": "V4",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:10.666089",
+    "demo_id": "Latino_Male_60s",
+    "version": "V7",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:30.628743",
+    "demo_id": "Latino_Male_70plus",
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:34.899643",
+    "demo_id": "Latino_Female_20s",
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:41.075710",
+    "demo_id": "Latino_Female_30s",
+    "version": "V2",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:50.231145",
+    "demo_id": "Latino_Female_40s",
+    "version": "V1",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:12:55.981096",
+    "demo_id": "Latino_Female_40s",
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:13:02.885515",
+    "demo_id": "Latino_Female_50s",
+    "version": "V6",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:13:12.741117",
+    "demo_id": "Latino_Female_60s",
+    "version": "V7",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:13:28.412140",
+    "demo_id": "Latino_Female_70plus",
+    "version": "V3",
+    "race": "Latino",
+    "gender": "Female",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:13:37.348352",
+    "demo_id": "MiddleEastern_Male_20s",
+    "version": "V3",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:13:47.676713",
+    "demo_id": "MiddleEastern_Male_30s",
+    "version": "V3",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:08.686071",
+    "demo_id": "MiddleEastern_Male_40s",
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:12.327772",
+    "demo_id": "MiddleEastern_Male_50s",
+    "version": "V1",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:15.667717",
+    "demo_id": "MiddleEastern_Male_50s",
+    "version": "V4",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:17.668290",
+    "demo_id": "MiddleEastern_Male_50s",
+    "version": "V6",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:23.018772",
+    "demo_id": "MiddleEastern_Male_60s",
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:29.678978",
+    "demo_id": "MiddleEastern_Male_70plus",
+    "version": "V6",
+    "race": "MiddleEastern",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:39.786292",
+    "demo_id": "MiddleEastern_Female_20s",
+    "version": "V3",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:14:54.603535",
+    "demo_id": "MiddleEastern_Female_20s",
+    "version": "V1",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:15:07.679333",
+    "demo_id": "MiddleEastern_Female_20s",
+    "version": "V3",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:15:33.172873",
+    "demo_id": "MiddleEastern_Female_30s",
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:15:39.553862",
+    "demo_id": "MiddleEastern_Female_40s",
+    "version": "V1",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:15:48.068638",
+    "demo_id": "MiddleEastern_Female_50s",
+    "version": "V4",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:15:57.128233",
+    "demo_id": "MiddleEastern_Female_60s",
+    "version": "V7",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:16:05.955145",
+    "demo_id": "MiddleEastern_Female_70plus",
+    "version": "V5",
+    "race": "MiddleEastern",
+    "gender": "Female",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:16:19.150660",
+    "demo_id": "SoutheastAsian_Male_20s",
+    "version": "V1",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:16:26.378716",
+    "demo_id": "SoutheastAsian_Male_30s",
+    "version": "V4",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:16:34.896353",
+    "demo_id": "SoutheastAsian_Male_40s",
+    "version": "V5",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:16:42.935639",
+    "demo_id": "SoutheastAsian_Male_50s",
+    "version": "V5",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:16:48.704852",
+    "demo_id": "SoutheastAsian_Male_60s",
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:16:54.003451",
+    "demo_id": "SoutheastAsian_Male_70plus",
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:17:03.460927",
+    "demo_id": "SoutheastAsian_Female_20s",
+    "version": "V6",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:17:12.383100",
+    "demo_id": "SoutheastAsian_Female_30s",
+    "version": "V6",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:17:30.703989",
+    "demo_id": "SoutheastAsian_Female_40s",
+    "version": "V1",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:17:41.421877",
+    "demo_id": "SoutheastAsian_Female_50s",
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:17:55.834830",
+    "demo_id": "SoutheastAsian_Female_60s",
+    "version": "V3",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:18:05.879578",
+    "demo_id": "SoutheastAsian_Female_70plus",
+    "version": "V4",
+    "race": "SoutheastAsian",
+    "gender": "Female",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:18:18.887670",
+    "demo_id": "White_Male_20s",
+    "version": "V7",
+    "race": "White",
+    "gender": "Male",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:18:41.085531",
+    "demo_id": "White_Male_30s",
+    "version": "V3",
+    "race": "White",
+    "gender": "Male",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:18:47.920767",
+    "demo_id": "White_Male_40s",
+    "version": "V5",
+    "race": "White",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:18:50.528136",
+    "demo_id": "White_Male_40s",
+    "version": "V6",
+    "race": "White",
+    "gender": "Male",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:18:56.419537",
+    "demo_id": "White_Male_50s",
+    "version": "V7",
+    "race": "White",
+    "gender": "Male",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:00.771797",
+    "demo_id": "White_Male_60s",
+    "version": "V3",
+    "race": "White",
+    "gender": "Male",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:06.093835",
+    "demo_id": "White_Male_70plus",
+    "version": "V1",
+    "race": "White",
+    "gender": "Male",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:10.179062",
+    "demo_id": "White_Female_20s",
+    "version": "V5",
+    "race": "White",
+    "gender": "Female",
+    "age": "20s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:16.957795",
+    "demo_id": "White_Female_30s",
+    "version": "V7",
+    "race": "White",
+    "gender": "Female",
+    "age": "30s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:23.906741",
+    "demo_id": "White_Female_40s",
+    "version": "V3",
+    "race": "White",
+    "gender": "Female",
+    "age": "40s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:28.957001",
+    "demo_id": "White_Female_50s",
+    "version": "V1",
+    "race": "White",
+    "gender": "Female",
+    "age": "50s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:44.012349",
+    "demo_id": "White_Female_60s",
+    "version": "V4",
+    "race": "White",
+    "gender": "Female",
+    "age": "60s",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:19:48.017743",
+    "demo_id": "White_Female_70plus",
+    "version": "V3",
+    "race": "White",
+    "gender": "Female",
+    "age": "70plus",
+    "criteria": {
+      "frontal_face": true,
+      "clear_focus": true,
+      "proper_lighting": true,
+      "identifiable_features": true,
+      "neutral_expression": true,
+      "upright_posture": true
+    },
+    "notes": "",
+    "action": "select"
+  },
+  {
+    "timestamp": "2026-01-08T13:41:43.340117",
+    "demo_id": "Black_Female_40s",
+    "action": "deselect"
+  }
+]
