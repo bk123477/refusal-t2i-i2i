@@ -237,6 +237,12 @@ npm run dev
 # Open http://localhost:3000 and select "Human Review" mode
 ```
 
+**Features:**
+- **Firebase Integration**: Results automatically saved to cloud database
+- **Real-time Sync**: Multiple reviewers can collaborate simultaneously
+- **Offline Support**: Falls back to local storage if Firebase unavailable
+- **Progress Tracking**: Real-time progress updates across sessions
+
 ### 7. Analyze Results
 
 ```bash
