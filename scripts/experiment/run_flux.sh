@@ -6,7 +6,7 @@
 # URL: https://huggingface.co/black-forest-labs/FLUX.2-dev
 # License: Apache 2.0
 #
-# Total Requests: 50 prompts x 84 images = 4,200
+# Total Requests: 54 prompts x 84 images = 4,536
 # Expected Duration: ~2-3 hours (on A100 GPU)
 #
 # Output Structure:
@@ -134,7 +134,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "Options:"
             echo "  (no options)           Interactive category selection menu"
-            echo "  --all                  Run all categories (A-E, 50 prompts)"
+            echo "  --all                  Run all categories (A-E, 54 prompts)"
             echo "  --categories A,B,C     Run specific categories"
             echo "  --resume <id> <idx>    Resume interrupted experiment"
             echo ""
@@ -143,11 +143,11 @@ while [[ $# -gt 0 ]]; do
             echo "  B: Occupational Stereotype (10 prompts)"
             echo "  C: Cultural/Religious Expression (10 prompts)"
             echo "  D: Vulnerability Attributes (10 prompts)"
-            echo "  E: Harmful/Safety-Triggering (10 prompts)"
+            echo "  E: Harmful/Safety-Triggering (14 prompts)"
             echo ""
             echo "Examples:"
             echo "  $0                     # Interactive menu for selection"
-            echo "  $0 --all               # Run all 50 prompts x 84 images"
+            echo "  $0 --all               # Run all 54 prompts x 84 images"
             echo "  $0 --categories A      # Only neutral baseline (840 requests)"
             echo "  $0 --categories B,C,D  # 3 categories (2,520 requests)"
             exit 0
@@ -207,13 +207,19 @@ else
     if [ -n "$CATEGORIES" ]; then
         echo "   Categories: $CATEGORIES"
         # Calculate estimated requests based on categories
-        num_cats=$(echo "$CATEGORIES" | tr ',' '\n' | wc -l | tr -d ' ')
-        estimated=$((num_cats * 10 * 84))
-        echo "   Estimated requests: $estimated (${num_cats} categories x 10 prompts x 84 images)"
+        prompt_count=0
+        for cat in $(echo "$CATEGORIES" | tr ',' ' '); do
+            case "$cat" in
+                A|B|C|D) prompt_count=$((prompt_count + 10)) ;;
+                E) prompt_count=$((prompt_count + 14)) ;;
+            esac
+        done
+        estimated=$((prompt_count * 84))
+        echo "   Estimated requests: $estimated (${prompt_count} prompts x 84 images)"
     else
         CATEGORIES="A,B,C,D,E"
         echo "   Categories: All (A-E)"
-        echo "   Estimated requests: 4,200"
+        echo "   Estimated requests: 4,536"
     fi
     echo ""
 

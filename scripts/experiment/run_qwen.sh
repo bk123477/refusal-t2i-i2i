@@ -12,7 +12,7 @@
 #   - Integrated LoRA capabilities
 #   - Multi-image input support
 #
-# Total Requests: 50 prompts × 84 images = 4,200
+# Total Requests: 54 prompts × 84 images = 4,536
 #
 # Output Structure:
 #   data/results/qwen/{experiment_id}/
