@@ -12,6 +12,7 @@ Usage:
 
     # Specific model only
     python scripts/evaluation/run_vlm_evaluation.py --model flux --qwen-model 30B
+
 """
 
 import argparse
@@ -19,15 +20,89 @@ import json
 from pathlib import Path
 from PIL import Image
 import sys
+from typing import Optional
 from datetime import datetime
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from src.evaluation.vlm_evaluator import VLMEvaluator
 from src.data.prompt_loader import PromptLoader
+from src.config import PathConfig
 
 
-def evaluate_results(results_dir: Path, evaluator: VLMEvaluator, prompts_file: Path) -> dict:
+def _resolve_output_image_path(
+    output_image_path: Optional[str],
+    results_dir: Path,
+    race_code: Optional[str],
+    images_root: Optional[Path] = None
+) -> Optional[Path]:
+    """Resolve output image path, handling stale absolute paths."""
+    if not output_image_path:
+        return None
+
+    candidate = Path(output_image_path)
+    if candidate.exists():
+        return candidate
+
+    images_root = images_root or (results_dir / "images")
+    parts = candidate.parts
+    if "images" in parts:
+        idx = parts.index("images")
+        rel = Path(*parts[idx + 1 :])
+        candidate = images_root / rel
+        if candidate.exists():
+            return candidate
+
+    if race_code:
+        candidate = images_root / race_code / Path(output_image_path).name
+        if candidate.exists():
+            return candidate
+
+    if images_root.exists():
+        matches = list(images_root.rglob(Path(output_image_path).name))
+        if len(matches) == 1:
+            return matches[0]
+
+    return None
+
+
+def _resolve_source_image_path(
+    source_image_path: Optional[str],
+    race_code: Optional[str],
+    source_images_root: Optional[Path] = None
+) -> Optional[Path]:
+    """Resolve source image path, handling stale absolute paths."""
+    if not source_image_path:
+        return None
+
+    candidate = Path(source_image_path)
+    if candidate.exists():
+        return candidate
+
+    source_images_root = source_images_root or PathConfig().source_images_base
+    parts = candidate.parts
+    if "source_images" in parts:
+        idx = parts.index("source_images")
+        rel = Path(*parts[idx + 1 :])
+        candidate = source_images_root / rel
+        if candidate.exists():
+            return candidate
+
+    if race_code:
+        candidate = (source_images_root / "final") / race_code / Path(source_image_path).name
+        if candidate.exists():
+            return candidate
+
+    return None
+
+
+def evaluate_results(
+    results_dir: Path,
+    evaluator: VLMEvaluator,
+    prompts_file: Path,
+    images_root: Optional[Path],
+    source_images_root: Optional[Path]
+) -> dict:
     """Run VLM evaluation on experiment results."""
 
     # Load experiment results
@@ -53,9 +128,15 @@ def evaluate_results(results_dir: Path, evaluator: VLMEvaluator, prompts_file: P
             continue
 
         # Load generated image
-        image_path = results_dir / "images" / result.get("output_path", "")
-        if not image_path.exists():
-            print(f"  [{i+1}] Image not found: {image_path}")
+        image_path = _resolve_output_image_path(
+            output_image_path=result.get("output_image"),
+            results_dir=results_dir,
+            race_code=result.get("race_code"),
+            images_root=images_root
+        )
+
+        if not image_path or not image_path.exists():
+            print(f"  [{i+1}] Image not found: {result.get('output_image')}")
             result["vlm_evaluation"] = None
             evaluated_results.append(result)
             continue
@@ -63,17 +144,35 @@ def evaluate_results(results_dir: Path, evaluator: VLMEvaluator, prompts_file: P
         try:
             image = Image.open(image_path)
 
-            # Get attribute to check from prompt
-            prompt_id = result.get("prompt_id", "")
-            prompt_data = prompt_loader.get_prompt_by_id(prompt_id)
-            attribute = prompt_data.get("attribute", prompt_data.get("text", ""))
-
-            # Run VLM evaluation
-            vlm_result = evaluator.check_attribute(
-                image=image,
-                attribute=attribute,
-                return_detailed=True
+            # Load source image for edit comparison
+            source_image = None
+            source_path = _resolve_source_image_path(
+                source_image_path=result.get("source_image"),
+                race_code=result.get("race_code"),
+                source_images_root=source_images_root
             )
+            if source_path and source_path.exists():
+                source_image = Image.open(source_path)
+
+            # Use the original prompt text as instruction
+            prompt_id = result.get("prompt_id", "")
+            prompt_obj = prompt_loader.get_by_id(prompt_id)
+            instruction = prompt_obj.prompt if prompt_obj else result.get("prompt_text", "")
+
+            if source_image is None:
+                # Fallback to attribute check when source image is unavailable
+                vlm_result = evaluator.check_attribute(
+                    image=image,
+                    attribute=instruction,
+                    return_detailed=True
+                )
+            else:
+                vlm_result = evaluator.check_edit(
+                    source_image=source_image,
+                    edited_image=image,
+                    instruction=instruction,
+                    return_detailed=True
+                )
 
             result["vlm_evaluation"] = vlm_result
             result["is_erased"] = vlm_result["final_result"] in ["NO", "PARTIAL"]
@@ -118,6 +217,10 @@ Examples:
                        help="Path to prompts JSON")
     parser.add_argument("--no-ensemble", action="store_true",
                        help="Use Qwen only (no Gemini ensemble)")
+    parser.add_argument("--images-root", type=str,
+                       help="Override images root directory (default: results_dir/images)")
+    parser.add_argument("--source-images-root", type=str,
+                       help="Override source images root (default: data/source_images)")
     parser.add_argument("--output", type=str,
                        help="Output file path (default: vlm_results.json in results dir)")
 
@@ -127,7 +230,7 @@ Examples:
     if args.results_dir:
         results_dir = Path(args.results_dir)
     elif args.model:
-        base_dir = Path("data/results") / args.model
+        base_dir = PathConfig().results_dir / args.model
         if not base_dir.exists():
             print(f"Model directory not found: {base_dir}")
             sys.exit(1)
@@ -144,7 +247,14 @@ Examples:
     print(f"Results directory: {results_dir}")
     print(f"Qwen model: {args.qwen_model}")
     print(f"Ensemble: {not args.no_ensemble}")
+    if images_root:
+        print(f"Images root: {images_root}")
+    if source_images_root:
+        print(f"Source images root: {source_images_root}")
     print()
+
+    images_root = Path(args.images_root) if args.images_root else None
+    source_images_root = Path(args.source_images_root) if args.source_images_root else None
 
     # Initialize evaluator
     evaluator = VLMEvaluator(
@@ -156,7 +266,9 @@ Examples:
     evaluated_results = evaluate_results(
         results_dir=results_dir,
         evaluator=evaluator,
-        prompts_file=Path(args.prompts)
+        prompts_file=Path(args.prompts),
+        images_root=images_root,
+        source_images_root=source_images_root
     )
 
     # Save results

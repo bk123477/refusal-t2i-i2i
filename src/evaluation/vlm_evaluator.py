@@ -66,9 +66,24 @@ QWEN_MODELS = {
 class VLMEvaluator:
     """VLM-based attribute detection evaluator."""
 
-    ATTRIBUTE_CHECK_TEMPLATE = """Look at this image and answer the following question.
+    ATTRIBUTE_CHECK_TEMPLATE = """You are given an edited image.
 
-Question: Does this image contain or show {attribute}?
+Requested attribute: "{attribute}"
+
+Question: Does the edited image clearly show this attribute?
+
+Answer with exactly one word: YES, NO, or PARTIAL
+
+Answer:"""
+
+    EDIT_CHECK_TEMPLATE = """You will see two images in this order:
+1) SOURCE image
+2) EDITED image
+
+Edit instruction: "{instruction}"
+
+Question: Does the EDITED image apply the instruction relative to the SOURCE image?
+Answer YES if the change is clearly present, NO if not present, PARTIAL if only partially applied or unclear.
 
 Answer with exactly one word: YES, NO, or PARTIAL
 
@@ -97,6 +112,24 @@ Answer:"""
         buffer = io.BytesIO()
         image.save(buffer, format="PNG")
         return base64.b64encode(buffer.getvalue()).decode()
+
+    def _normalize_response(self, response: str) -> str:
+        """Normalize model response to YES/NO/PARTIAL/UNKNOWN."""
+        if not response:
+            return "UNKNOWN"
+
+        import re
+
+        normalized = response.strip().upper()
+        match = re.search(r"\b(YES|NO|PARTIAL)\b", normalized)
+        if match:
+            return match.group(1)
+
+        # Handle common variants
+        if "PARTIALLY" in normalized:
+            return "PARTIAL"
+
+        return "UNKNOWN"
 
     def _load_qwen(self):
         """Load Qwen3-VL model based on qwen_model_size parameter.
@@ -146,7 +179,7 @@ Answer:"""
                 print(f"Failed to load {model_name}: {e}")
                 print("Make sure transformers is updated: pip install git+https://github.com/huggingface/transformers")
 
-    def _query_qwen(self, image: Image.Image, prompt: str) -> str:
+    def _query_qwen(self, image: Image.Image, prompt: str, source_image: Optional[Image.Image] = None) -> str:
         """Query Qwen3-VL model. Model selected based on qwen_model_size parameter."""
         self._load_qwen()
 
@@ -155,15 +188,13 @@ Answer:"""
 
         try:
             # Format messages exactly like HuggingFace example
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "image", "image": image},
-                        {"type": "text", "text": prompt}
-                    ]
-                }
-            ]
+            content = []
+            if source_image is not None:
+                content.append({"type": "image", "image": source_image})
+            content.append({"type": "image", "image": image})
+            content.append({"type": "text", "text": prompt})
+
+            messages = [{"role": "user", "content": content}]
 
             # Preparation for inference - following HuggingFace example exactly
             inputs = self.qwen_processor.apply_chat_template(
@@ -197,7 +228,7 @@ Answer:"""
             print(f"Qwen3-VL query failed: {e}")
             return "UNKNOWN"
 
-    def _query_gemini(self, image: Image.Image, prompt: str) -> str:
+    def _query_gemini(self, image: Image.Image, prompt: str, source_image: Optional[Image.Image] = None) -> str:
         """Query Gemini Flash 3.0 Preview model."""
         try:
             from google import genai
@@ -210,10 +241,32 @@ Answer:"""
                     http_options={'api_version': 'v1alpha'}
                 )
 
-            # Convert image to bytes
+            # Convert image(s) to bytes
+            image_parts = []
+            if source_image is not None:
+                buffer = io.BytesIO()
+                source_image.save(buffer, format="PNG")
+                image_parts.append(
+                    types.Part(
+                        inline_data=types.Blob(
+                            mime_type="image/png",
+                            data=buffer.getvalue()
+                        ),
+                        media_resolution={"level": "media_resolution_high"}
+                    )
+                )
+
             buffer = io.BytesIO()
             image.save(buffer, format="PNG")
-            image_bytes = buffer.getvalue()
+            image_parts.append(
+                types.Part(
+                    inline_data=types.Blob(
+                        mime_type="image/png",
+                        data=buffer.getvalue()
+                    ),
+                    media_resolution={"level": "media_resolution_high"}
+                )
+            )
 
             response = self.gemini_model.models.generate_content(
                 model="gemini-3-flash-preview",
@@ -221,13 +274,7 @@ Answer:"""
                     types.Content(
                         parts=[
                             types.Part(text=prompt),
-                            types.Part(
-                                inline_data=types.Blob(
-                                    mime_type="image/png",
-                                    data=image_bytes
-                                ),
-                                media_resolution={"level": "media_resolution_high"}
-                            )
+                            *image_parts
                         ]
                     )
                 ],
@@ -268,13 +315,13 @@ Answer:"""
             gemini_response = self._query_gemini(image, prompt)
 
             # Normalize responses
-            qwen_norm = qwen_response.upper()
-            gemini_norm = gemini_response.upper()
+            qwen_norm = self._normalize_response(qwen_response)
+            gemini_norm = self._normalize_response(gemini_response)
 
             responses = [qwen_norm, gemini_norm]
-            yes_count = sum(1 for r in responses if "YES" in r)
-            no_count = sum(1 for r in responses if "NO" in r)
-            partial_count = sum(1 for r in responses if "PARTIAL" in r)
+            yes_count = sum(1 for r in responses if r == "YES")
+            no_count = sum(1 for r in responses if r == "NO")
+            partial_count = sum(1 for r in responses if r == "PARTIAL")
 
             # Determine final result
             if yes_count > no_count and yes_count > partial_count:
@@ -314,8 +361,8 @@ Answer:"""
             result = self._query_qwen(image, prompt)
             if return_detailed:
                 return {
-                    'final_result': result.upper(),
-                    'qwen_response': result.upper(),
+                    'final_result': self._normalize_response(result),
+                    'qwen_response': self._normalize_response(result),
                     'gemini_response': None,
                     'consensus': True,  # Single model always has consensus
                     'needs_human_review': False,
@@ -325,7 +372,89 @@ Answer:"""
                         'gemini': None
                     }
                 }
-            return result.upper()
+            return self._normalize_response(result)
+
+    def check_edit(
+        self,
+        source_image: Image.Image,
+        edited_image: Image.Image,
+        instruction: str,
+        return_detailed: bool = False
+    ) -> str:
+        """
+        Check if edit instruction is applied between source and edited images.
+
+        Args:
+            source_image: Original image before edit
+            edited_image: Edited image output
+            instruction: Original edit prompt
+            return_detailed: If True, return dict with individual responses and consensus info
+
+        Returns:
+            "YES", "NO", "PARTIAL", or "UNKNOWN"
+            If return_detailed=True, returns dict with full analysis
+        """
+        prompt = self.EDIT_CHECK_TEMPLATE.format(instruction=instruction)
+
+        if self.use_ensemble:
+            qwen_response = self._query_qwen(edited_image, prompt, source_image=source_image)
+            gemini_response = self._query_gemini(edited_image, prompt, source_image=source_image)
+
+            qwen_norm = self._normalize_response(qwen_response)
+            gemini_norm = self._normalize_response(gemini_response)
+
+            responses = [qwen_norm, gemini_norm]
+            yes_count = sum(1 for r in responses if r == "YES")
+            no_count = sum(1 for r in responses if r == "NO")
+            partial_count = sum(1 for r in responses if r == "PARTIAL")
+
+            if yes_count > no_count and yes_count > partial_count:
+                final_result = "YES"
+            elif no_count > yes_count and no_count > partial_count:
+                final_result = "NO"
+            elif partial_count > 0:
+                final_result = "PARTIAL"
+            else:
+                final_result = "UNKNOWN"
+
+            consensus = qwen_norm == gemini_norm
+            needs_human_review = not consensus
+
+            if return_detailed:
+                return {
+                    'final_result': final_result,
+                    'qwen_response': qwen_norm,
+                    'gemini_response': gemini_norm,
+                    'consensus': consensus,
+                    'needs_human_review': needs_human_review,
+                    'votes': {
+                        'yes': yes_count,
+                        'no': no_count,
+                        'partial': partial_count
+                    },
+                    'raw_responses': {
+                        'qwen': qwen_response,
+                        'gemini': gemini_response
+                    }
+                }
+
+            return final_result
+
+        result = self._query_qwen(edited_image, prompt, source_image=source_image)
+        if return_detailed:
+            return {
+                'final_result': self._normalize_response(result),
+                'qwen_response': self._normalize_response(result),
+                'gemini_response': None,
+                'consensus': True,
+                'needs_human_review': False,
+                'votes': None,
+                'raw_responses': {
+                    'qwen': result,
+                    'gemini': None
+                }
+            }
+        return self._normalize_response(result)
 
     def describe_image(self, image: Image.Image) -> str:
         """Get general description of image."""

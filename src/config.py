@@ -4,6 +4,7 @@ Unified paths, naming conventions, and logging settings
 """
 
 from pathlib import Path
+import os
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
@@ -17,11 +18,25 @@ class PathConfig:
     # Base directories
     project_root: Path = Path(__file__).parent.parent
     data_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data")
-    results_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "results")
+    results_dir: Path = field(
+        default_factory=lambda: Path(
+            os.environ.get(
+                "I2I_RESULTS_ROOT",
+                Path(__file__).parent.parent / "data" / "results"
+            )
+        )
+    )
     logs_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "logs")
 
     # Source images base directory
-    source_images_base: Path = field(default_factory=lambda: Path(__file__).parent.parent / "data" / "source_images")
+    source_images_base: Path = field(
+        default_factory=lambda: Path(
+            os.environ.get(
+                "I2I_SOURCE_IMAGES_ROOT",
+                Path(__file__).parent.parent / "data" / "source_images"
+            )
+        )
+    )
 
     # Default version (use 'final' for curated 84 images, 'fairface_sample' for candidates)
     source_version: str = "final"
