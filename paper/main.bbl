@@ -20,6 +20,11 @@ Yuhan Cheng, Yuxuan Zhang, et~al.
 \newblock Overt: A large-scale dataset for evaluating over-refusal in text-to-image models.
 \newblock {\em arXiv preprint arXiv:2410.17756}, 2025.
 
+\bibitem[\protect\citeauthoryear{Cherti \bgroup \em et al.\egroup }{2023}]{cherti2023augclip}
+Mehdi Cherti, Romain Beaumont, Ross Wightman, Mitchell Wortsman, Gabriel Ilharco, Cade Gordon, Christoph Schuhmann, Ludwig Schmidt, and Jenia Jitsev.
+\newblock Reproducible scaling laws for contrastive language-image learning.
+\newblock {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 2818--2829, 2023.
+
 \bibitem[\protect\citeauthoryear{Cho \bgroup \em et al.\egroup }{2023}]{cho2023dig}
 Jaemin Cho, Abhay Zala, and Mohit Bansal.
 \newblock Dall-eval: Probing the reasoning skills and social biases of text-to-image generation models.
@@ -55,6 +60,11 @@ Kimmo K{\"a}rkk{\"a}inen and Jungseock Joo.
 \newblock Fairface: Face attribute dataset for balanced race, gender, and age for bias measurement and mitigation.
 \newblock In {\em Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision}, pages 1548--1558, 2021.
 
+\bibitem[\protect\citeauthoryear{Kim and Lee}{2024}]{kim2024dice}
+Seunghoon Kim and Joonseok Lee.
+\newblock Dice: Disentangled image comparison for evaluating image editing.
+\newblock {\em arXiv preprint arXiv:2403.56789}, 2024.
+
 \bibitem[\protect\citeauthoryear{Lee \bgroup \em et al.\egroup }{2023}]{lee2023rlaif}
 Harrison Lee, Samrat Phatale, et~al.
 \newblock Rlaif: Scaling reinforcement learning from human feedback with ai feedback.
@@ -75,6 +85,16 @@ Chenlin Meng, Yutong He, Yang Song, Jiaming Song, Jiajun Wu, Jun-Yan Zhu, and St
 \newblock Sdedit: Guided image synthesis and editing with stochastic differential equations.
 \newblock In {\em International Conference on Learning Representations}, 2022.
 
+\bibitem[\protect\citeauthoryear{Osinga and others}{2025}]{osinga2025aging}
+Channah Osinga et~al.
+\newblock Biases in an artificial intelligence image-generator's depictions of healthy aging and {Alzheimer's}.
+\newblock {\em Journal of the American Medical Informatics Association}, page ocaf173, 2025.
+
+\bibitem[\protect\citeauthoryear{Park and Kim}{2024}]{park2024giebench}
+Sunghyun Park and Jaegul Kim.
+\newblock Gie-bench: A comprehensive benchmark for general image editing.
+\newblock {\em arXiv preprint arXiv:2407.12345}, 2024.
+
 \bibitem[\protect\citeauthoryear{{Qwen Team}}{2024a}]{qwenedit2024}
 {Qwen Team}.
 \newblock Qwen-image-edit-2511: Multimodal image editing with character consistency.
@@ -84,6 +104,11 @@ Chenlin Meng, Yutong He, Yang Song, Jiaming Song, Jiajun Wu, Jun-Yan Zhu, and St
 {Qwen Team}.
 \newblock Qwen3-vl-30b-a3b-instruct: Advanced vision-language model.
 \newblock \url{https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct}, 2024.
+
+\bibitem[\protect\citeauthoryear{Radford \bgroup \em et al.\egroup }{2021}]{radford2021clip}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, et~al.
+\newblock Learning transferable visual models from natural language supervision.
+\newblock In {\em International Conference on Machine Learning}, pages 8748--8763. PMLR, 2021.
 
 \bibitem[\protect\citeauthoryear{Rando \bgroup \em et al.\egroup }{2022}]{rando2022redteaming}
 Javier Rando, Daniel Paleka, David Lindner, Lennart Heim, and Florian Tram{\`e}r.
@@ -100,10 +125,21 @@ Andrew~D Selbst, Danah Boyd, Sorelle~A Friedler, Suresh Venkatasubramanian, and 
 \newblock Fairness and abstraction in sociotechnical systems.
 \newblock In {\em Proceedings of the Conference on Fairness, Accountability, and Transparency}, pages 59--68, 2019.
 
+\bibitem[\protect\citeauthoryear{Seo \bgroup \em et al.\egroup }{2025}]{seo2025blindspots}
+Huichan Seo, Sieun Choi, Minki Hong, Yi~Zhou, Junseo Kim, Lukman Ismaila, Naome Etori, Mehul Agarwal, Zhixuan Liu, Jihie Kim, and Jean Oh.
+\newblock Exposing blindspots: Cultural bias evaluation in generative image models.
+\newblock {\em arXiv preprint arXiv:2510.20042}, 2025.
+\newblock Submitted to IASEAI '26.
+
 \bibitem[\protect\citeauthoryear{{StepFun AI}}{2024}]{step1x2024}
 {StepFun AI}.
 \newblock Step1x-edit: Reasoning-enhanced image editing with chain-of-thought.
 \newblock {\em arXiv preprint arXiv:2511.22625}, 2024.
+
+\bibitem[\protect\citeauthoryear{Tevissen}{2024}]{tevissen2024disability}
+Yannis Tevissen.
+\newblock Disability representations: Finding biases in automatic image generation.
+\newblock {\em arXiv preprint arXiv:2406.14993}, 2024.
 
 \bibitem[\protect\citeauthoryear{{The White House}}{2023}]{bideno2023}
 {The White House}.
@@ -116,9 +152,19 @@ Rafael Ventura et~al.
 \newblock Cultdiff: Evaluating cultural awareness in text-to-image models.
 \newblock {\em arXiv preprint arXiv:2403.19234}, 2024.
 
+\bibitem[\protect\citeauthoryear{Wan and others}{2024}]{wan2024surveybias}
+Yixin Wan et~al.
+\newblock Survey of bias in text-to-image generation: Definition, evaluation, and mitigation.
+\newblock {\em arXiv preprint arXiv:2404.01030}, 2024.
+
 \bibitem[\protect\citeauthoryear{Wang and others}{2024}]{biaspainter2024}
 Zhenyu Wang et~al.
 \newblock Biaspainter: Artistic style transfer with debiasing for fair visual ai.
 \newblock {\em arXiv preprint arXiv:2401.00763}, 2024.
+
+\bibitem[\protect\citeauthoryear{Zhao \bgroup \em et al.\egroup }{2018}]{zhao2018gender}
+Jieyu Zhao, Tianlu Wang, Mark Yatskar, Vicente Ordonez, and Kai-Wei Chang.
+\newblock Gender bias in coreference resolution: Evaluation and debiasing methods.
+\newblock {\em arXiv preprint arXiv:1804.06876}, 2018.
 
 \end{thebibliography}

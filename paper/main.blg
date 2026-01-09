@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: FormattingGuidelines-IJCAI-ECAI-26/named.bst
 Database file #1: references.bib
-You've used 24 entries,
+You've used 33 entries,
             2439 wiz_defined-function locations,
-            657 strings with 8898 characters,
-and the built_in function-call counts, 9039 in all, are:
-= -- 917
-> -- 405
-< -- 5
-+ -- 137
-- -- 136
-* -- 630
-:= -- 1461
-add.period$ -- 73
-call.type$ -- 24
-change.case$ -- 157
-chr.to.int$ -- 23
-cite$ -- 24
-duplicate$ -- 378
-empty$ -- 670
-format.name$ -- 163
-if$ -- 1893
+            698 strings with 10798 characters,
+and the built_in function-call counts, 13187 in all, are:
+= -- 1335
+> -- 656
+< -- 8
++ -- 227
+- -- 226
+* -- 954
+:= -- 2140
+add.period$ -- 102
+call.type$ -- 33
+change.case$ -- 235
+chr.to.int$ -- 32
+cite$ -- 33
+duplicate$ -- 538
+empty$ -- 905
+format.name$ -- 266
+if$ -- 2740
 int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 18
-newline$ -- 124
-num.names$ -- 72
-pop$ -- 181
+missing$ -- 27
+newline$ -- 170
+num.names$ -- 99
+pop$ -- 253
 preamble$ -- 1
-purify$ -- 181
+purify$ -- 268
 quote$ -- 0
-skip$ -- 348
+skip$ -- 505
 stack$ -- 0
-substring$ -- 320
-swap$ -- 110
-text.length$ -- 5
+substring$ -- 459
+swap$ -- 166
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 192
+type$ -- 264
 warning$ -- 0
-while$ -- 63
-width$ -- 29
-write$ -- 297
+while$ -- 88
+width$ -- 36
+write$ -- 411
