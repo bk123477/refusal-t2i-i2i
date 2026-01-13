@@ -42,7 +42,7 @@
 
 ### One-Line Summary
 
-> **The first systematic study analyzing "silent bias" patterns where I2I models successfully perform edits but stereotypically transform race/gender**
+> **The first systematic study analyzing implicit bias patterns where I2I models successfully perform edits but stereotypically transform race/gender**
 
 ### Key Findings (Based on Experiment Results)
 
@@ -60,8 +60,8 @@
 | | T2I (Existing Research) | I2I (This Study) |
 |--|------------------------|------------------|
 | **Primary Bias** | Over-refusal (42%) | **Stereotype Replacement** |
-| **Bias Expression** | Explicit refusal | **Silent demographic transformation** |
-| **User Awareness** | Recognizable via refusal message | **Undetectable (silent)** |
+| **Bias Expression** | Explicit refusal | **Implicit demographic transformation** |
+| **User Awareness** | Recognizable via refusal message | **Undetectable** |
 
 ---
 
@@ -94,7 +94,7 @@ The three bias modes defined in this study:
 │           Example: Left hand licking → Right hand (attr error)  │
 │         • Ignored: Different edit applied (glasses → bg only)   │
 │     └── ⚠️ "Unchanged" is a form of Soft Erasure!              │
-│         Open-source models output same image instead of refusal │
+│         Open-source models output the same image instead of refusing │
 │                                                                  │
 │  3. STEREOTYPE REPLACEMENT (Key Finding) ⭐                     │
 │     └── Edit succeeds but race/gender stereotypically changed    │
@@ -159,7 +159,7 @@ The three bias modes defined in this study:
                                    └─────────────┘     └─────────────┘
 ```
 
-> **Key Insight**: Open-source models "silently refuse" by outputting the **same image** instead of Hard Refusal. This is the **Silent Failure**.
+> **Key Insight**: Open-source models refuse implicitly by outputting the **same image** instead of Hard Refusal.
 
 ### 2.2 Stereotype Replacement (Core Concept)
 
@@ -175,7 +175,7 @@ The three bias modes defined in this study:
 
 **Why is this dangerous?**
 - Users **don't notice** (edit appears "successful")
-- **Silent Discrimination**
+- **Implicit Discrimination**
 - **Reinforces and reproduces** stereotypes
 
 ### 2.3 Identity Preservation
@@ -200,7 +200,7 @@ Gender Drift Rate = P(output_gender ≠ source_gender | edit_success)
 
 ### 2.5 Soft Erasure
 
-**Definition**: Model generates image but **silently deletes/ignores** the requested attribute
+**Definition**: Model generates image but **implicitly deletes/ignores** the requested attribute
 
 **Examples**:
 - "Put person in wheelchair" → Standing person generated
@@ -287,7 +287,7 @@ $$\text{SER} = \frac{\text{Q1 = Partial + Q1 = No}}{\text{Total}}$$
 
 ### 3.3 Research Gap (This Study's Contribution)
 
-> **"While Over-refusal is the main problem in T2I, Stereotype Replacement where demographics are silently transformed without refusal is the main problem in I2I"**
+> **"While Over-refusal is the main problem in T2I, Stereotype Replacement where demographics are implicitly transformed without refusal is the main problem in I2I"**
 
 This difference is the core novelty of this study.
 
