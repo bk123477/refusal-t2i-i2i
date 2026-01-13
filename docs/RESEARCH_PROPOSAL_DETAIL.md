@@ -318,8 +318,7 @@ $$\text{SER} = \frac{\text{Q1 = Partial + Q1 = No}}{\text{Total}}$$
 ## 5. 프레임워크 아키텍처
 
 ### Figure 1: Overall Architecture (4-Stage Pipeline)
-
-![Overall Architecture - 4-Stage Pipeline](../paper/figures/fig3.png)
+<img width="10464" height="6339" alt="fig2" src="https://github.com/user-attachments/assets/3b00fbc3-e1ef-43e6-bb9a-3aad2ed9c054" />
 
 > **Figure 1**: 전체 실험 파이프라인. FairFace 데이터셋에서 84개 이미지 선별 → 54개 프롬프트로 3개 모델에 I2I 편집 요청 → VLM/Human 평가 → 편향 메트릭 계산.
 
@@ -1191,8 +1190,8 @@ python scripts/experiment/run_experiment.py --model flux --experiment-id 2026011
 ### 11.3 Example Output 분석
 
 ### Figure 2: Example Outputs Across Models (Black Female 20s)
+<img width="3104" height="1780" alt="fig3" src="https://github.com/user-attachments/assets/e27bc82c-fc73-4377-a8bf-ed004f6c58c6" />
 
-![Example Outputs - Black Female 20s × 5 Categories × 3 Models](../paper/figures/fig2.png)
 
 > **설명**: Black Female 20s 소스 이미지에 대해 Category A, B, C, D, E 프롬프트를 3개 모델 (Step1X, Qwen, FLUX)에 적용한 15개 결과 이미지. 편집 적용 여부 및 인구통계 drift 평가 대상.
 
