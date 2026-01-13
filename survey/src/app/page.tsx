@@ -108,7 +108,7 @@ async function loadHumanReviewResults(): Promise<any[]> {
     const q = query(resultsRef, orderBy('timestamp', 'desc'))
     const querySnapshot = await getDocs(q)
 
-    const results = []
+    const results: any[] = []
     querySnapshot.forEach((doc) => {
       results.push({ id: doc.id, ...doc.data() })
     })
@@ -211,9 +211,9 @@ export default function EvaluationPage() {
   }, [currentItem, currentIndex, items.length])
 
   const handleHumanReviewLabel = useCallback(async (label: 'yes' | 'no' | 'partial' | 'skip') => {
-    if (!currentData[currentIndex] || mode !== 'human-review') return
+    if (!humanReviewItems[currentIndex] || mode !== 'human-review') return
 
-    const currentHumanItem = currentData[currentIndex] as HumanReviewItem
+    const currentHumanItem = humanReviewItems[currentIndex] as HumanReviewItem
 
     // Update the item status locally
     const updatedItems = [...humanReviewItems]
@@ -246,7 +246,7 @@ export default function EvaluationPage() {
     if (currentIndex < humanReviewItems.length - 1) {
       setCurrentIndex(prev => prev + 1)
     }
-  }, [currentData, currentIndex, mode, humanReviewItems])
+  }, [currentIndex, mode, humanReviewItems])
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -485,50 +485,50 @@ export default function EvaluationPage() {
         ) : (
           <>
             {/* Human Review Mode - Model disagreements */}
-            {currentData.length > 0 && (
+            {humanReviewItems.length > 0 && (
               <>
                 {/* Case Info */}
                 <div className="mb-4 p-4 panel">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="badge badge-orange">
-                      Case {currentData[currentIndex]?.case_id}
+                      Case {humanReviewItems[currentIndex]?.case_id}
                     </span>
                     <span className="badge badge-red">
-                      {currentData[currentIndex]?.disagreement_type}
+                      {humanReviewItems[currentIndex]?.disagreement_type}
                     </span>
                     <span className={`badge ${
-                      currentData[currentIndex]?.review_status === 'pending' ? 'badge-yellow' :
-                      currentData[currentIndex]?.review_status === 'reviewed' ? 'badge-green' : 'badge-gray'
+                      humanReviewItems[currentIndex]?.review_status === 'pending' ? 'badge-yellow' :
+                      humanReviewItems[currentIndex]?.review_status === 'reviewed' ? 'badge-green' : 'badge-gray'
                     }`}>
-                      {currentData[currentIndex]?.review_status}
+                      {humanReviewItems[currentIndex]?.review_status}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-6 mb-4">
                     <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
                       <h3 className="font-semibold text-red-700 dark:text-red-300 mb-2">Qwen3-VL Says:</h3>
-                      <p className="text-lg font-medium">{currentData[currentIndex]?.qwen_response}</p>
+                      <p className="text-lg font-medium">{humanReviewItems[currentIndex]?.qwen_response}</p>
                     </div>
                     <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                       <h3 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Gemini Flash Says:</h3>
-                      <p className="text-lg font-medium">{currentData[currentIndex]?.gemini_response}</p>
+                      <p className="text-lg font-medium">{humanReviewItems[currentIndex]?.gemini_response}</p>
                     </div>
                   </div>
 
                   <p className="text-md text-[var(--text-secondary)]">
-                    <strong>Attribute:</strong> "{currentData[currentIndex]?.attribute}"
+                    <strong>Attribute:</strong> "{humanReviewItems[currentIndex]?.attribute}"
                   </p>
                   <p className="text-sm text-[var(--text-muted)] mt-1">
-                    Ensemble result: {currentData[currentIndex]?.ensemble_result}
+                    Ensemble result: {humanReviewItems[currentIndex]?.ensemble_result}
                   </p>
                 </div>
 
                 {/* Image */}
                 <div className="mb-6 flex justify-center">
                   <div className="max-w-md">
-                    {currentData[currentIndex]?.image_data ? (
+                    {humanReviewItems[currentIndex]?.image_data ? (
                       <img
-                        src={`data:image/png;base64,${currentData[currentIndex].image_data}`}
+                        src={`data:image/png;base64,${humanReviewItems[currentIndex].image_data}`}
                         alt="Review case"
                         className="w-full h-auto rounded-lg shadow-lg"
                       />

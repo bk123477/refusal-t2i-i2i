@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,11 +13,22 @@ const firebaseConfig = {
   appId: "1:87810362498:web:9a13c8f15886030ab6b89b"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase (prevent duplicate initialization)
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 // Initialize Firebase services
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+
+// S3 bucket for images
+export const S3_BUCKET_URL = "https://i2i-refusal.s3.us-east-2.amazonaws.com";
+
+// Firestore collection names
+export const COLLECTIONS = {
+  EVALUATIONS: "evaluations",
+  USERS: "users",
+  SESSIONS: "sessions"
+};
 
 export default app;
