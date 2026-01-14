@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Category B Pilot - GPU 1 (FEMALE)
-Occupational Stereotype prompts with Identity Preservation
-Generates: Edited (baseline) + Preserved (with identity prompt)
+Category B Pilot - GPU 1
+B02 (Military) - Balanced distribution across races/genders/ages
+PRESERVED ONLY
 """
 import os
 import json
@@ -20,16 +20,30 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.models.step1x_wrapper import Step1XWrapper
 
-# Paths (relative to project root)
+# Paths
 SOURCE_DIR = PROJECT_ROOT / "data" / "source_images" / "final"
 IDENTITY_PROMPTS_FILE = PROJECT_ROOT / "data" / "identity_prompts" / "identity_prompt_mapping_full_20260113_234029.json"
 PROMPTS_FILE = PROJECT_ROOT / "data" / "prompts" / "i2i_prompts.json"
 OUTPUT_DIR = PROJECT_ROOT / "data" / "results" / "category_b_pilot"
 
-# GPU 1: FEMALE only, 20s only for quick pilot
-RACES = ["White", "Black", "EastAsian", "SoutheastAsian", "Indian", "MiddleEastern", "Latino"]
-GENDER = "Female"
-AGE = "20s"  # Quick pilot: single age
+# B02 - Balanced distribution (7 races × mixed gender/age)
+B02_TARGETS = [
+    # Each race: 1 male + 1 female, varied ages
+    "White_Male_30s",
+    "White_Female_40s",
+    "Black_Male_20s",
+    "Black_Female_30s",
+    "EastAsian_Male_40s",
+    "EastAsian_Female_20s",
+    "SoutheastAsian_Male_30s",
+    "SoutheastAsian_Female_50s",
+    "Indian_Male_50s",
+    "Indian_Female_20s",
+    "MiddleEastern_Male_20s",
+    "MiddleEastern_Female_30s",
+    "Latino_Male_40s",
+    "Latino_Female_20s",
+]
 
 
 def load_identity_prompts() -> dict:
@@ -37,34 +51,33 @@ def load_identity_prompts() -> dict:
         return json.load(f)
 
 
-def load_category_b_prompts() -> list:
+def load_prompt(prompt_id: str) -> dict:
     with open(PROMPTS_FILE, "r") as f:
         data = json.load(f)
-        # Filter only Category B prompts
-        return [p for p in data["prompts"] if p["id"].startswith("B")]
+        for p in data["prompts"]:
+            if p["id"] == prompt_id:
+                return p
+    return None
 
 
 def main():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     print("=" * 80)
-    print("Category B Pilot - GPU 1 (FEMALE)")
-    print("Occupational Stereotype prompts with Identity Preservation")
-    print(f"Images: {len(RACES)} races × 1 gender × 1 age = {len(RACES)} images")
+    print("Category B Pilot - GPU 1 - B02 (Military) PRESERVED")
+    print(f"Targets: {len(B02_TARGETS)} balanced distribution")
     print(f"Timestamp: {timestamp}")
     print("=" * 80)
 
-    # Create output directories
-    edited_dir = OUTPUT_DIR / "edited"
     preserved_dir = OUTPUT_DIR / "preserved"
-    edited_dir.mkdir(parents=True, exist_ok=True)
     preserved_dir.mkdir(parents=True, exist_ok=True)
 
     identity_prompts = load_identity_prompts()
     print(f"Loaded {len(identity_prompts)} identity prompts")
 
-    prompts = load_category_b_prompts()
-    print(f"Loaded {len(prompts)} Category B prompts")
+    prompt_info = load_prompt("B02")
+    prompt_text = prompt_info["prompt"]
+    print(f"B02: {prompt_text[:60]}...")
 
     # Initialize Step1X
     print("\nInitializing Step1X-Edit...")
@@ -72,152 +85,80 @@ def main():
     model.load()
 
     results = []
-    total = len(RACES) * len(prompts) * 2  # × 2 for edited + preserved
-    count = 0
+    total = len(B02_TARGETS)
 
-    for prompt_info in prompts:
-        prompt_id = prompt_info["id"]
-        prompt_text = prompt_info["prompt"]
+    print(f"\n--- B02 PRESERVED ({total} targets) ---")
+    for count, image_key in enumerate(B02_TARGETS, 1):
+        # Parse race from image_key
+        race = image_key.split("_")[0]
+        source_path = SOURCE_DIR / race / f"{image_key}.jpg"
 
-        print(f"\n{'='*60}")
-        print(f"Prompt {prompt_id}: {prompt_text[:60]}...")
-        print("=" * 60)
+        print(f"\n[{count}/{total}] {image_key}")
 
-        # ===== PASS 1: All races EDITED (baseline) =====
-        print(f"\n--- {prompt_id} EDITED (all races) ---")
-        for race in RACES:
-            image_key = f"{race}_{GENDER}_{AGE}"
-            source_path = SOURCE_DIR / race / f"{image_key}.jpg"
+        if not source_path.exists():
+            print(f"  SKIP: Source not found: {source_path}")
+            continue
 
-            if not source_path.exists():
-                print(f"  SKIP: Source not found: {source_path}")
-                continue
+        identity_prompt = identity_prompts.get(image_key, "")
+        if not identity_prompt:
+            print(f"  SKIP: No identity prompt")
+            continue
 
-            count += 1
-            print(f"[{count}/{total}] {image_key} - EDITED")
+        source_image = Image.open(source_path)
+        combined_prompt = f"{prompt_text}. {identity_prompt}"
 
-            source_image = Image.open(source_path)
+        try:
+            result = model.edit(
+                source_image=source_image,
+                prompt=combined_prompt,
+                num_inference_steps=50,
+                true_cfg_scale=6.0,
+                seed=42
+            )
 
-            try:
-                result = model.edit(
-                    source_image=source_image,
-                    prompt=prompt_text,
-                    num_inference_steps=50,
-                    true_cfg_scale=6.0,
-                    seed=42
-                )
-
-                if result.success and result.output_image:
-                    output_filename = f"{prompt_id}_{image_key}_edited.png"
-                    output_path = edited_dir / output_filename
-                    result.output_image.save(output_path)
-                    print(f"  SUCCESS: {output_filename} ({result.latency_ms:.0f}ms)")
-                    results.append({
-                        "prompt_id": prompt_id,
-                        "image_key": image_key,
-                        "type": "edited",
-                        "status": "success",
-                        "latency_ms": result.latency_ms
-                    })
-                else:
-                    print(f"  FAILED: {result.error_message or 'Unknown'}")
-                    results.append({
-                        "prompt_id": prompt_id,
-                        "image_key": image_key,
-                        "type": "edited",
-                        "status": "failed",
-                        "error": result.error_message
-                    })
-
-            except Exception as e:
-                print(f"  ERROR: {str(e)[:80]}")
+            if result.success and result.output_image:
+                output_filename = f"B02_{image_key}_preserved.png"
+                output_path = preserved_dir / output_filename
+                result.output_image.save(output_path)
+                print(f"  SUCCESS: {output_filename} ({result.latency_ms:.0f}ms)")
                 results.append({
-                    "prompt_id": prompt_id,
+                    "prompt_id": "B02",
                     "image_key": image_key,
-                    "type": "edited",
-                    "status": "error",
-                    "error": str(e)[:200]
+                    "status": "success",
+                    "latency_ms": result.latency_ms
+                })
+            else:
+                print(f"  FAILED: {result.error_message or 'Unknown'}")
+                results.append({
+                    "prompt_id": "B02",
+                    "image_key": image_key,
+                    "status": "failed",
+                    "error": result.error_message
                 })
 
-        # ===== PASS 2: All races PRESERVED (with identity prompt) =====
-        print(f"\n--- {prompt_id} PRESERVED (all races) ---")
-        for race in RACES:
-            image_key = f"{race}_{GENDER}_{AGE}"
-            source_path = SOURCE_DIR / race / f"{image_key}.jpg"
-
-            if not source_path.exists():
-                continue
-
-            identity_prompt = identity_prompts.get(image_key, "")
-            if not identity_prompt:
-                print(f"  SKIP: No identity prompt for {image_key}")
-                continue
-
-            count += 1
-            print(f"[{count}/{total}] {image_key} - PRESERVED")
-
-            source_image = Image.open(source_path)
-            combined_prompt = f"{prompt_text}. {identity_prompt}"
-
-            try:
-                result = model.edit(
-                    source_image=source_image,
-                    prompt=combined_prompt,
-                    num_inference_steps=50,
-                    true_cfg_scale=6.0,
-                    seed=42
-                )
-
-                if result.success and result.output_image:
-                    output_filename = f"{prompt_id}_{image_key}_preserved.png"
-                    output_path = preserved_dir / output_filename
-                    result.output_image.save(output_path)
-                    print(f"  SUCCESS: {output_filename} ({result.latency_ms:.0f}ms)")
-                    results.append({
-                        "prompt_id": prompt_id,
-                        "image_key": image_key,
-                        "type": "preserved",
-                        "status": "success",
-                        "latency_ms": result.latency_ms
-                    })
-                else:
-                    print(f"  FAILED: {result.error_message or 'Unknown'}")
-                    results.append({
-                        "prompt_id": prompt_id,
-                        "image_key": image_key,
-                        "type": "preserved",
-                        "status": "failed",
-                        "error": result.error_message
-                    })
-
-            except Exception as e:
-                print(f"  ERROR: {str(e)[:80]}")
-                results.append({
-                    "prompt_id": prompt_id,
-                    "image_key": image_key,
-                    "type": "preserved",
-                    "status": "error",
-                    "error": str(e)[:200]
-                })
+        except Exception as e:
+            print(f"  ERROR: {str(e)[:80]}")
+            results.append({
+                "prompt_id": "B02",
+                "image_key": image_key,
+                "status": "error",
+                "error": str(e)[:200]
+            })
 
     # Save results
-    results_file = OUTPUT_DIR / f"gpu1_female_results_{timestamp}.json"
+    results_file = OUTPUT_DIR / f"gpu1_B02_preserved_{timestamp}.json"
     with open(results_file, "w") as f:
         json.dump({
             "timestamp": timestamp,
             "gpu": 1,
-            "gender": GENDER,
-            "age": AGE,
-            "prompts": [p["id"] for p in prompts],
+            "prompt": "B02",
+            "targets": B02_TARGETS,
             "results": results
         }, f, indent=2)
 
     print("\n" + "=" * 80)
-    edited_success = sum(1 for r in results if r["type"] == "edited" and r["status"] == "success")
-    preserved_success = sum(1 for r in results if r["type"] == "preserved" and r["status"] == "success")
-    print(f"GPU 1 (FEMALE) Complete:")
-    print(f"  Edited: {edited_success}/{len(RACES) * len(prompts)}")
-    print(f"  Preserved: {preserved_success}/{len(RACES) * len(prompts)}")
+    success = sum(1 for r in results if r["status"] == "success")
+    print(f"GPU 1 Complete: {success}/{total} B02 preserved images")
     print(f"Results: {results_file}")
 
     model.cleanup()
