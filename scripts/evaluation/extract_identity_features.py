@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Extract identity-preserving features from baseline images using VLM (Gemini)
+Extract identity-preserving features from ALL 84 baseline images using VLM (Gemini)
 Creates prompts to maintain identity during I2I editing
+7 races × 2 genders × 6 ages = 84 images
 """
 
 import json
@@ -9,6 +10,7 @@ from pathlib import Path
 from datetime import datetime
 from google import genai
 from PIL import Image
+import time
 
 GEMINI_API_KEY = "AIzaSyCYNx5TMv-2cPsPIBdHCZ6PuG0c_HQXNxY"
 
@@ -24,8 +26,8 @@ Focus on:
 3. Eye characteristics (shape, color, distinctive features)
 4. Nose characteristics (shape, width, bridge)
 5. Lip characteristics (shape, fullness)
-6. Hair (color, texture, style)
-7. Any distinctive features (birthmarks, dimples, etc.)
+6. Hair (color, texture, style, gray hair if present)
+7. Any distinctive features (wrinkles, birthmarks, dimples, glasses, facial hair, etc.)
 
 Output a JSON object with:
 {{
@@ -94,82 +96,80 @@ def main():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     print("=" * 80)
-    print("Identity Feature Extraction for Baseline Images")
+    print("Identity Feature Extraction for ALL 84 Baseline Images")
     print(f"Timestamp: {timestamp}")
     print("=" * 80)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     client = setup_client()
 
-    # Image configurations
+    # ALL 84 images: 7 races × 2 genders × 6 ages
     races = ["White", "Black", "EastAsian", "SoutheastAsian", "Indian", "MiddleEastern", "Latino"]
     genders = ["Male", "Female"]
-    age = "20s"
+    ages = ["20s", "30s", "40s", "50s", "60s", "70plus"]
 
     all_results = {}
+    prompt_mapping = {}
+
+    total = len(races) * len(genders) * len(ages)
+    count = 0
+    success_count = 0
 
     for race in races:
-        all_results[race] = {}
-
         for gender in genders:
-            image_path = SOURCE_DIR / race / f"{race}_{gender}_{age}.jpg"
+            for age in ages:
+                count += 1
+                image_key = f"{race}_{gender}_{age}"
+                image_path = SOURCE_DIR / race / f"{image_key}.jpg"
 
-            if not image_path.exists():
-                print(f"\n[SKIP] {race} {gender}: File not found")
-                continue
+                if not image_path.exists():
+                    print(f"[{count}/{total}] SKIP {image_key}: File not found")
+                    continue
 
-            print(f"\n[{race} {gender}]")
-            print(f"  Processing: {image_path.name}")
+                print(f"[{count}/{total}] {image_key}...", end=" ", flush=True)
 
-            result = extract_features(client, image_path)
+                result = extract_features(client, image_path)
 
-            if result["status"] == "success":
-                features = result["features"]
-                print(f"  Skin tone: {features.get('skin_tone', 'N/A')}")
-                print(f"  Identity prompt: {features.get('identity_prompt', 'N/A')[:60]}...")
+                if result["status"] == "success":
+                    features = result["features"]
+                    identity_prompt = features.get("identity_prompt", "")
 
-                all_results[race][gender] = {
-                    "image_path": str(image_path),
-                    "features": features
-                }
-            else:
-                print(f"  Error: {result.get('error', 'Unknown')[:50]}")
-                all_results[race][gender] = {"error": result.get("error")}
+                    all_results[image_key] = {
+                        "image_path": str(image_path),
+                        "features": features
+                    }
+                    prompt_mapping[image_key] = identity_prompt
 
-    # Save results
-    output_file = OUTPUT_DIR / f"identity_features_{timestamp}.json"
+                    print(f"OK - {identity_prompt[:50]}...")
+                    success_count += 1
+                else:
+                    print(f"ERROR - {result.get('error', 'Unknown')[:40]}")
+                    all_results[image_key] = {"error": result.get("error")}
+
+                # Rate limiting
+                time.sleep(0.5)
+
+    # Save full results
+    output_file = OUTPUT_DIR / f"identity_features_full_{timestamp}.json"
     with open(output_file, "w") as f:
         json.dump({
             "timestamp": timestamp,
             "source_dir": str(SOURCE_DIR),
+            "total_images": total,
+            "success_count": success_count,
             "results": all_results
         }, f, indent=2, ensure_ascii=False)
 
-    print("\n" + "=" * 80)
-    print(f"Results saved to: {output_file}")
-
-    # Generate identity prompt mapping file
-    prompt_mapping = {}
-    for race in races:
-        for gender in genders:
-            key = f"{race}_{gender}_{age}"
-            if race in all_results and gender in all_results[race]:
-                data = all_results[race][gender]
-                if "features" in data and "identity_prompt" in data["features"]:
-                    prompt_mapping[key] = data["features"]["identity_prompt"]
-
-    mapping_file = OUTPUT_DIR / f"identity_prompt_mapping_{timestamp}.json"
+    # Save prompt mapping (key file for experiments)
+    mapping_file = OUTPUT_DIR / f"identity_prompt_mapping_full_{timestamp}.json"
     with open(mapping_file, "w") as f:
         json.dump(prompt_mapping, f, indent=2, ensure_ascii=False)
 
-    print(f"Prompt mapping saved to: {mapping_file}")
+    print("\n" + "=" * 80)
+    print(f"Complete: {success_count}/{total} successful")
+    print(f"Full results: {output_file}")
+    print(f"Prompt mapping: {mapping_file}")
     print("=" * 80)
-
-    # Print summary
-    print("\n=== IDENTITY PROMPTS SUMMARY ===\n")
-    for key, prompt in prompt_mapping.items():
-        print(f"{key}:")
-        print(f"  {prompt}\n")
 
 
 if __name__ == "__main__":
