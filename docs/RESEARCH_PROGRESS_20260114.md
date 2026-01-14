@@ -22,8 +22,9 @@
 |----|----------|----------|
 | **RQ1** | I2I 모델이 인종/성별에 따라 차별적 결과를 생성하는가? | H1 |
 | **RQ2** | 어떤 편집 유형에서 Stereotype Replacement가 발생하는가? | H2 |
-| **RQ3** | Identity Preservation Prompt로 bias를 완화할 수 있는가? | H3 |
-| **RQ4** | VLM 평가가 human judgment와 일치하는가? | H4 |
+| **RQ3** | 모델 간 편향 패턴이 일관되게 나타나는가? (Step1X/Qwen/FLUX) | H3 |
+| **RQ4** | Identity Preservation Prompt로 bias를 완화할 수 있는가? | H4 |
+| **RQ5** | VLM 평가가 human judgment와 일치하는가? | H5 |
 
 ---
 
@@ -38,11 +39,14 @@
 > - **노화 프롬프트**: 비백인 → 백인화
 > - **문화/종교 프롬프트**: Stereotype-congruent 방향으로 drift
 
-### H3: Mitigation
+### H3: Cross-Model Consistency
+> 오픈소스 I2I 모델들(예: Step1X, Qwen, FLUX)에서 편향 패턴의 방향이 일관되게 나타난다. (크기 차이는 가능)
+
+### H4: Mitigation
 > Source image의 물리적 특징(피부톤, 얼굴 구조 등)을 명시하는 **Identity Preservation Prompt**를 추가하면 Stereotype Replacement를 완화할 수 있다.
 > ⚠️ **인종을 명시하지 않음** (VLM bias 방지)
 
-### H4: VLM Evaluation Validity
+### H5: VLM Evaluation Validity
 > VLM-based evaluation이 I2I bias를 정량적으로 측정할 수 있으며, human judgment와 높은 상관관계를 보인다.
 
 ---
@@ -96,6 +100,13 @@
 | **Base** | Source image (원본) |
 | **Edited** | Baseline (identity prompt 없이) |
 | **Preserved** | + Identity Preservation prompt |
+
+### 3.4 Cross-Model Consistency Metrics (NEW)
+
+| Metric | Definition | 해석 |
+|--------|------------|------|
+| **Directional Agreement** | 모델 간 bias 방향이 동일한 비율 (비백인 > 백인) | 1.0 = 완전 일치 |
+| **Rank Correlation** | 모델 간 인종별 bias score 순위 Spearman ρ | ρ가 높을수록 일관성 |
 
 ---
 
@@ -154,7 +165,7 @@ wide expressive smile with prominent cheekbones, and broad nasal features."
 | E.Asian | 2 | **1** | -1 (over-aging 방지) |
 | White | 1 | **1** | 0 (이목구비 유지) |
 
-**결론:** H3 지지 - Identity Preservation Prompt로 Stereotype Replacement 크게 완화
+**결론:** H4 지지 - Identity Preservation Prompt로 Stereotype Replacement 크게 완화
 
 ---
 
@@ -168,7 +179,7 @@ wide expressive smile with prominent cheekbones, and broad nasal features."
 | B05 (가사도우미) | 백인/남성 → 비백인/여성 drift (Stereotype 7-9) | Stereotype 3-5 |
 | B03 (의사) | 비백인 → 백인 drift (Race 5-7) | Race 2-3 |
 
-**검증할 가설:** H2 (직업 프롬프트에서 고정관념 방향 drift)
+**검증할 가설:** H2 (직업 프롬프트에서 고정관념 방향 drift), H4 (완화 효과)
 
 ### 5.2 Category C: Ambiguous Cultural (NEW)
 
@@ -181,7 +192,7 @@ wide expressive smile with prominent cheekbones, and broad nasal features."
 **검증할 가설:**
 - 모델이 "traditional"을 인종별로 다르게 해석하는가?
 - Stereotype 가정이 얼마나 강한가? (Stereotype score로 측정)
-- Identity Preservation이 stereotype 가정을 완화하는가?
+- Identity Preservation이 stereotype 가정을 완화하는가? (H4)
 
 ### 5.3 Category D: Vulnerability
 
@@ -190,7 +201,15 @@ wide expressive smile with prominent cheekbones, and broad nasal features."
 | D01-02 (휠체어/장애) | Soft Erasure 높음 (Erasure 6-8), 비백인에서 더 심함 | Erasure 3-5 |
 | D03 (노화) | ✅ Pilot 완료 - 백인화 확인 | ✅ 개선 확인 |
 
-**검증할 가설:** H1 (Soft Erasure), H2 (노화 시 백인화)
+**검증할 가설:** H1 (Soft Erasure), H2 (노화 시 백인화), H4 (완화 효과)
+
+### 5.4 Cross-Model Consistency (RQ3)
+
+**Expected Pattern:**
+- Step1X / Qwen / FLUX 전반에서 비백인 → 백인화/고정관념 drift 방향이 유사
+- 효과 크기는 모델별로 다르되, 방향은 일치
+
+**검증할 가설:** H3 (모델 간 일관성)
 
 ---
 
@@ -202,8 +221,9 @@ wide expressive smile with prominent cheekbones, and broad nasal features."
 |------------|-----------|---------------|----------|
 | **H1** (Bias Existence) | ✅ 지지됨 | Race/Gender score > 5 for 비백인 | VLM scoring |
 | **H2** (Stereotype Pattern) | ✅ D03 지지됨 | B, C 카테고리에서 동일 패턴 | Category별 비교 |
-| **H3** (Mitigation) | ✅ 지지됨 | Preserved score < Edited score | Δ score 비교 |
-| **H4** (VLM Validity) | 🔜 검증 필요 | VLM-Human 상관계수 > 0.7 | User Study |
+| **H3** (Cross-Model Consistency) | — | 모델 간 방향 일치 | Directional agreement, ρ |
+| **H4** (Mitigation) | ✅ 지지됨 | Preserved score < Edited score | Δ score 비교 |
+| **H5** (VLM Validity) | 🔜 검증 필요 | VLM-Human 상관계수 > 0.7 | User Study |
 
 ---
 
@@ -279,7 +299,7 @@ Diversity Index: 1.0 (모든 인종 다른 문화 가정 → 고정관념 존재
 ## 8. Human Evaluation Design
 
 ### 8.1 Study Purpose
-VLM 평가의 신뢰도 검증 (H4) + 실제 사용자 관점에서 bias 인식 측정
+VLM 평가의 신뢰도 검증 (H5) + 실제 사용자 관점에서 bias 인식 측정
 
 ### 8.2 Study Design
 
@@ -333,7 +353,7 @@ VLM 평가의 신뢰도 검증 (H4) + 실제 사용자 관점에서 bias 인식 
 | Metric | Threshold | 해석 |
 |--------|-----------|------|
 | Preference Rate | > 60% | Preserved가 유의미하게 선호됨 |
-| VLM-Human Corr | > 0.7 | VLM 평가 신뢰도 검증 (H4 지지) |
+| VLM-Human Corr | > 0.7 | VLM 평가 신뢰도 검증 (H5 지지) |
 | IRR (α) | > 0.6 | 평가자 간 일치도 acceptable |
 
 ### 8.5 IRB & Ethics
@@ -354,8 +374,8 @@ VLM 평가의 신뢰도 검증 (H4) + 실제 사용자 관점에서 bias 인식 
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                         │
 │  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐              │
-│  │ Source Images│───▶│ I2I Model    │───▶│ Result Images│              │
-│  │ (84 images)  │    │ (Step1X-Edit)│    │              │              │
+│  │ Source Images│───▶│ I2I Models   │───▶│ Result Images│              │
+│  │ (84 images)  │    │ (Step1X/Qwen/FLUX)│              │              │
 │  └──────────────┘    └──────────────┘    └──────────────┘              │
 │         │                   │                    │                      │
 │         │            ┌──────┴──────┐             │                      │
@@ -399,8 +419,8 @@ Step 1: Identity Extraction
   (84 images)                 (skin tone, facial features, etc.)
 
 Step 2: I2I Editing
-  Source + Edit Prompt → Step1X-Edit → Edited Image
-  Source + Edit + ID Prompt → Step1X-Edit → Preserved Image
+  Source + Edit Prompt → I2I Model (Step1X/Qwen/FLUX) → Edited Image
+  Source + Edit + ID Prompt → I2I Model (Step1X/Qwen/FLUX) → Preserved Image
 
 Step 3: VLM Evaluation
   (Source, Edited) → Gemini VLM → Scores (Race, Gender, Stereotype, Erasure)
@@ -421,6 +441,7 @@ Step 5: Validation
 | I2I Editing (B) | `run_category_b_pilot_gpu*.py` | Source + Prompts | `results/category_b_pilot/` |
 | I2I Editing (C) | `run_category_c_pilot_gpu*.py` | Source + Prompts | `results/category_c_pilot/` |
 | I2I Editing (D) | `run_step1x_identity_gpu*.py` | Source + Prompts | `results/step1x_identity_preserved/` |
+| I2I Editing (Multi-model) | `run_experiment.py`, `run_step1x.sh`, `run_qwen.sh`, `run_flux.sh` | Source + Prompts | `results/<model>/*` |
 | VLM Evaluation | `vlm_eval_identity_preserved.py` | Image pairs | `results/vlm_eval/*.json` |
 | Visualization | `plot_*_comparison.py` | Results | `results/plots/*.png` |
 | Human Study | `survey/` (Next.js app) | Image pairs | Survey responses |
@@ -481,10 +502,11 @@ python scripts/visualization/plot_category_c_comparison.py
 - [ ] Category B (Occupational) - Identity Preservation 적용
 - [ ] Category C (Ambiguous Cultural) - Pilot 결과 반영
 - [ ] Category D (나머지 prompts) - D03 외 추가
+- [ ] 3개 모델(Step1X/Qwen/FLUX) 전체 실행 및 비교 (RQ3)
 
 ### Phase 4: Validation
 - [ ] User Study 실행
-- [ ] VLM vs Human 상관관계 분석 (H4 검증)
+- [ ] VLM vs Human 상관관계 분석 (H5 검증)
 
 ---
 
@@ -494,9 +516,10 @@ python scripts/visualization/plot_category_c_comparison.py
 
 2. **Evaluation Framework**: VLM-based bias scoring (Race/Gender/Stereotype/Soft Erasure 4 categories)
 
-3. **Mitigation Method**: **Identity Preservation Prompt**로 bias 완화 (모델 재훈련 없이, 인종 명시 없이)
+3. **Cross-Model Consistency**: 3개 오픈소스 I2I 모델 간 편향 패턴 비교 분석
+4. **Mitigation Method**: **Identity Preservation Prompt**로 bias 완화 (모델 재훈련 없이, 인종 명시 없이)
 
-4. **Validation**: User study로 VLM-human 상관관계 검증
+5. **Validation**: User study로 VLM-human 상관관계 검증
 
 ---
 
