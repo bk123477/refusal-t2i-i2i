@@ -54,7 +54,7 @@ export default function SelectPage() {
     }
   }, [router])
 
-  // Check AMT info
+  // Check AMT info (optional - user may have skipped)
   useEffect(() => {
     async function checkAMT() {
       if (!user) {
@@ -64,10 +64,18 @@ export default function SelectPage() {
 
       try {
         const userDoc = await getDoc(doc(db, 'users', user.uid))
-        if (userDoc.exists() && userDoc.data().amtWorkerId) {
-          setAmtWorkerId(userDoc.data().amtWorkerId)
+        if (userDoc.exists()) {
+          const data = userDoc.data()
+          // Check if user has gone through AMT page (either with or without Worker ID)
+          if (!data.createdAt) {
+            // User hasn't been through AMT page yet
+            router.push('/amt')
+            return
+          }
+          // Set Worker ID if available (may be null if user skipped)
+          setAmtWorkerId(data.amtWorkerId || null)
         } else {
-          // No AMT info, redirect to AMT page
+          // No user doc, redirect to AMT page
           router.push('/amt')
           return
         }
@@ -75,11 +83,7 @@ export default function SelectPage() {
         console.error('Error checking AMT:', err)
         // Fallback to localStorage
         const localWorkerId = localStorage.getItem('amt_worker_id')
-        if (!localWorkerId) {
-          router.push('/amt')
-          return
-        }
-        setAmtWorkerId(localWorkerId)
+        setAmtWorkerId(localWorkerId || null)
       }
       setCheckingAmt(false)
     }
