@@ -376,12 +376,16 @@ function Exp2Content() {
             <span className="ml-2 keyboard-hint">1</span>
           </div>
           <div className="image-container flex items-center justify-center" style={{ minHeight: '350px' }}>
-            <img
-              src={leftImage || ''}
-              alt="Option A"
-              className="max-w-full max-h-full object-contain"
-              onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }}
-            />
+            {leftImage ? (
+              <img
+                src={leftImage}
+                alt="Option A"
+                className="max-w-full max-h-full object-contain"
+                onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }}
+              />
+            ) : (
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading image...</div>
+            )}
           </div>
         </div>
 
@@ -404,12 +408,16 @@ function Exp2Content() {
             <span className="ml-2 keyboard-hint">2</span>
           </div>
           <div className="image-container flex items-center justify-center" style={{ minHeight: '350px' }}>
-            <img
-              src={rightImage || ''}
-              alt="Option B"
-              className="max-w-full max-h-full object-contain"
-              onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }}
-            />
+            {rightImage ? (
+              <img
+                src={rightImage}
+                alt="Option B"
+                className="max-w-full max-h-full object-contain"
+                onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.svg' }}
+              />
+            ) : (
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading image...</div>
+            )}
           </div>
         </div>
       </div>
