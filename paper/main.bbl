@@ -35,10 +35,20 @@ Can Cui, Wei Yuan, et~al.
 \newblock Or-bench: A benchmark for over-refusal in large language models.
 \newblock {\em arXiv preprint arXiv:2409.14098}, 2024.
 
+\bibitem[\protect\citeauthoryear{Deng \bgroup \em et al.\egroup }{2019}]{deng2019arcface}
+Jiankang Deng, Jia Guo, Niannan Xue, and Stefanos Zafeiriou.
+\newblock Arcface: Additive angular margin loss for deep face recognition.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pages 4690--4699, 2019.
+
 \bibitem[\protect\citeauthoryear{{European Parliament and Council}}{2024}]{euaiact2024}
 {European Parliament and Council}.
 \newblock Regulation (eu) 2024/1689 of the european parliament and of the council on artificial intelligence (ai act).
 \newblock \url{https://artificialintelligenceact.eu/}, 2024.
+
+\bibitem[\protect\citeauthoryear{Friedrich \bgroup \em et al.\egroup }{2024}]{friedrich2024fairdiffusion}
+Felix Friedrich, Manuel Brack, Patrick Schramowski, Kristian Kersting, and Lukas Struppek.
+\newblock Fair diffusion: Instructing text-to-image generation models on fairness.
+\newblock {\em arXiv preprint arXiv:2302.10893}, 2024.
 
 \bibitem[\protect\citeauthoryear{{Google DeepMind}}{2024}]{geminiv3flash2024}
 {Google DeepMind}.
@@ -70,6 +80,11 @@ Harrison Lee, Samrat Phatale, et~al.
 \newblock Rlaif: Scaling reinforcement learning from human feedback with ai feedback.
 \newblock {\em arXiv preprint arXiv:2309.00267}, 2023.
 
+\bibitem[\protect\citeauthoryear{Li \bgroup \em et al.\egroup }{2024}]{li2024rscorrector}
+Jinhao Li, Jingyu Cheng, and Kun Xu.
+\newblock Rs-corrector: Correcting the racial stereotypes in text-to-image generative ai.
+\newblock {\em arXiv preprint arXiv:2404.04788}, 2024.
+
 \bibitem[\protect\citeauthoryear{Liu \bgroup \em et al.\egroup }{2024}]{liu2024cube}
 Yufan Liu, Xinyi Zhang, et~al.
 \newblock Cube: A culture-centric benchmark for text-to-image evaluation.
@@ -84,6 +99,11 @@ Alexandra~Sasha Luccioni, Christopher Akiki, Margaret Mitchell, and Yacine Jerni
 Chenlin Meng, Yutong He, Yang Song, Jiaming Song, Jiajun Wu, Jun-Yan Zhu, and Stefano Ermon.
 \newblock Sdedit: Guided image synthesis and editing with stochastic differential equations.
 \newblock In {\em International Conference on Learning Representations}, 2022.
+
+\bibitem[\protect\citeauthoryear{Oquab \bgroup \em et al.\egroup }{2023}]{oquab2023dinov2}
+Maxime Oquab, Timoth{\'e}e Darcet, Th{\'e}o Moutakanni, Huy Vo, Marc Szafraniec, Vasil Khalidov, Pierre Fernandez, Daniel Haziza, Francisco Massa, Alaaeldin El-Nouby, et~al.
+\newblock Dinov2: Learning robust visual features without supervision.
+\newblock {\em arXiv preprint arXiv:2304.07193}, 2023.
 
 \bibitem[\protect\citeauthoryear{Osinga and others}{2025}]{osinga2025aging}
 Channah Osinga et~al.
@@ -161,6 +181,11 @@ Yixin Wan et~al.
 Zhenyu Wang et~al.
 \newblock Biaspainter: Artistic style transfer with debiasing for fair visual ai.
 \newblock {\em arXiv preprint arXiv:2401.00763}, 2024.
+
+\bibitem[\protect\citeauthoryear{Zhang and Kim}{2024}]{zhang2024mist}
+Yihao Zhang and Joonhyuk Kim.
+\newblock Mist: Mitigating intersectional stereotypes in text-to-image models via cross-attention intervention.
+\newblock {\em arXiv preprint arXiv:2406.09876}, 2024.
 
 \bibitem[\protect\citeauthoryear{Zhao \bgroup \em et al.\egroup }{2018}]{zhao2018gender}
 Jieyu Zhao, Tianlu Wang, Mark Yatskar, Vicente Ordonez, and Kai-Wei Chang.
