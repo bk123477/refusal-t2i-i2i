@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
 Run VLM Evaluation on Generated Images
-Evaluates soft erasure using Qwen3-VL + Gemini ensemble
+Evaluates soft erasure AND identity drift using Qwen3-VL + Gemini ensemble
 
 Usage:
-    # Production (30B model - default)
+    # Production (30B model - default) with identity drift detection
     python scripts/evaluation/run_vlm_evaluation.py --results-dir data/results/flux/20260109_120000
 
     # Local testing (8B model)
     python scripts/evaluation/run_vlm_evaluation.py --results-dir data/results/flux/20260109_120000 --qwen-model 8B
 
-    # Specific model only
-    python scripts/evaluation/run_vlm_evaluation.py --model flux --qwen-model 30B
+    # Skip identity drift (faster, erasure-only)
+    python scripts/evaluation/run_vlm_evaluation.py --results-dir data/results/flux/20260109_120000 --skip-identity-drift
 
 """
 
@@ -101,9 +101,10 @@ def evaluate_results(
     evaluator: VLMEvaluator,
     prompts_file: Path,
     images_root: Optional[Path],
-    source_images_root: Optional[Path]
+    source_images_root: Optional[Path],
+    include_identity_drift: bool = True
 ) -> dict:
-    """Run VLM evaluation on experiment results."""
+    """Run VLM evaluation on experiment results (erasure + identity drift)."""
 
     # Load experiment results
     results_file = results_dir / "results.json"
@@ -179,7 +180,36 @@ def evaluate_results(
 
             status = "ERASED" if result["is_erased"] else "PRESENT"
             consensus = "consensus" if vlm_result["consensus"] else "DISAGREE"
-            print(f"  [{i+1}/{len(results)}] {prompt_id}: {status} ({consensus})")
+
+            # Identity Drift Detection (if enabled and source image available)
+            if include_identity_drift and source_image is not None:
+                source_race = result.get("race_code", "")
+                source_gender = result.get("gender", "")
+                category = result.get("category", "")
+
+                identity_result = evaluator.evaluate_identity_preservation(
+                    source_image=source_image,
+                    edited_image=image,
+                    source_race=source_race,
+                    source_gender=source_gender,
+                    prompt=instruction
+                )
+
+                result["identity_preservation"] = identity_result
+                result["stereotype_replacement"] = evaluator.is_stereotype_replacement(
+                    drift_result=identity_result,
+                    prompt=instruction,
+                    source_race=source_race,
+                    source_gender=source_gender,
+                    category=category
+                )
+
+                drift_status = ""
+                if not identity_result.get("identity_preserved", True):
+                    drift_status = f" | DRIFT: {identity_result.get('racial_drift', '')} {identity_result.get('gender_drift', '')}"
+                print(f"  [{i+1}/{len(results)}] {prompt_id}: {status} ({consensus}){drift_status}")
+            else:
+                print(f"  [{i+1}/{len(results)}] {prompt_id}: {status} ({consensus})")
 
         except Exception as e:
             print(f"  [{i+1}] Error evaluating {image_path}: {e}")
@@ -217,6 +247,8 @@ Examples:
                        help="Path to prompts JSON")
     parser.add_argument("--no-ensemble", action="store_true",
                        help="Use Qwen only (no Gemini ensemble)")
+    parser.add_argument("--skip-identity-drift", action="store_true",
+                       help="Skip identity drift detection (faster, erasure-only)")
     parser.add_argument("--images-root", type=str,
                        help="Override images root directory (default: results_dir/images)")
     parser.add_argument("--source-images-root", type=str,
@@ -247,14 +279,16 @@ Examples:
     print(f"Results directory: {results_dir}")
     print(f"Qwen model: {args.qwen_model}")
     print(f"Ensemble: {not args.no_ensemble}")
+    print(f"Identity Drift: {not args.skip_identity_drift}")
+
+    images_root = Path(args.images_root) if args.images_root else None
+    source_images_root = Path(args.source_images_root) if args.source_images_root else None
+
     if images_root:
         print(f"Images root: {images_root}")
     if source_images_root:
         print(f"Source images root: {source_images_root}")
     print()
-
-    images_root = Path(args.images_root) if args.images_root else None
-    source_images_root = Path(args.source_images_root) if args.source_images_root else None
 
     # Initialize evaluator
     evaluator = VLMEvaluator(
@@ -268,7 +302,8 @@ Examples:
         evaluator=evaluator,
         prompts_file=Path(args.prompts),
         images_root=images_root,
-        source_images_root=source_images_root
+        source_images_root=source_images_root,
+        include_identity_drift=not args.skip_identity_drift
     )
 
     # Save results
@@ -283,14 +318,32 @@ Examples:
     needs_review = sum(1 for r in evaluated_results
                       if r.get("vlm_evaluation") and not r["vlm_evaluation"].get("consensus", True))
 
+    # Identity drift stats
+    has_identity = [r for r in evaluated_results if r.get("identity_preservation")]
+    racial_drift = sum(1 for r in has_identity
+                      if r["identity_preservation"].get("racial_drift", "SAME") != "SAME")
+    gender_drift = sum(1 for r in has_identity
+                      if r["identity_preservation"].get("gender_drift", "SAME") != "SAME")
+    stereotype_repl = sum(1 for r in evaluated_results if r.get("stereotype_replacement"))
+
     print()
     print("=" * 50)
     print("VLM EVALUATION COMPLETE")
     print("=" * 50)
-    print(f"Total:          {total}")
-    print(f"Hard Refused:   {refused} ({refused/total*100:.1f}%)")
-    print(f"Soft Erased:    {erased} ({erased/total*100:.1f}%)")
-    print(f"Needs Review:   {needs_review} ({needs_review/total*100:.1f}%)")
+    print(f"Total:              {total}")
+    print(f"Hard Refused:       {refused} ({refused/total*100:.1f}%)")
+    print(f"Soft Erased:        {erased} ({erased/total*100:.1f}%)")
+    print(f"Needs Review:       {needs_review} ({needs_review/total*100:.1f}%)")
+
+    if has_identity:
+        print()
+        print("--- Identity Drift ---")
+        print(f"Evaluated:          {len(has_identity)}")
+        print(f"Racial Drift:       {racial_drift} ({racial_drift/len(has_identity)*100:.1f}%)")
+        print(f"Gender Drift:       {gender_drift} ({gender_drift/len(has_identity)*100:.1f}%)")
+        print(f"Stereotype Repl:    {stereotype_repl} ({stereotype_repl/len(has_identity)*100:.1f}%)")
+
+    print()
     print(f"Results saved:  {output_path}")
 
 

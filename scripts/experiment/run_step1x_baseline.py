@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Step1X-Edit with Identity Preservation Prompts
-Combines VLM-extracted identity features with edit prompts (e.g., D03 "30 years older")
+Step1X-Edit Baseline (Without Identity Preservation)
+Uses only the edit prompt without identity preservation
+For comparison with identity-preserved version
 """
 
 import json
@@ -18,8 +19,7 @@ from src.models.step1x_wrapper import Step1XWrapper
 
 # Paths
 SOURCE_DIR = Path("/Users/chan/IJCAI26/I2I-T2I-Bias-Refusal/data/source_images/final")
-IDENTITY_PROMPTS_FILE = Path("/Users/chan/IJCAI26/I2I-T2I-Bias-Refusal/data/identity_prompts/identity_prompt_mapping_20260113_233133.json")
-OUTPUT_DIR = Path("/Users/chan/IJCAI26/I2I-T2I-Bias-Refusal/data/results/step1x_identity_preserved")
+OUTPUT_DIR = Path("/Users/chan/IJCAI26/I2I-T2I-Bias-Refusal/data/results/step1x_baseline")
 
 # Edit prompts to test
 EDIT_PROMPTS = {
@@ -32,32 +32,15 @@ GENDERS = ["Male"]  # Start with Male only
 AGE = "20s"
 
 
-def load_identity_prompts() -> dict:
-    """Load identity preservation prompts from VLM extraction."""
-    with open(IDENTITY_PROMPTS_FILE, "r") as f:
-        return json.load(f)
-
-
-def combine_prompts(identity_prompt: str, edit_prompt: str) -> str:
-    """Combine identity preservation prompt with edit instruction."""
-    # Format: "Edit: [action]. [Identity preservation]"
-    combined = f"{edit_prompt}. {identity_prompt}"
-    return combined
-
-
 def main():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     print("=" * 80)
-    print("Step1X-Edit with Identity Preservation")
+    print("Step1X-Edit BASELINE (No Identity Preservation)")
     print(f"Timestamp: {timestamp}")
     print("=" * 80)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    # Load identity prompts
-    identity_prompts = load_identity_prompts()
-    print(f"Loaded {len(identity_prompts)} identity prompts")
 
     # Initialize model
     print("\nInitializing Step1X-Edit...")
@@ -84,18 +67,9 @@ def main():
                     print(f"\n[SKIP] {image_key}: Source not found")
                     continue
 
-                # Get identity prompt
-                identity_prompt = identity_prompts.get(image_key, "")
-                if not identity_prompt:
-                    print(f"\n[SKIP] {image_key}: No identity prompt")
-                    continue
-
-                # Combine prompts
-                combined_prompt = combine_prompts(identity_prompt, edit_prompt)
-
                 print(f"\n[{race} {gender}]")
                 print(f"  Source: {source_path.name}")
-                print(f"  Combined prompt: {combined_prompt[:80]}...")
+                print(f"  Prompt: {edit_prompt}")
 
                 # Load source image
                 source_image = Image.open(source_path)
@@ -104,7 +78,7 @@ def main():
                 try:
                     result = model.edit(
                         source_image=source_image,
-                        prompt=combined_prompt,
+                        prompt=edit_prompt,
                         num_inference_steps=50,
                         true_cfg_scale=6.0,
                         seed=42
@@ -112,7 +86,7 @@ def main():
 
                     if result.success and result.output_image:
                         # Save output
-                        output_filename = f"{prompt_id}_{image_key}_identity_preserved.png"
+                        output_filename = f"{prompt_id}_{image_key}_baseline.png"
                         output_path = OUTPUT_DIR / output_filename
                         result.output_image.save(output_path)
                         print(f"  SUCCESS: Saved to {output_filename}")
@@ -151,8 +125,8 @@ def main():
     with open(results_file, "w") as f:
         json.dump({
             "timestamp": timestamp,
-            "identity_prompts_file": str(IDENTITY_PROMPTS_FILE),
             "edit_prompts": EDIT_PROMPTS,
+            "identity_preserved": False,
             "results": results
         }, f, indent=2)
 
