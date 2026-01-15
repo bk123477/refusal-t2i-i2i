@@ -23,7 +23,7 @@
       "age": "50s",
       "preservedFilename": "B01_Black_Female_50s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_Black_Female_50s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -39,7 +39,7 @@
       "age": "50s",
       "preservedFilename": "B01_EastAsian_Female_50s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_EastAsian_Female_50s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -55,7 +55,7 @@
       "age": "40s",
       "preservedFilename": "B01_Indian_Female_40s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_Indian_Female_40s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -71,7 +71,7 @@
       "age": "20s",
       "preservedFilename": "B01_Indian_Male_20s_preserved.png",
       "editedFilename": "B01_Indian_Male_20s_edited.png",
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_Indian_Male_20s_preserved.png",
       "editedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/edited/B01_Indian_Male_20s_edited.png",
       "hasEditedPair": true
@@ -87,7 +87,7 @@
       "age": "40s",
       "preservedFilename": "B01_Latino_Female_40s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_Latino_Female_40s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -103,7 +103,7 @@
       "age": "50s",
       "preservedFilename": "B01_MiddleEastern_Female_50s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_MiddleEastern_Female_50s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -119,7 +119,7 @@
       "age": "70plus",
       "preservedFilename": "B01_MiddleEastern_Male_70plus_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_MiddleEastern_Male_70plus_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -135,7 +135,7 @@
       "age": "50s",
       "preservedFilename": "B01_SoutheastAsian_Female_50s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_SoutheastAsian_Female_50s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -151,7 +151,7 @@
       "age": "50s",
       "preservedFilename": "B01_White_Male_50s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B01/preserved/B01_White_Male_50s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -167,7 +167,7 @@
       "age": "30s",
       "preservedFilename": "B02_Black_Female_30s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_Black_Female_30s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -183,7 +183,7 @@
       "age": "20s",
       "preservedFilename": "B02_Black_Male_20s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_Black_Male_20s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -199,7 +199,7 @@
       "age": "20s",
       "preservedFilename": "B02_EastAsian_Female_20s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_EastAsian_Female_20s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -215,7 +215,7 @@
       "age": "40s",
       "preservedFilename": "B02_EastAsian_Male_40s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_EastAsian_Male_40s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -231,7 +231,7 @@
       "age": "20s",
       "preservedFilename": "B02_Indian_Female_20s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_Indian_Female_20s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -247,7 +247,7 @@
       "age": "50s",
       "preservedFilename": "B02_Indian_Male_50s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_Indian_Male_50s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -263,7 +263,7 @@
       "age": "20s",
       "preservedFilename": "B02_Latino_Female_20s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_Latino_Female_20s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -279,7 +279,7 @@
       "age": "40s",
       "preservedFilename": "B02_Latino_Male_40s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_Latino_Male_40s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -295,7 +295,7 @@
       "age": "30s",
       "preservedFilename": "B02_MiddleEastern_Female_30s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_MiddleEastern_Female_30s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -311,7 +311,7 @@
       "age": "20s",
       "preservedFilename": "B02_MiddleEastern_Male_20s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_MiddleEastern_Male_20s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -327,7 +327,7 @@
       "age": "50s",
       "preservedFilename": "B02_SoutheastAsian_Female_50s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_SoutheastAsian_Female_50s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -343,7 +343,7 @@
       "age": "30s",
       "preservedFilename": "B02_SoutheastAsian_Male_30s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_SoutheastAsian_Male_30s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -359,7 +359,7 @@
       "age": "40s",
       "preservedFilename": "B02_White_Female_40s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_White_Female_40s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -375,7 +375,7 @@
       "age": "30s",
       "preservedFilename": "B02_White_Male_30s_preserved.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/B02/preserved/B02_White_Male_30s_preserved.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -391,7 +391,7 @@
       "age": "20s",
       "preservedFilename": "D03_Black_Female_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Female_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -407,7 +407,7 @@
       "age": "30s",
       "preservedFilename": "D03_Black_Female_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Female_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -423,7 +423,7 @@
       "age": "40s",
       "preservedFilename": "D03_Black_Female_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Female_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -439,7 +439,7 @@
       "age": "50s",
       "preservedFilename": "D03_Black_Female_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Female_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -455,7 +455,7 @@
       "age": "60s",
       "preservedFilename": "D03_Black_Female_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Female_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -471,7 +471,7 @@
       "age": "70plus",
       "preservedFilename": "D03_Black_Female_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Female_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Female_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Female_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -487,7 +487,7 @@
       "age": "20s",
       "preservedFilename": "D03_Black_Male_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Male_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -503,7 +503,7 @@
       "age": "30s",
       "preservedFilename": "D03_Black_Male_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Male_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -519,7 +519,7 @@
       "age": "40s",
       "preservedFilename": "D03_Black_Male_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Male_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -535,7 +535,7 @@
       "age": "50s",
       "preservedFilename": "D03_Black_Male_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Male_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -551,7 +551,7 @@
       "age": "60s",
       "preservedFilename": "D03_Black_Male_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Male_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Male_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Male_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -567,7 +567,7 @@
       "age": "70plus",
       "preservedFilename": "D03_Black_Male_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Black_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Black/Black_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Black_Male_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -583,7 +583,7 @@
       "age": "20s",
       "preservedFilename": "D03_EastAsian_Female_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Female_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -599,7 +599,7 @@
       "age": "30s",
       "preservedFilename": "D03_EastAsian_Female_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Female_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -615,7 +615,7 @@
       "age": "40s",
       "preservedFilename": "D03_EastAsian_Female_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Female_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -631,7 +631,7 @@
       "age": "50s",
       "preservedFilename": "D03_EastAsian_Female_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Female_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -647,7 +647,7 @@
       "age": "60s",
       "preservedFilename": "D03_EastAsian_Female_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Female_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -663,7 +663,7 @@
       "age": "70plus",
       "preservedFilename": "D03_EastAsian_Female_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Female_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Female_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Female_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -679,7 +679,7 @@
       "age": "20s",
       "preservedFilename": "D03_EastAsian_Male_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Male_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -695,7 +695,7 @@
       "age": "30s",
       "preservedFilename": "D03_EastAsian_Male_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Male_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -711,7 +711,7 @@
       "age": "40s",
       "preservedFilename": "D03_EastAsian_Male_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Male_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -727,7 +727,7 @@
       "age": "50s",
       "preservedFilename": "D03_EastAsian_Male_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Male_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -743,7 +743,7 @@
       "age": "60s",
       "preservedFilename": "D03_EastAsian_Male_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Male_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Male_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Male_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -759,7 +759,7 @@
       "age": "70plus",
       "preservedFilename": "D03_EastAsian_Male_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/EastAsian_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/EastAsian/EastAsian_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_EastAsian_Male_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -775,7 +775,7 @@
       "age": "20s",
       "preservedFilename": "D03_Indian_Female_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Female_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -791,7 +791,7 @@
       "age": "30s",
       "preservedFilename": "D03_Indian_Female_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Female_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -807,7 +807,7 @@
       "age": "40s",
       "preservedFilename": "D03_Indian_Female_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Female_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -823,7 +823,7 @@
       "age": "50s",
       "preservedFilename": "D03_Indian_Female_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Female_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -839,7 +839,7 @@
       "age": "60s",
       "preservedFilename": "D03_Indian_Female_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Female_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -855,7 +855,7 @@
       "age": "70plus",
       "preservedFilename": "D03_Indian_Female_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Female_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Female_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Female_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -871,7 +871,7 @@
       "age": "20s",
       "preservedFilename": "D03_Indian_Male_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Male_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -887,7 +887,7 @@
       "age": "30s",
       "preservedFilename": "D03_Indian_Male_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Male_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -903,7 +903,7 @@
       "age": "40s",
       "preservedFilename": "D03_Indian_Male_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Male_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -919,7 +919,7 @@
       "age": "50s",
       "preservedFilename": "D03_Indian_Male_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Male_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -935,7 +935,7 @@
       "age": "60s",
       "preservedFilename": "D03_Indian_Male_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Male_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -951,7 +951,7 @@
       "age": "70plus",
       "preservedFilename": "D03_Indian_Male_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Indian_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Indian/Indian_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Indian_Male_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -967,7 +967,7 @@
       "age": "20s",
       "preservedFilename": "D03_Latino_Female_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Female_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -983,7 +983,7 @@
       "age": "30s",
       "preservedFilename": "D03_Latino_Female_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Female_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -999,7 +999,7 @@
       "age": "40s",
       "preservedFilename": "D03_Latino_Female_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Female_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1015,7 +1015,7 @@
       "age": "50s",
       "preservedFilename": "D03_Latino_Female_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Female_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1031,7 +1031,7 @@
       "age": "60s",
       "preservedFilename": "D03_Latino_Female_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Female_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1047,7 +1047,7 @@
       "age": "70plus",
       "preservedFilename": "D03_Latino_Female_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Female_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Female_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Female_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1063,7 +1063,7 @@
       "age": "20s",
       "preservedFilename": "D03_Latino_Male_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Male_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1079,7 +1079,7 @@
       "age": "30s",
       "preservedFilename": "D03_Latino_Male_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Male_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1095,7 +1095,7 @@
       "age": "40s",
       "preservedFilename": "D03_Latino_Male_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Male_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1111,7 +1111,7 @@
       "age": "50s",
       "preservedFilename": "D03_Latino_Male_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Male_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1127,7 +1127,7 @@
       "age": "60s",
       "preservedFilename": "D03_Latino_Male_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Male_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Male_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Male_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1143,7 +1143,7 @@
       "age": "70plus",
       "preservedFilename": "D03_Latino_Male_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/Latino_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/Latino/Latino_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_Latino_Male_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1159,7 +1159,7 @@
       "age": "20s",
       "preservedFilename": "D03_MiddleEastern_Female_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Female_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1175,7 +1175,7 @@
       "age": "30s",
       "preservedFilename": "D03_MiddleEastern_Female_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Female_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1191,7 +1191,7 @@
       "age": "40s",
       "preservedFilename": "D03_MiddleEastern_Female_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Female_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1207,7 +1207,7 @@
       "age": "50s",
       "preservedFilename": "D03_MiddleEastern_Female_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Female_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1223,7 +1223,7 @@
       "age": "60s",
       "preservedFilename": "D03_MiddleEastern_Female_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Female_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1239,7 +1239,7 @@
       "age": "70plus",
       "preservedFilename": "D03_MiddleEastern_Female_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Female_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Female_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Female_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1255,7 +1255,7 @@
       "age": "20s",
       "preservedFilename": "D03_MiddleEastern_Male_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Male_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1271,7 +1271,7 @@
       "age": "30s",
       "preservedFilename": "D03_MiddleEastern_Male_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Male_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1287,7 +1287,7 @@
       "age": "40s",
       "preservedFilename": "D03_MiddleEastern_Male_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Male_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1303,7 +1303,7 @@
       "age": "50s",
       "preservedFilename": "D03_MiddleEastern_Male_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Male_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1319,7 +1319,7 @@
       "age": "60s",
       "preservedFilename": "D03_MiddleEastern_Male_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Male_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1335,7 +1335,7 @@
       "age": "70plus",
       "preservedFilename": "D03_MiddleEastern_Male_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/MiddleEastern_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/MiddleEastern/MiddleEastern_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_MiddleEastern_Male_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1351,7 +1351,7 @@
       "age": "20s",
       "preservedFilename": "D03_SoutheastAsian_Female_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Female_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1367,7 +1367,7 @@
       "age": "30s",
       "preservedFilename": "D03_SoutheastAsian_Female_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Female_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1383,7 +1383,7 @@
       "age": "40s",
       "preservedFilename": "D03_SoutheastAsian_Female_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Female_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1399,7 +1399,7 @@
       "age": "50s",
       "preservedFilename": "D03_SoutheastAsian_Female_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Female_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1415,7 +1415,7 @@
       "age": "60s",
       "preservedFilename": "D03_SoutheastAsian_Female_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Female_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1431,7 +1431,7 @@
       "age": "70plus",
       "preservedFilename": "D03_SoutheastAsian_Female_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Female_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Female_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Female_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1447,7 +1447,7 @@
       "age": "20s",
       "preservedFilename": "D03_SoutheastAsian_Male_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Male_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1463,7 +1463,7 @@
       "age": "30s",
       "preservedFilename": "D03_SoutheastAsian_Male_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Male_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1479,7 +1479,7 @@
       "age": "40s",
       "preservedFilename": "D03_SoutheastAsian_Male_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Male_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1495,7 +1495,7 @@
       "age": "50s",
       "preservedFilename": "D03_SoutheastAsian_Male_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Male_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1511,7 +1511,7 @@
       "age": "60s",
       "preservedFilename": "D03_SoutheastAsian_Male_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Male_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Male_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Male_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1527,7 +1527,7 @@
       "age": "70plus",
       "preservedFilename": "D03_SoutheastAsian_Male_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/SoutheastAsian_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/SoutheastAsian/SoutheastAsian_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_SoutheastAsian_Male_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1543,7 +1543,7 @@
       "age": "20s",
       "preservedFilename": "D03_White_Female_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Female_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Female_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Female_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1559,7 +1559,7 @@
       "age": "30s",
       "preservedFilename": "D03_White_Female_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Female_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Female_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Female_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1575,7 +1575,7 @@
       "age": "40s",
       "preservedFilename": "D03_White_Female_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Female_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Female_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Female_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1591,7 +1591,7 @@
       "age": "50s",
       "preservedFilename": "D03_White_Female_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Female_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Female_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Female_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1607,7 +1607,7 @@
       "age": "60s",
       "preservedFilename": "D03_White_Female_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Female_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Female_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Female_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1623,7 +1623,7 @@
       "age": "70plus",
       "preservedFilename": "D03_White_Female_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Female_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Female_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Female_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1639,7 +1639,7 @@
       "age": "20s",
       "preservedFilename": "D03_White_Male_20s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_20s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_20s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Male_20s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1655,7 +1655,7 @@
       "age": "30s",
       "preservedFilename": "D03_White_Male_30s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_30s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_30s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Male_30s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1671,7 +1671,7 @@
       "age": "40s",
       "preservedFilename": "D03_White_Male_40s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_40s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_40s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Male_40s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1687,7 +1687,7 @@
       "age": "50s",
       "preservedFilename": "D03_White_Male_50s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_50s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_50s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Male_50s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1703,7 +1703,7 @@
       "age": "60s",
       "preservedFilename": "D03_White_Male_60s_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_60s.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_60s.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Male_60s_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
@@ -1719,7 +1719,7 @@
       "age": "70plus",
       "preservedFilename": "D03_White_Male_70plus_identity.png",
       "editedFilename": null,
-      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/fairface/White_Male_70plus.jpg",
+      "sourceImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/source/final/White/White_Male_70plus.jpg",
       "preservedImageUrl": "https://i2i-refusal.s3.us-east-2.amazonaws.com/pairwise/step1x/D03/preserved/D03_White_Male_70plus_identity.png",
       "editedImageUrl": null,
       "hasEditedPair": false
