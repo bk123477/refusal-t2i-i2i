@@ -477,7 +477,7 @@ function Exp1Content() {
             'Was the edit applied?',
             q1,
             setQ1,
-            [{ key: 'yes', label: 'Yes' }, { key: 'partial', label: 'Partial' }, { key: 'no', label: 'No' }],
+            [{ key: 'yes', label: 'Yes' }, { key: 'ambiguous', label: 'Ambig' }, { key: 'no', label: 'No' }],
             false
           )}
 
@@ -486,7 +486,7 @@ function Exp1Content() {
             'Race preserved?',
             q2,
             setQ2,
-            [{ key: 'same', label: 'Same' }, { key: 'different', label: 'Different' }, { key: 'ambiguous', label: 'Ambig' }],
+            [{ key: 'same', label: 'Same' }, { key: 'ambiguous', label: 'Ambig' }, { key: 'different', label: 'Different' }],
             q1 === null
           )}
 
@@ -495,7 +495,7 @@ function Exp1Content() {
             'Gender preserved?',
             q3,
             setQ3,
-            [{ key: 'same', label: 'Same' }, { key: 'different', label: 'Different' }, { key: 'ambiguous', label: 'Ambig' }],
+            [{ key: 'same', label: 'Same' }, { key: 'ambiguous', label: 'Ambig' }, { key: 'different', label: 'Different' }],
             q2 === null
           )}
 
