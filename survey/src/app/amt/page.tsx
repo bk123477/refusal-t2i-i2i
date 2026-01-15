@@ -35,26 +35,26 @@ export default function AMTPage() {
     }
   }, [router])
 
-  // Check if AMT info already exists
+  // Check if user has already been through this page
   useEffect(() => {
-    async function checkExistingAMT() {
+    async function checkExistingUser() {
       if (!user) return
 
       try {
         const userDoc = await getDoc(doc(db, 'users', user.uid))
         if (userDoc.exists()) {
           const data = userDoc.data()
-          if (data.amtWorkerId) {
-            // Already has AMT info, redirect to select
+          // If user doc exists with createdAt, they've already been through AMT page
+          if (data.createdAt) {
             router.push('/select')
           }
         }
       } catch (err) {
-        console.error('Error checking AMT info:', err)
+        console.error('Error checking user info:', err)
       }
     }
 
-    checkExistingAMT()
+    checkExistingUser()
   }, [user, router])
 
   // Auto-fill from URL params (MTurk often passes these)
