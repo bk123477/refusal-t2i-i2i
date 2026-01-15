@@ -44,8 +44,7 @@ CUDA_VISIBLE_DEVICES=1 PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH" python3 "$SCRIPT_D
     --start-id "$START_ID" \
     --end-id "$END_ID" \
     --steps "$STEPS" \
-    --seed "$SEED" \
-    --thinking
+    --seed "$SEED"
 
 echo ""
 echo "========================================================================"
