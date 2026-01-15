@@ -12,11 +12,16 @@ Usage:
 import argparse
 import json
 import sys
+import os
 from pathlib import Path
 from datetime import datetime
 import time
 from PIL import Image
 import logging
+
+# Set Hugging Face cache directory (for server environment)
+os.environ["HF_HOME"] = "/scratch/chans/models/huggingface"
+os.environ["HF_HUB_CACHE"] = "/scratch/chans/models/huggingface/hub"
 
 # Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent.parent
