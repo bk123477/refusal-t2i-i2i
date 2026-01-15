@@ -296,6 +296,66 @@ def summarize_unchanged(df: pd.DataFrame) -> dict:
     return summary
 
 
+def summarize_identity_drift(df: pd.DataFrame) -> dict:
+    """Summarize identity drift metrics (racial drift, gender drift, body transformation)."""
+    if "racial_drift" not in df.columns:
+        return {}
+
+    # Overall drift rates
+    summary = {
+        "total_samples": len(df),
+        "identity_preserved_rate": float(df.get("identity_preserved", pd.Series([True]*len(df))).mean()),
+        "racial_drift_detected": 0,
+        "gender_drift_detected": 0,
+        "body_transform_detected": 0,
+        "stereotype_replacement_detected": 0
+    }
+
+    # Racial drift breakdown
+    if "racial_drift" in df.columns:
+        racial_drift_counts = df["racial_drift"].value_counts().to_dict()
+        summary["racial_drift_breakdown"] = {k: int(v) for k, v in racial_drift_counts.items()}
+        summary["racial_drift_detected"] = len(df[df["racial_drift"] != "SAME"])
+
+    # Gender drift breakdown
+    if "gender_drift" in df.columns:
+        gender_drift_counts = df["gender_drift"].value_counts().to_dict()
+        summary["gender_drift_breakdown"] = {k: int(v) for k, v in gender_drift_counts.items()}
+        summary["gender_drift_detected"] = len(df[df["gender_drift"] != "SAME"])
+
+    # Body transformation breakdown
+    if "body_transform" in df.columns:
+        body_transform_counts = df["body_transform"].value_counts().to_dict()
+        summary["body_transform_breakdown"] = {k: int(v) for k, v in body_transform_counts.items()}
+        summary["body_transform_detected"] = len(df[df["body_transform"] != "NONE"])
+
+    # Stereotype replacement
+    if "stereotype_replacement" in df.columns:
+        summary["stereotype_replacement_detected"] = int(df["stereotype_replacement"].sum())
+        summary["stereotype_replacement_rate"] = float(df["stereotype_replacement"].mean())
+
+    # Drift by race (source)
+    if "race" in df.columns and "racial_drift" in df.columns:
+        drift_by_source_race = df.groupby("race")["racial_drift"].apply(
+            lambda x: (x != "SAME").sum() / len(x) if len(x) > 0 else 0
+        ).to_dict()
+        summary["racial_drift_by_source_race"] = {k: float(v) for k, v in drift_by_source_race.items()}
+
+    # Drift by category
+    if "category" in df.columns and "racial_drift" in df.columns:
+        drift_by_category = df.groupby("category")["racial_drift"].apply(
+            lambda x: (x != "SAME").sum() / len(x) if len(x) > 0 else 0
+        ).to_dict()
+        summary["racial_drift_by_category"] = {k: float(v) for k, v in drift_by_category.items()}
+
+    # Stereotype replacement by category
+    if "category" in df.columns and "stereotype_replacement" in df.columns:
+        sr_by_category = df.groupby("category")["stereotype_replacement"].mean().to_dict()
+        summary["stereotype_replacement_by_category"] = {k: float(v) for k, v in sr_by_category.items()}
+
+    return summary
+
+
 def analyze_edit_difficulty(df: pd.DataFrame, analyzer: StatisticalAnalyzer) -> dict:
     """Analyze edit difficulty metrics and control for them."""
     required_cols = ["edit_l1", "edit_hash_diff"]
@@ -625,7 +685,43 @@ Examples:
         if edit_difficulty_results:
             print("   ✓ Edit difficulty controls computed")
 
-    # 16. Save comprehensive analysis report
+    # 16. Identity Drift Analysis (NEW)
+    identity_drift_summary = {}
+    if "racial_drift" in df.columns or "gender_drift" in df.columns:
+        print("\n16. IDENTITY DRIFT ANALYSIS")
+        print("-"*40)
+        identity_drift_summary = summarize_identity_drift(df)
+
+        if identity_drift_summary:
+            print(f"   Identity preserved rate: {identity_drift_summary.get('identity_preserved_rate', 0):.2%}")
+            print(f"   Racial drift detected: {identity_drift_summary.get('racial_drift_detected', 0)} cases")
+            print(f"   Gender drift detected: {identity_drift_summary.get('gender_drift_detected', 0)} cases")
+            print(f"   Body transformation detected: {identity_drift_summary.get('body_transform_detected', 0)} cases")
+
+            if "stereotype_replacement_rate" in identity_drift_summary:
+                print(f"   Stereotype replacement rate: {identity_drift_summary['stereotype_replacement_rate']:.2%}")
+                print(f"   Stereotype replacement cases: {identity_drift_summary['stereotype_replacement_detected']}")
+
+            # Detailed breakdown
+            if "racial_drift_breakdown" in identity_drift_summary:
+                print("\n   Racial Drift Breakdown:")
+                for drift_type, count in identity_drift_summary["racial_drift_breakdown"].items():
+                    if drift_type != "SAME":
+                        print(f"      {drift_type}: {count}")
+
+            if "racial_drift_by_source_race" in identity_drift_summary:
+                print("\n   Racial Drift by Source Race:")
+                for race, rate in identity_drift_summary["racial_drift_by_source_race"].items():
+                    if rate > 0:
+                        print(f"      {race}: {rate:.2%}")
+
+            if "stereotype_replacement_by_category" in identity_drift_summary:
+                print("\n   Stereotype Replacement by Category:")
+                for cat, rate in identity_drift_summary["stereotype_replacement_by_category"].items():
+                    if rate > 0:
+                        print(f"      Category {cat}: {rate:.2%}")
+
+    # 17. Save comprehensive analysis report
     report = {
         "baseline_validation": baseline,
         "race_effect": {
@@ -658,7 +754,8 @@ Examples:
         "scs_log_odds": scs_log_odds_results,
         "scs_risk_ratio": scs_risk_ratio_results,
         "edit_difficulty_analysis": edit_difficulty_results,
-        "unchanged_summary": unchanged_summary
+        "unchanged_summary": unchanged_summary,
+        "identity_drift_analysis": identity_drift_summary
     }
 
     report_path = output_dir / "analysis_report.json"
@@ -668,8 +765,8 @@ Examples:
     print(f"\n✓ Analysis report saved to {report_path}")
     print(f"✓ Figures saved to {output_dir / 'figures'}")
 
-    # 17. Generate LaTeX tables
-    print("\n17. GENERATING LATEX TABLES")
+    # 18. Generate LaTeX tables
+    print("\n18. GENERATING LATEX TABLES")
     print("-"*40)
     tables_dir = output_dir / "tables"
     tables_dir.mkdir(exist_ok=True)
@@ -686,8 +783,8 @@ Examples:
         f.write(disparity_table)
     print(f"   ✓ Disparity table: {disparity_latex_path}")
 
-    # 18. Save extended analysis results
-    print("\n18. SAVING EXTENDED ANALYSIS RESULTS")
+    # 19. Save extended analysis results
+    print("\n19. SAVING EXTENDED ANALYSIS RESULTS")
     print("-"*40)
 
     # Mixed-effects results
@@ -754,6 +851,13 @@ Examples:
             json.dump(unchanged_summary, f, indent=2, default=str)
         print(f"   ✓ Unchanged summary: {unchanged_path}")
 
+    # Identity drift results
+    if identity_drift_summary:
+        identity_drift_path = output_dir / "identity_drift_analysis.json"
+        with open(identity_drift_path, "w") as f:
+            json.dump(identity_drift_summary, f, indent=2, default=str)
+        print(f"   ✓ Identity drift analysis: {identity_drift_path}")
+
     print("\n" + "="*60)
     print("ANALYSIS COMPLETE")
     print("="*60)
@@ -763,6 +867,7 @@ Examples:
     print(f"  - sensitivity_analysis.json (reviewer feedback #2)")
     print(f"  - bootstrap_results.json (reviewer feedback #5)")
     print(f"  - scs_log_odds.json (reviewer feedback #4)")
+    print(f"  - identity_drift_analysis.json (NEW: stereotype replacement)")
     print(f"  - tables/ (LaTeX tables)")
     print(f"  - figures/ (all visualizations)")
 

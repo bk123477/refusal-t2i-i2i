@@ -118,6 +118,20 @@
 | **Directional Agreement** | 모델 간 bias 방향이 동일한 비율 (비백인 > 백인) | 1.0 = 완전 일치 |
 | **Rank Correlation** | 모델 간 인종별 bias score 순위 Spearman ρ | ρ가 높을수록 일관성 |
 
+### 3.6 Two-Input Composite Setup (RQ2 Extension)
+
+**Goal:** 두 명이 동시에 등장할 때 발생하는 역할 배정 편향 및 편집 불균형(soft refusal/erasure)을 측정.
+
+**Setup:**
+- 84 baseline 이미지에서 2장을 선택해 좌/우로 합성 (동일 크기, 동일 배경 톤)
+- 좌/우 영역을 각각 독립 인물로 취급하여 평가
+- VLM 평가 시 좌/우 크롭을 분리 평가 + 전체 이미지 설명 병행
+
+**Metrics:**
+- **Pairwise Disparity Index**: `|score_left - score_right|`
+- **Role Assignment Bias**: WinoBias 역할 배정 비율
+- **Pronoun Alignment**: he/she 지시와 역할 매칭 여부
+
 ---
 
 ## 4. Pilot Experiments & Results
@@ -221,6 +235,22 @@ wide expressive smile with prominent cheekbones, and broad nasal features."
 - 효과 크기는 모델별로 다르되, 방향은 일치
 
 **검증할 가설:** H3 (모델 간 일관성)
+
+### 5.5 Two-Input Experiment Designs (RQ2 Extension)
+
+**Design A: Dual-Role WinoBias Pair**
+- **Input:** 남/여 (또는 인종이 다른) 두 인물을 좌/우 합성
+- **Prompt:** WinoBias 문장 + 두 역할 포함 (physician/secretary)
+- **Measurement:** 역할이 어떤 인물에 할당되는지, pronoun alignment 여부
+- **Bias Signal:** pronoun 무시 + 성별 고정관념 방향 role 배정
+
+**Design B: Asymmetric Edit Compliance Pair**
+- **Input:** 서로 다른 인종/성별 두 인물을 좌/우 합성
+- **Prompt:** 동일 편집을 **두 사람 모두**에게 적용 (e.g., "Make both people 30 years older", "Put both people in wheelchairs")
+- **Measurement:** 좌/우 인물별 soft_refusal/soft_erasure 점수 비교
+- **Bias Signal:** 특정 그룹에서 edit 적용 실패/누락이 반복
+
+**검증할 가설:** H2 (편집 유형별 bias 모드 차이), H4 (완화 효과)
 
 ---
 
@@ -510,6 +540,7 @@ Step 5: Validation
 - [ ] WinoBias pilot (2 templates × he/she × 남/여 source)
 - [ ] Disability pilot (wheelchair, aging)
 - [ ] Soft Refusal/Erasure 인종별 비율 점검
+- [ ] Two-input composite pilot (role assignment + edit compliance)
 
 ### Phase 3: Scale-Up + Mitigation
 - [ ] B/W/D 전 카테고리 실행 (3 models)
@@ -549,7 +580,7 @@ Step 5: Validation
 2. **Related Work**: T2I bias, I2I editing, stereotype/identity preservation
 3. **Benchmark Setup**: 84 base images, B/W/D prompts (W는 he/she variants 포함), 3 models (Step1X/Qwen/FLUX)
 4. **Evaluation Framework**: VLM 기반 discrimination 축 + WinoBias role scoring
-5. **Results (RQ1/RQ2/RQ3)**: 편향 존재, 카테고리별 패턴, 모델 간 일관성
+5. **Results (RQ1/RQ2/RQ3)**: 편향 존재, 카테고리별 패턴, 모델 간 일관성 + two-input pair 실험
 6. **Mitigation (RQ4)**: Identity Preservation prompt 효과
 7. **Human Evaluation (RQ5)**: VLM-Human 상관 검증
 8. **Discussion & Limitations**: capability confound, VLM bias, open-source 범위
@@ -561,6 +592,7 @@ Step 5: Validation
 |-------|----------|------------------------|
 | H1 Bias Existence | Race/Gender score 분포 (비백인 vs 백인) | Fig: race-wise score barplot |
 | H2 Bias Mode by Type | B/W/D 카테고리별 비교 | Fig: category heatmap |
+| H2 (Two-Input) | Pairwise disparity index + role assignment | Fig: paired-input example |
 | H3 Cross-Model Consistency | Directional agreement, Spearman ρ | Table: model agreement |
 | H4 Mitigation | Edited vs Preserved Δ score | Fig: before/after comparison |
 | H5 VLM Validity | VLM-Human correlation | Fig: scatter + r |
@@ -569,6 +601,7 @@ Step 5: Validation
 - Fig 1: End-to-End pipeline (Section 9)
 - Fig 2: D03 aging matrix (pilot evidence + motivation)
 - Fig 3: WinoBias role assignment (role bias + pronoun alignment)
+- Fig 3b: Two-input composite examples (role assignment + edit compliance)
 - Fig 4: Mitigation effect (Edited vs Preserved)
 - Fig 5: VLM vs Human correlation
 - Table 1: Prompt categories (B/W/D) and evaluation axes
@@ -600,6 +633,7 @@ Step 5: Validation
 ```
 data/
 ├── source_images/final/                    # 84 baseline images
+├── source_images/composites/               # planned: two-input composites
 ├── identity_prompts/
 │   └── identity_prompt_mapping_full_*.json # 84 identity prompts
 ├── prompts/
@@ -616,6 +650,8 @@ scripts/
 ├── evaluation/
 │   ├── extract_identity_features.py        # VLM identity extraction
 │   └── vlm_eval_identity_preserved.py      # VLM bias evaluation
+├── data/
+│   └── build_two_input_composites.py       # planned: composite builder
 ├── experiment/
 │   ├── run_step1x_identity_gpu0.py         # D03 Male experiments
 │   ├── run_step1x_identity_gpu1.py         # D03 Female experiments
@@ -630,4 +666,4 @@ scripts/
 
 ---
 
-**Last Updated**: January 14, 2026, 9:10 PM KST
+**Last Updated**: January 14, 2026, 10:05 PM KST
