@@ -240,6 +240,13 @@ function Exp2Content() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [currentIndex, items, completedIds])
 
+  // Redirect to completion page when all items are done
+  useEffect(() => {
+    if (items.length > 0 && completedIds.size === items.length) {
+      router.push(`/complete?exp=exp2&model=${model}&completed=${completedIds.size}`)
+    }
+  }, [items.length, completedIds.size, model, router])
+
   if (loading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--bg-primary)' }}>
@@ -278,13 +285,6 @@ function Exp2Content() {
       </div>
     )
   }
-
-  // Redirect to completion page when all items are done
-  useEffect(() => {
-    if (items.length > 0 && completedIds.size === items.length) {
-      router.push(`/complete?exp=exp2&model=${model}&completed=${completedIds.size}`)
-    }
-  }, [items.length, completedIds.size, model, router])
 
   if (!currentItem || items.length === 0) {
     return (
