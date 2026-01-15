@@ -12,6 +12,10 @@
 
 set -e
 
+# HuggingFace cache path (change to your path)
+export HF_HOME="/scratch/chans/models/huggingface"
+export HF_HUB_CACHE="/scratch/chans/models/huggingface/hub"
+
 MODEL="step1x"
 DEVICE="cuda"
 GENDER="Male"

@@ -31,9 +31,8 @@ from pathlib import Path
 from datetime import datetime
 from typing import Optional
 
-# Set HuggingFace cache (must be before model imports)
-if os.environ.get("HF_HOME") is None:
-    os.environ["HF_HOME"] = os.path.expanduser("~/.cache/huggingface")
+# HuggingFace cache path - set via environment variable or shell script
+# Example: export HF_HOME="/scratch/username/models/huggingface"
 
 from PIL import Image
 from tqdm import tqdm
