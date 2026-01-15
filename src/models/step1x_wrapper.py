@@ -114,11 +114,13 @@ class Step1XWrapper(I2IModel):
 
         try:
             # Handle single or multiple images
+            is_multi_image = False
             if isinstance(source_image, Image.Image):
                 images = source_image.convert("RGB")
             else:
                 # Multi-image input: concatenate side-by-side
                 # Step1X doesn't support list of images, so we merge them
+                is_multi_image = True
                 converted_images = [img.convert("RGB") for img in source_image]
                 
                 # Get dimensions
@@ -137,6 +139,13 @@ class Step1XWrapper(I2IModel):
                 
                 images = concatenated
 
+            # Add prefix for multi-image inputs to help model understand
+            if is_multi_image:
+                prompt_prefix = "The input image contains two separate people side by side (left and right). Keep both people visible in the output. "
+                full_prompt = prompt_prefix + prompt
+            else:
+                full_prompt = prompt
+
             # Setup generator
             if seed is not None:
                 generator = torch.Generator().manual_seed(seed)
@@ -146,7 +155,7 @@ class Step1XWrapper(I2IModel):
             # Run inference
             pipe_output = self.pipe(
                 image=images,
-                prompt=prompt,
+                prompt=full_prompt,
                 num_inference_steps=num_inference_steps,
                 true_cfg_scale=true_cfg_scale,
                 generator=generator,
