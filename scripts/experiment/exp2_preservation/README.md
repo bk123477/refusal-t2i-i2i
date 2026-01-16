@@ -27,6 +27,16 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/experiment/exp2_preservation/run_step1x_gpu0
 CUDA_VISIBLE_DEVICES=1 bash scripts/experiment/exp2_preservation/run_step1x_gpu1.sh
 ```
 
+### Qwen (GPU 0/1 분할, 옵션)
+
+```bash
+# 터미널 1 - GPU 0 (Female, 168 tasks)
+CUDA_VISIBLE_DEVICES=0 bash scripts/experiment/exp2_preservation/run_qwen_gpu0.sh
+
+# 터미널 2 - GPU 1 (Male, 168 tasks)
+CUDA_VISIBLE_DEVICES=1 bash scripts/experiment/exp2_preservation/run_qwen_gpu1.sh
+```
+
 ### FLUX / Qwen (단일 GPU)
 
 ```bash
