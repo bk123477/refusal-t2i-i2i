@@ -7,7 +7,7 @@
 # Remaining Prompts (excluding B01, B05, B09, D03 from exp2-1):
 # 16 prompts total (7 B + 9 D)
 #
-# Total Requests: 16 prompts × 83 sampled images = 1,328
+# Total Requests: 16 prompts × 75 sampled sources (step1x-specific) = 1,200
 #
 # Usage:
 #   bash scripts/experiment/exp2_preservation/dexp2-2_all\(exclude_B01,B05,B09,D03\)/run_step1x_preservation.sh

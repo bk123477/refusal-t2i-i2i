@@ -2,13 +2,17 @@
 """
 Experiment 2-2: Identity Preservation Evaluation (Remaining Prompts)
 Tests all prompts EXCEPT B01, B05, B09, D03 (which were already done in exp2-1)
-Uses AMT-sampled source images (83 unique images from balanced sampling)
+Uses AMT-sampled source images (model-specific from balanced sampling)
 
 Remaining Prompts: 16 prompts
 - B: B02, B03, B04, B06, B07, B08, B10 (7 prompts)
 - D: D01, D02, D04, D05, D06, D07, D08, D09, D10 (9 prompts)
 
-Scale: 16 prompts × 83 sampled images × 3 models = 3,984 total images (preserved condition)
+Scale (per model, different source images per model):
+- flux:   73 sources × 16 prompts = 1,168 images
+- qwen:   69 sources × 16 prompts = 1,104 images
+- step1x: 75 sources × 16 prompts = 1,200 images
+- Total: 3,472 images
 
 Usage:
     python scripts/experiment/exp2_preservation/dexp2-2_all\(exclude_B01,B05,B09,D03\)/run_preservation_experiment.py --model step1x --device cuda
@@ -131,8 +135,8 @@ GENDERS = ["Female", "Male"]
 AGES = ["20s", "30s", "40s", "50s", "60s", "70plus"]
 
 
-def load_sampled_source_images() -> List[Tuple[str, str, str]]:
-    """Load unique source images (race, gender, age) from AMT sampling."""
+def load_sampled_source_images_for_model(model_name: str) -> List[Tuple[str, str, str]]:
+    """Load unique source images (race, gender, age) for a specific model from AMT sampling."""
     if not AMT_SAMPLED_FILE.exists():
         print(f"ERROR: AMT sampled file not found: {AMT_SAMPLED_FILE}")
         print("Please run AMT sampling first!")
@@ -141,13 +145,14 @@ def load_sampled_source_images() -> List[Tuple[str, str, str]]:
     with open(AMT_SAMPLED_FILE, "r") as f:
         data = json.load(f)
 
-    # Extract unique (race, gender, age) combinations
+    # Extract unique (race, gender, age) combinations for this specific model
     unique_sources = set()
     for item in data["items"]:
-        key = (item["race"], item["gender"], item["age"])
-        unique_sources.add(key)
+        if item["model"] == model_name:
+            key = (item["race"], item["gender"], item["age"])
+            unique_sources.add(key)
 
-    print(f"Loaded {len(unique_sources)} unique source images from AMT sampling")
+    print(f"Loaded {len(unique_sources)} unique source images for {model_name} from AMT sampling")
     return list(unique_sources)
 
 
@@ -234,8 +239,8 @@ def run_preservation_experiment(
     identity_prompts = load_identity_prompts(identity_prompts_file)
     print(f"Loaded {len(identity_prompts)} identity prompts from {identity_prompts_file.name}")
 
-    # Load sampled source images from AMT sampling
-    sampled_sources = load_sampled_source_images()
+    # Load sampled source images for THIS MODEL from AMT sampling
+    sampled_sources = load_sampled_source_images_for_model(model_name)
 
     # Build task list: 16 prompts × sampled images (~83)
     tasks = []

@@ -15,7 +15,7 @@
 #                               - D09: Economic Hardship
 #                               - D10: Digital Exclusion
 #
-# Total Requests: 16 prompts × 83 sampled images = 1,328
+# Total Requests: 16 prompts × 73 sampled sources (flux-specific) = 1,168
 #
 # Usage:
 #   bash scripts/experiment/exp2_preservation/dexp2-2_all\(exclude_B01,B05,B09,D03\)/run_flux_preservation.sh
