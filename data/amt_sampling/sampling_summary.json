@@ -1,107 +1,107 @@
 {
   "overall": {
     "gender": {
-      "Male": 251,
-      "Female": 249
+      "Male": 250,
+      "Female": 250
     },
     "race": {
-      "Black": 79,
-      "Indian": 76,
-      "White": 71,
+      "Indian": 72,
+      "SoutheastAsian": 72,
+      "White": 72,
       "MiddleEastern": 71,
-      "EastAsian": 70,
-      "Latino": 67,
-      "SoutheastAsian": 66
+      "Latino": 71,
+      "Black": 71,
+      "EastAsian": 71
     },
     "age": {
-      "50s": 86,
-      "70plus": 84,
-      "30s": 83,
+      "40s": 84,
+      "50s": 84,
+      "60s": 83,
       "20s": 83,
-      "60s": 82,
-      "40s": 82
+      "70plus": 83,
+      "30s": 83
     },
     "model": {
-      "qwen": 168,
-      "flux": 168,
-      "step1x": 164
+      "qwen": 167,
+      "step1x": 167,
+      "flux": 166
     },
     "category": {
-      "B": 250,
-      "D": 250
+      "D": 252,
+      "B": 248
     }
   },
   "per_model": {
     "flux": {
-      "total": 168,
+      "total": 166,
       "gender": {
-        "Male": 89,
-        "Female": 79
+        "Female": 88,
+        "Male": 78
       },
       "race": {
-        "EastAsian": 30,
-        "Black": 30,
-        "Indian": 25,
-        "SoutheastAsian": 24,
-        "MiddleEastern": 21,
-        "Latino": 21,
-        "White": 17
+        "Indian": 33,
+        "SoutheastAsian": 29,
+        "Black": 25,
+        "MiddleEastern": 24,
+        "Latino": 20,
+        "White": 20,
+        "EastAsian": 15
       },
       "age": {
-        "20s": 34,
+        "70plus": 33,
+        "20s": 31,
         "60s": 30,
-        "50s": 29,
-        "70plus": 27,
-        "40s": 26,
-        "30s": 22
+        "40s": 28,
+        "30s": 22,
+        "50s": 22
       }
     },
     "qwen": {
-      "total": 168,
+      "total": 167,
       "gender": {
-        "Female": 91,
-        "Male": 77
+        "Male": 94,
+        "Female": 73
       },
       "race": {
-        "White": 30,
-        "MiddleEastern": 28,
-        "Latino": 27,
-        "Indian": 25,
+        "White": 31,
+        "MiddleEastern": 27,
+        "EastAsian": 24,
+        "Black": 24,
+        "Latino": 23,
         "SoutheastAsian": 20,
-        "Black": 19,
-        "EastAsian": 19
+        "Indian": 18
       },
       "age": {
-        "50s": 35,
-        "70plus": 31,
-        "40s": 30,
-        "60s": 28,
-        "30s": 22,
-        "20s": 22
+        "30s": 34,
+        "60s": 31,
+        "50s": 30,
+        "70plus": 25,
+        "20s": 25,
+        "40s": 22
       }
     },
     "step1x": {
-      "total": 164,
+      "total": 167,
       "gender": {
-        "Male": 85,
-        "Female": 79
+        "Female": 89,
+        "Male": 78
       },
       "race": {
-        "Black": 30,
-        "Indian": 26,
-        "White": 24,
-        "SoutheastAsian": 22,
-        "MiddleEastern": 22,
-        "EastAsian": 21,
-        "Latino": 19
+        "EastAsian": 32,
+        "Latino": 28,
+        "SoutheastAsian": 23,
+        "Black": 22,
+        "White": 21,
+        "Indian": 21,
+        "MiddleEastern": 20
       },
       "age": {
-        "30s": 39,
+        "40s": 34,
+        "50s": 32,
         "20s": 27,
-        "70plus": 26,
-        "40s": 26,
-        "60s": 24,
-        "50s": 22
+        "30s": 27,
+        "70plus": 25,
+        "60s": 22
       }
     }
   }
